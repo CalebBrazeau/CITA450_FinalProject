@@ -17,8 +17,10 @@ public class DatabaseConnection {
     }
     public ResultSet selectQuery(String query) {
         try {
+            // Create query statement
             Statement stmt = con.createStatement();
-            return stmt.executeQuery(query); // Return query results
+            // Execute and return query results
+            return stmt.executeQuery(query);
         } catch(Exception e) {
             System.out.println(e);
         }
@@ -27,12 +29,15 @@ public class DatabaseConnection {
 
     public void updateAvailability(int roomID, boolean isAvailable) {
         try {
-            PreparedStatement pstmt = con.prepareStatement("UPDATE rooms SET is_available = ? WHERE room_id = ?");
+            // Prepare update statement
+            PreparedStatement updateStatement = con.prepareStatement("UPDATE rooms SET is_available = ? WHERE room_id = ?");
 
-            pstmt.setBoolean(1, isAvailable);
-            pstmt.setInt(2, roomID);
+            // Set update values (Replaces the '?' with values bellow)
+            updateStatement.setBoolean(1, isAvailable);
+            updateStatement.setInt(2, roomID);
 
-            pstmt.executeUpdate();
+            // Execute update statement
+            updateStatement.executeUpdate();
         } catch (Exception e) {
             System.out.println(e);
         }

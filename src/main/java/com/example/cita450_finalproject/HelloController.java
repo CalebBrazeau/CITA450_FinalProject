@@ -16,53 +16,42 @@ public class HelloController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        test();
-    }
-    @FXML
-    protected void test()
-    {
+        db = new DatabaseConnection();
         try {
-            // Create new connection object
-            db = new DatabaseConnection();
+            getRoomInfo();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    // TODO: Probably a better name for this method
+    private void getRoomInfo() throws SQLException {
+        // Clear list box before adding more things
+        listRooms.getItems().clear();
 
-            // Execute query on object
-            ResultSet rs = db.selectQuery("SELECT * FROM rooms");
+        // Execute query on object
+        ResultSet rs = db.selectQuery("SELECT * FROM rooms");
 
-            // Retrieve result set metadata (column names and such)
-            ResultSetMetaData rsMetaData = rs.getMetaData();
+        // Retrieve result set metadata (column names and such)
+        ResultSetMetaData rsMetaData = rs.getMetaData();
 
-            // Loop through and print column names
-            for(int i = 1; i <= rsMetaData.getColumnCount(); i++) {
-                System.out.println(rsMetaData.getColumnName(i));
-            }
+        // Loop through and print column names
+        for(int i = 1; i <= rsMetaData.getColumnCount(); i++) {
+            System.out.println(rsMetaData.getColumnName(i));
+        }
 
-            // While there is something to read from result set
-            while (rs.next()) {
-                listRooms.getItems().add(
-                        rs.getInt(1) + " " +
-                        rs.getInt(2) + " " +
-                        rs.getString(3) + " " +
-                        rs.getString(4) + " " +
-                        rs.getBoolean(5) + " " +
-                        rs.getBoolean(6) + " " +
-                        rs.getInt(7) + " " +
-                        rs.getFloat(8) + " " +
-                        rs.getBoolean(9)
-                );
-//                System.out.println(
-//                        rs.getInt(1) + " " +
-//                                rs.getInt(2) + " " +
-//                                rs.getString(3) + " " +
-//                                rs.getString(4) + " " +
-//                                rs.getBoolean(5) + " " +
-//                                rs.getBoolean(6) + " " +
-//                                rs.getInt(7) + " " +
-//                                rs.getFloat(8) + " " +
-//                                rs.getBoolean(9)
-//                );
-            }
-        } catch (Exception e) {
-            System.out.println(e);
+        // While there is something to read from result set
+        while (rs.next()) {
+            listRooms.getItems().add(
+                    rs.getInt(1) + " " +
+                            rs.getInt(2) + " " +
+                            rs.getString(3) + " " +
+                            rs.getString(4) + " " +
+                            rs.getBoolean(5) + " " +
+                            rs.getBoolean(6) + " " +
+                            rs.getInt(7) + " " +
+                            rs.getFloat(8) + " " +
+                            rs.getBoolean(9)
+            );
         }
     }
 
@@ -73,42 +62,54 @@ public class HelloController implements Initializable {
         String selectedItem = listRooms.getSelectionModel().getSelectedItem().toString();
 
         // TODO: Strings are being parsed as their byte value not string value iunno something like that
-        int roomID = selectedItem.charAt(0) + selectedItem.charAt(1) + selectedItem.charAt(2);
-        ResultSet rs = db.selectQuery("SELECT is_available FROM rooms WHERE room_id = " + String.valueOf(roomID));
+        // TODO: Maybe find a better way to do this
+        StringBuilder roomID = new StringBuilder();
+        roomID.append(selectedItem.charAt(0));
+        roomID.append(selectedItem.charAt(1));
+        roomID.append(selectedItem.charAt(2));
+
+        String query = "SELECT is_available FROM rooms WHERE room_id = " + roomID;
+
+        ResultSet rs = db.selectQuery(query);
 
         // While there are results from the query
         while (rs.next()) {
             // Check if returned value is true
             if(rs.getBoolean(1)) {
-                // Update Availibilty to false
-                db.updateAvailability(roomID, false);
+                // Update Availability to false
+                db.updateAvailability(Integer.parseInt(roomID.toString()), false);
                 System.out.println("Checked customer in");
+                getRoomInfo();
             }
         }
     }
 
     @FXML
-    protected void checkOut() {
-        try {
-            if(listRooms.getSelectionModel().getSelectedIndex() == -1) { return; }
+    protected void checkOut() throws SQLException {
+        if(listRooms.getSelectionModel().getSelectedIndex() == -1) { return; }
 
-            String selectedItem = listRooms.getSelectionModel().getSelectedItem().toString();
+        String selectedItem = listRooms.getSelectionModel().getSelectedItem().toString();
 
-            // TODO: Find a better way to get room number
-            int roomID = selectedItem.charAt(0) + selectedItem.charAt(1) + selectedItem.charAt(2);
-            ResultSet rs = db.selectQuery("SELECT is_available FROM rooms WHERE room_id = " + String.valueOf(roomID));
+        // TODO: Strings are being parsed as their byte value not string value iunno something like that
+        // TODO: Maybe find a better way to do this
+        StringBuilder roomID = new StringBuilder();
+        roomID.append(selectedItem.charAt(0));
+        roomID.append(selectedItem.charAt(1));
+        roomID.append(selectedItem.charAt(2));
 
-            // While there are results from the query
-            while (rs.next()) {
-                // Check if returned value is true
-                if(!rs.getBoolean(1)) {
-                    // Update Availability to true
-                    db.updateAvailability(roomID, true);
-                    System.out.println("Checked customer out");
-                }
+        String query = "SELECT is_available FROM rooms WHERE room_id = " + roomID;
+
+        ResultSet rs = db.selectQuery(query);
+
+        // While there are results from the query
+        while (rs.next()) {
+            // Check if returned value is true
+            if(!rs.getBoolean(1)) {
+                // Update Availability to false
+                db.updateAvailability(Integer.parseInt(roomID.toString()), true);
+                System.out.println("Checked customer out");
+                getRoomInfo();
             }
-        } catch (Exception e) {
-            System.out.println(e);
         }
     }
 }
