@@ -1,17 +1,22 @@
 package com.example.cita450_finalproject;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ListView;
-// Replace with only necessary imports
+import javafx.stage.Stage;
+
+import java.io.IOException;
 import java.net.URL;
-import java.sql.*;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class HelloController implements Initializable {
-    @FXML
-    private ListView listRooms;
-
+public class DashboardController implements Initializable {
+    public ListView listRooms;
     private DatabaseConnection db;
 
     @Override
@@ -19,6 +24,7 @@ public class HelloController implements Initializable {
         db = new DatabaseConnection();
         try {
             getRoomInfo();
+            insertNewCustomer();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -61,7 +67,7 @@ public class HelloController implements Initializable {
 
         String selectedItem = listRooms.getSelectionModel().getSelectedItem().toString();
 
-        // TODO: Strings are being parsed as their byte value not string value iunno something like that
+        // Strings are being parsed as their byte value not string (1 = 49, 0 = 48, instead of 1 = 1)
         // TODO: Maybe find a better way to do this
         StringBuilder roomID = new StringBuilder();
         roomID.append(selectedItem.charAt(0));
@@ -79,6 +85,8 @@ public class HelloController implements Initializable {
                 // Update Availability to false
                 db.updateAvailability(Integer.parseInt(roomID.toString()), false);
                 System.out.println("Checked customer in");
+
+                // Update list box contents
                 getRoomInfo();
             }
         }
@@ -90,7 +98,7 @@ public class HelloController implements Initializable {
 
         String selectedItem = listRooms.getSelectionModel().getSelectedItem().toString();
 
-        // TODO: Strings are being parsed as their byte value not string value iunno something like that
+        // Strings are being parsed as their byte value not string (1 = 49, 0 = 48, instead of 1 = 1)
         // TODO: Maybe find a better way to do this
         StringBuilder roomID = new StringBuilder();
         roomID.append(selectedItem.charAt(0));
@@ -108,8 +116,24 @@ public class HelloController implements Initializable {
                 // Update Availability to false
                 db.updateAvailability(Integer.parseInt(roomID.toString()), true);
                 System.out.println("Checked customer out");
+
+                // Update list box contents
                 getRoomInfo();
             }
+        }
+    }
+
+    private void insertNewCustomer() {
+        Parent root;
+        try {
+            root = FXMLLoader.load(HelloApplication.class.getResource("customer-information.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("My New Stage Title");
+            stage.setScene(new Scene(root, 600, 400));
+            stage.show();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cita450_finalproject.DashboardController">
+   <children>
+      <Label layoutX="14.0" layoutY="14.0" text="User - Front Desk" />
+      <Label layoutX="256.0" layoutY="22.0" text="Room Lookup" />
+      <Pane layoutX="14.0" layoutY="63.0" prefHeight="324.0" prefWidth="575.0">
+         <children>
+            <Label layoutX="14.0" layoutY="14.0" text="Search By:" />
+            <ChoiceBox fx:id="choiceSearchBy" layoutX="91.0" layoutY="10.0" prefWidth="150.0" />
+            <TextField layoutX="390.0" layoutY="10.0" />
+            <Label layoutX="334.0" layoutY="14.0" text="Search:" />
+            <ListView fx:id="listRooms" layoutX="14.0" layoutY="44.0" prefHeight="237.0" prefWidth="546.0" />
+            <Button fx:id="btnCheckOut" layoutX="14.0" layoutY="286.0" mnemonicParsing="false" onAction="#checkOut" text="Check Out" />
+            <Button fx:id="btnCheckIn" layoutX="485.0" layoutY="286.0" mnemonicParsing="false" onAction="#checkIn" text="Check In" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

@@ -42,4 +42,9 @@ public class DatabaseConnection {
             System.out.println(e);
         }
     }
+
+    public void insertCustomer(String customerFName, String customerLName, String customerPhone, String customerEmail, int customerBillingAddressID, String customerPaymentMethod) {
+        
+
+    }
 }
