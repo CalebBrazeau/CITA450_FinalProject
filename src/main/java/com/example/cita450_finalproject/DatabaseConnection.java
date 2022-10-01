@@ -1,5 +1,7 @@
 package com.example.cita450_finalproject;
+import java.io.*;
 import  java.sql.*;
+import java.util.Scanner;
 
 public class DatabaseConnection {
     Connection con;
@@ -9,12 +11,35 @@ public class DatabaseConnection {
 
     private void connect() {
         try {
+            String mysqlPassword = readPassword();
             // Create connection to database
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/sys", "root", "password");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/sys", "root", mysqlPassword);
         } catch(Exception e) {
             System.out.println(e);
         }
     }
+
+    // Probably not the best way, but it works
+    private String readPassword() {
+        try {
+            // Open Credentials file
+            File myObj = new File("src/creds.txt");
+            Scanner myReader = new Scanner(myObj);
+
+            // If there is a line to read
+            if (myReader.hasNextLine()) {
+                // Return credentials content
+                return myReader.nextLine();
+            }
+            // Close reader
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Uh Oh.");
+            e.printStackTrace();
+        }
+        return "";
+    }
+
     public ResultSet selectQuery(String query) {
         try {
             // Create query statement

@@ -38,12 +38,12 @@ public class DashboardController implements Initializable {
         ResultSet rs = db.selectQuery("SELECT * FROM rooms");
 
         // Retrieve result set metadata (column names and such)
-        ResultSetMetaData rsMetaData = rs.getMetaData();
+        //ResultSetMetaData rsMetaData = rs.getMetaData();
 
         // Loop through and print column names
-        for(int i = 1; i <= rsMetaData.getColumnCount(); i++) {
-            System.out.println(rsMetaData.getColumnName(i));
-        }
+        //for(int i = 1; i <= rsMetaData.getColumnCount(); i++) {
+        //    System.out.println(rsMetaData.getColumnName(i));
+        //}
 
         // While there is something to read from result set
         while (rs.next()) {
