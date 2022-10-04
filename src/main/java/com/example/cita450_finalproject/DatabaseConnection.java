@@ -43,8 +43,21 @@ public class DatabaseConnection {
         }
     }
 
-    public void insertCustomer(String customerFName, String customerLName, String customerPhone, String customerEmail, int customerBillingAddressID, String customerPaymentMethod) {
-        
+    public void insertCustomer(String customerFName, String customerLName, String customerPhone, String customerEmail, int customerBillingAddressID, String customerPaymentMethod) throws SQLException {
+        // The mysql insert statement
+        String query = " INSERT INTO customers (customer_fname, customer_lname, customer_phone, customer_email, customer_billing_address_id, customer_payment_method)"
+                + " values (?, ?, ?, ?, ?, ?)";
 
+        // Create the mysql insert prepared statement
+        PreparedStatement preparedStmt = con.prepareStatement(query);
+        preparedStmt.setString(1, customerFName);
+        preparedStmt.setString(2, customerLName);
+        preparedStmt.setString(3, customerPhone);
+        preparedStmt.setString(4, customerEmail);
+        preparedStmt.setInt(5, customerBillingAddressID);
+        preparedStmt.setString(6, customerPaymentMethod);
+
+        // Execute the prepared statement
+        preparedStmt.execute();
     }
 }

@@ -123,12 +123,13 @@ public class DashboardController implements Initializable {
         }
     }
 
+    // Function to load customer-information.fxml scene
     private void insertNewCustomer() {
         Parent root;
         try {
             root = FXMLLoader.load(HelloApplication.class.getResource("customer-information.fxml"));
             Stage stage = new Stage();
-            stage.setTitle("My New Stage Title");
+            stage.setTitle("Customer Information");
             stage.setScene(new Scene(root, 600, 400));
             stage.show();
         }
