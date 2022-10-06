@@ -64,6 +64,7 @@ public class DashboardController implements Initializable {
 
     @FXML
     protected void checkIn() throws SQLException {
+        // If nothing is selected exit function
         if(listRooms.getSelectionModel().getSelectedIndex() == -1) { return; }
 
         String selectedItem = listRooms.getSelectionModel().getSelectedItem().toString();
@@ -95,8 +96,10 @@ public class DashboardController implements Initializable {
 
     @FXML
     protected void checkOut() throws SQLException {
+        // If nothing is selected exit function
         if(listRooms.getSelectionModel().getSelectedIndex() == -1) { return; }
 
+        // Get Selected item's string content
         String selectedItem = listRooms.getSelectionModel().getSelectedItem().toString();
 
         // Strings are being parsed as their byte value not string (1 = 49, 0 = 48, instead of 1 = 1)
@@ -106,8 +109,10 @@ public class DashboardController implements Initializable {
         roomID.append(selectedItem.charAt(1));
         roomID.append(selectedItem.charAt(2));
 
+        // Select is_available from rooms table where id matches
         String query = "SELECT is_available FROM rooms WHERE room_id = " + roomID;
 
+        // Get result set from query
         ResultSet rs = db.selectQuery(query);
 
         // While there are results from the query

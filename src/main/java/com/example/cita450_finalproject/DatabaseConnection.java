@@ -11,6 +11,7 @@ public class DatabaseConnection {
 
     private void connect() {
         try {
+            // Get mysql password from creds.txt
             String mysqlPassword = readPassword();
             // Create connection to database
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/sys", "root", mysqlPassword);
@@ -40,16 +41,11 @@ public class DatabaseConnection {
         return "";
     }
 
-    public ResultSet selectQuery(String query) {
-        try {
-            // Create query statement
-            Statement stmt = con.createStatement();
-            // Execute and return query results
-            return stmt.executeQuery(query);
-        } catch(Exception e) {
-            System.out.println(e);
-        }
-        return null;
+    public ResultSet selectQuery(String query) throws SQLException {
+        // Create query statement
+        Statement stmt = con.createStatement();
+        // Execute and return query results
+        return stmt.executeQuery(query);
     }
 
     public void updateAvailability(int roomID, boolean isAvailable) {
