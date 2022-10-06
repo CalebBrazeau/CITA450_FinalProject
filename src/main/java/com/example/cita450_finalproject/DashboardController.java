@@ -48,15 +48,16 @@ public class DashboardController implements Initializable {
         // While there is something to read from result set
         while (rs.next()) {
             listRooms.getItems().add(
-                    rs.getInt(1) + " " +
-                            rs.getInt(2) + " " +
-                            rs.getString(3) + " " +
+                    rs.getInt(1) + " " +            //RoomID
+                            rs.getInt(2) + " " +    //Number of beds
+                            rs.getString(3) + " " + //
                             rs.getString(4) + " " +
                             rs.getBoolean(5) + " " +
                             rs.getBoolean(6) + " " +
                             rs.getInt(7) + " " +
                             rs.getFloat(8) + " " +
-                            rs.getBoolean(9)
+                            rs.getBoolean(9) + "" +
+                            rs.getBoolean(10)
             );
         }
     }
