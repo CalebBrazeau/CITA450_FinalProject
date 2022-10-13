@@ -20,9 +20,48 @@ public class DashboardController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
+<<<<<<< HEAD
             room = new Room();
         } catch (Exception e) {
             e.printStackTrace();
+=======
+            getRoomInfo();
+            insertNewCustomer();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    // TODO: Probably a better name for this method
+    private void getRoomInfo() throws SQLException {
+        // Clear list box before adding more things
+        listRooms.getItems().clear();
+
+        // Execute query on object
+        ResultSet rs = db.selectQuery("SELECT * FROM rooms");
+
+        // Retrieve result set metadata (column names and such)
+        //ResultSetMetaData rsMetaData = rs.getMetaData();
+
+        // Loop through and print column names
+        //for(int i = 1; i <= rsMetaData.getColumnCount(); i++) {
+        //    System.out.println(rsMetaData.getColumnName(i));
+        //}
+
+        // While there is something to read from result set
+        while (rs.next()) {
+            listRooms.getItems().add(
+                    rs.getInt(1) + " " +            //RoomID
+                            rs.getInt(2) + " " +    //Number of beds
+                            rs.getString(3) + " " + //
+                            rs.getString(4) + " " +
+                            rs.getBoolean(5) + " " +
+                            rs.getBoolean(6) + " " +
+                            rs.getInt(7) + " " +
+                            rs.getFloat(8) + " " +
+                            rs.getBoolean(9) + "" +
+                            rs.getBoolean(10)
+            );
+>>>>>>> 518da8a5763f155106ad38b16e25dd4daf8d4285
         }
     }
 

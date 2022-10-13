@@ -13,8 +13,11 @@ public class DatabaseConnection {
         try {
             // Get mysql password from creds.txt
             String mysqlPassword = readPassword();
+            System.out.println(mysqlPassword);
             // Create connection to database
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/sys", "root", mysqlPassword);
+
+
         } catch(Exception e) {
             System.out.println(e);
         }
@@ -31,6 +34,7 @@ public class DatabaseConnection {
             if (myReader.hasNextLine()) {
                 // Return credentials content
                 return myReader.nextLine();
+
             }
             // Close reader
             myReader.close();
@@ -44,6 +48,7 @@ public class DatabaseConnection {
     public ResultSet selectQuery(String query) throws SQLException {
         // Create query statement
         Statement stmt = con.createStatement();
+
         // Execute and return query results
         return stmt.executeQuery(query);
     }
