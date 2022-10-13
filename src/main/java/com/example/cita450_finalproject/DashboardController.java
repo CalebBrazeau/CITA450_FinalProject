@@ -10,126 +10,27 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class DashboardController implements Initializable {
     public ListView listRooms;
-    private DatabaseConnection db;
+
+    private Room room;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        db = new DatabaseConnection();
         try {
-            getRoomInfo();
-            insertNewCustomer();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    // TODO: Probably a better name for this method
-    private void getRoomInfo() throws SQLException {
-        // Clear list box before adding more things
-        listRooms.getItems().clear();
-
-        // Execute query on object
-        ResultSet rs = db.selectQuery("SELECT * FROM rooms");
-
-        // Retrieve result set metadata (column names and such)
-        //ResultSetMetaData rsMetaData = rs.getMetaData();
-
-        // Loop through and print column names
-        //for(int i = 1; i <= rsMetaData.getColumnCount(); i++) {
-        //    System.out.println(rsMetaData.getColumnName(i));
-        //}
-
-        // While there is something to read from result set
-        while (rs.next()) {
-            listRooms.getItems().add(
-                    rs.getInt(1) + " " +
-                            rs.getInt(2) + " " +
-                            rs.getString(3) + " " +
-                            rs.getString(4) + " " +
-                            rs.getBoolean(5) + " " +
-                            rs.getBoolean(6) + " " +
-                            rs.getInt(7) + " " +
-                            rs.getFloat(8) + " " +
-                            rs.getBoolean(9)
-            );
+            room = new Room();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    @FXML
-    protected void checkIn() throws SQLException {
-        // If nothing is selected exit function
-        if(listRooms.getSelectionModel().getSelectedIndex() == -1) { return; }
+    private void displayRoomInfo() {
 
-        String selectedItem = listRooms.getSelectionModel().getSelectedItem().toString();
-
-        // Strings are being parsed as their byte value not string (1 = 49, 0 = 48, instead of 1 = 1)
-        // TODO: Maybe find a better way to do this
-        StringBuilder roomID = new StringBuilder();
-        roomID.append(selectedItem.charAt(0));
-        roomID.append(selectedItem.charAt(1));
-        roomID.append(selectedItem.charAt(2));
-
-        String query = "SELECT is_available FROM rooms WHERE room_id = " + roomID;
-
-        ResultSet rs = db.selectQuery(query);
-
-        // While there are results from the query
-        while (rs.next()) {
-            // Check if returned value is true
-            if(rs.getBoolean(1)) {
-                // Update Availability to false
-                db.updateAvailability(Integer.parseInt(roomID.toString()), false);
-                System.out.println("Checked customer in");
-
-                // Update list box contents
-                getRoomInfo();
-            }
-        }
     }
 
-    @FXML
-    protected void checkOut() throws SQLException {
-        // If nothing is selected exit function
-        if(listRooms.getSelectionModel().getSelectedIndex() == -1) { return; }
-
-        // Get Selected item's string content
-        String selectedItem = listRooms.getSelectionModel().getSelectedItem().toString();
-
-        // Strings are being parsed as their byte value not string (1 = 49, 0 = 48, instead of 1 = 1)
-        // TODO: Maybe find a better way to do this
-        StringBuilder roomID = new StringBuilder();
-        roomID.append(selectedItem.charAt(0));
-        roomID.append(selectedItem.charAt(1));
-        roomID.append(selectedItem.charAt(2));
-
-        // Select is_available from rooms table where id matches
-        String query = "SELECT is_available FROM rooms WHERE room_id = " + roomID;
-
-        // Get result set from query
-        ResultSet rs = db.selectQuery(query);
-
-        // While there are results from the query
-        while (rs.next()) {
-            // Check if returned value is true
-            if(!rs.getBoolean(1)) {
-                // Update Availability to false
-                db.updateAvailability(Integer.parseInt(roomID.toString()), true);
-                System.out.println("Checked customer out");
-
-                // Update list box contents
-                getRoomInfo();
-            }
-        }
-    }
-
-    // Function to load customer-information.fxml scene
-    private void insertNewCustomer() {
+    private void loadNewCustomerForm() {
         Parent root;
         try {
             root = FXMLLoader.load(HelloApplication.class.getResource("customer-information.fxml"));
@@ -141,5 +42,9 @@ public class DashboardController implements Initializable {
         catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void search() {
+
     }
 }
