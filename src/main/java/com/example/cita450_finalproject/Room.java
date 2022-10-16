@@ -21,6 +21,10 @@ public class Room
      * -pull the search information for a room
      */
 
+
+    //DATABASE
+    DatabaseConnection dbConnection;    //connection to database
+
     //Class Variables
     boolean bol_isAvailable;            //is the room available and ready
     boolean bol_isHandicapAccessible;   //is the room handicap accessible
@@ -46,25 +50,133 @@ public class Room
     //Connection to database
     //database = database
 
-    //METHOD Driver(Room)
-        /*public Room()
-        {
-            Instantior(GetRoomID());
-        }*/
-
     //Method Instantitor
     private void Instantior( /*int int_RoomID*/)
     {
+        //establish connection to database
+        dbConnection = new DatabaseConnection();
+
         //set variabels
         int_RoomID = GetRoomID();
         bol_isAvailable = CheckAvailable();
-
-        //bol_isHandicapAccessible = CheckHandicap();
-        //int_floorNumber = CheckFloorNum();
-        //int_numBeds = CheckNumBeds();
+        bol_isHandicapAccessible = CheckHandicap();
+        int_floorNumber = CheckFloorNum();
+        int_numBeds = CheckNumBeds();
 
     }
 
+    //METHOD handle what is being shown when something is searched
+    public void PullInformation(String str_SearchCondidtion)
+    {
+        //if the search condition is room number
+
+        //if the search condition is customer name
+
+        //if the search condition is handicap accessesible
+
+        //if the search condition is floor number
+
+        //if the search condition is number of beds
+
+    }
+
+    //METHOD get room ID
+    public int GetRoomID()
+    {
+        return int_RoomID;
+    }
+
+    //METHOD Check in
+    public void Checkin()
+    {
+        //if the room is avaiable
+        if(!CheckAvailable())
+        {
+            //error room not avaibale
+            return;
+        }
+        else
+        {
+            //mark room as available
+            UpdateAvailable();
+
+            //set customerid
+        }
+    }
+
+    //METHOD Check out
+    public void Checkout()
+    {
+        //if the room is avaiable
+        if (CheckAvailable())
+        {
+            //error room not avaibale
+            return;
+        }
+        else
+        {
+            //eventuall this will be set to needs cleaning then from there cleaning would set this to true, but for now keeping it simple
+            //mark room as available
+            UpdateAvailable();
+
+        }
+    }
+    //METHOD Update Room Avaliability
+    private void UpdateAvailable()
+    {
+
+        //if checking out
+        if( bol_isAvailable = false)
+        {
+            //change the variable to available
+            bol_isAvailable = true;
+            //make the room available by sending the variable
+            dbConnection.updateAvailability(int_RoomID, bol_isAvailable);
+        }
+
+        //if checking in
+        else
+        {
+            //change the variable to unavailable
+            bol_isAvailable = false;
+            //make the room unavailable by sending the variable
+            dbConnection.updateAvailability(int_RoomID, bol_isAvailable);
+
+        }
+        //debug
+        System.out.println(bol_isAvailable);
+
+
+    }
+    //METHOD Check Room Avaiability
+    private boolean CheckAvailable()
+    {
+        //variable ( sql statement)
+        String SQL_Query = "SELECT is_available FROM rooms WHERE room_id = " + int_RoomID;
+
+        //pull avaiablity from table and set its variable
+        bol_isAvailable = dbConnection.selectQuery(SQL_Query);
+        return  bol_isAvailable;
+    }
+    //METHOD Check Floor Number for Room
+    private int CheckFloorNum()
+    {
+        //pull floor number from table
+        return int_floorNumber;
+    }
+    //METHOD Check Number Beds in Room
+    private int CheckNumBeds()
+    {
+        //pull number of beds from table
+        return int_numBeds;
+    }
+    //METHOD Check Handicap Accessible
+    private boolean CheckHandicap()
+    {
+        //pull hanicap accessible from table
+        return bol_isHandicapAccessible;
+    }
+/*
     //METHOD turn a string into an int
     public int StringToInt( String strTranslate, int intDefault)
     {
@@ -118,11 +230,11 @@ public class Room
         {
             //if there was data do this
 
-            /*get the int out of the input*/
-            intRoomNum = StringToInt(strInputRoomNum, int_DefaultRoom);
+            // get the int out of the input
+           //intRoomNum = StringToInt(strInputRoomNum, int_DefaultRoom);
 
             ///set the RoomID to the users input
-            int_RoomID = intRoomNum;
+            //int_RoomID = intRoomNum;
 
             //debug
             System.out.println(int_RoomID);
@@ -139,98 +251,6 @@ public class Room
         }
 
         //return intRoomNum;
-    }
-
-    //METHOD get room ID
-    public int GetRoomID()
-    {
-        return int_RoomID;
-    }
-
-    //METHOD Check in
-    public void Checkin()
-    {
-        //if the room is avaiable
-        if(!CheckAvailable())
-        {
-            //error room not avaibale
-            return;
-        }
-        else
-        {
-            //mark room as available
-            UpdateAvailable();
-
-            //set customerid
-        }
-    }
-
-    //METHOD Check out
-    public void Checkout()
-    {
-        //if the room is avaiable
-        if (CheckAvailable())
-        {
-            //error room not avaibale
-            return;
-        }
-        else
-        {
-            //eventuall this will be set to needs cleaning then from there cleaning would set this to true, but for now keeping it simple
-            //mark room as available
-            UpdateAvailable();
-
-        }
-    }
-    //METHOD Update Room Avaliability
-    private boolean UpdateAvailable()
-    {
-        //if chhecking out
-        if( bol_isAvailable = false)
-        {
-            //make the room available
-            return true;
-        }
-
-        //if checking in
-        else
-        {
-            //make the room unavaibale
-            return false;
-        }
-
-        //update the table
-        //
-
-        //debug
-        // System.out.println(toString(bol_isAvailable));
-
-
-    }
-    //METHOD Check Room Avaiability
-    private boolean CheckAvailable()
-    {
-        //pull avaiablity from table
-
-        return bol_isAvailable;
-    }
-    //METHOD Check Floor Number for Room
-    private int CheckFloorNum()
-    {
-        //pull floor number from table
-        return int_floorNumber;
-    }
-    //METHOD Check Number Beds in Room
-    private int CheckNumBeds()
-    {
-        //pull number of beds from table
-        return int_numBeds;
-    }
-    //METHOD Check Handicap Accessible
-    private boolean CheckHandicap()
-    {
-        //pull hanicap accessible from table
-        return bol_isHandicapAccessible;
-    }
+    } */
 
 }//end of Class "Room"
