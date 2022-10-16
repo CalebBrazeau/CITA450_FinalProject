@@ -46,6 +46,19 @@ public class DashboardController implements Initializable {
 
     private void search()
     {
+        //variabels
+        //Drop Down Menu Choices/Search Conditions
+        /*
+        "Room Number"
+        "Customer ID"
+        "Floor"
+        "Handicap Accessible"
+        "Number of Beds"
+        */
+        String str_Searched; //what the user typed into the text box
+
+
+
 
 
     }

@@ -1,5 +1,8 @@
 package com.example.cita450_finalproject;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 public class Room
 {
     /*
@@ -66,18 +69,25 @@ public class Room
     }
 
     //METHOD handle what is being shown when something is searched
-    public void PullInformation(String str_SearchCondidtion)
+    public ResultSet PullInformation(String str_SearchCondidtion)
     {
+        ResultSet resultSet;
         //if the search condition is room number
+            //pull up the rooms information that matches that room number
 
         //if the search condition is customer name
+            //pull up any rooms that that customer is currently assigned to
 
         //if the search condition is handicap accessesible
+            //pull up any rooms that are hanicap accessible
 
         //if the search condition is floor number
+            //pull up all rooms on that floor
 
         //if the search condition is number of beds
+            //pull up all rooms that have that number of beds
 
+        return resultSet;
     }
 
     //METHOD get room ID
@@ -115,7 +125,7 @@ public class Room
         }
         else
         {
-            //eventuall this will be set to needs cleaning then from there cleaning would set this to true, but for now keeping it simple
+            //eventually this will be set to needs cleaning then from there cleaning would set this to true, but for now keeping it simple
             //mark room as available
             UpdateAvailable();
 
@@ -157,6 +167,19 @@ public class Room
         //pull avaiablity from table and set its variable
         bol_isAvailable = dbConnection.selectQuery(SQL_Query);
         return  bol_isAvailable;
+
+        try {
+            // Prepare update statement
+            PreparedStatement selectStatement = dbConnection.con.prepareStatement("SELECT is_available FROM rooms WHERE room_id =  ?");
+
+            // Set update values (Replaces the '?' with values bellow)
+            selectStatement.setInt(1, int_RoomID);
+
+            // Execute update statement
+            selectStatement.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
     //METHOD Check Floor Number for Room
     private int CheckFloorNum()
