@@ -69,6 +69,24 @@ public class DatabaseConnection {
         }
     }
 
+
+    public void updateCustomerID(int roomID, int customerID)
+    {
+        try {
+            // Prepare update statement
+            PreparedStatement updateStatement = con.prepareStatement("UPDATE rooms SET customer_id = ? WHERE room_id = ?");
+
+            // Set update values (Replaces the '?' with values bellow)
+            updateStatement.setInt(1, customerID);
+            updateStatement.setInt(2, roomID);
+
+            // Execute update statement
+            updateStatement.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
     public void insertCustomer(String customerFName, String customerLName, String customerPhone, String customerEmail, int customerBillingAddressID, String customerPaymentMethod) throws SQLException {
         // The mysql insert statement
         String query = " INSERT INTO customers (customer_fname, customer_lname, customer_phone, customer_email, customer_billing_address_id, customer_payment_method)"
