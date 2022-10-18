@@ -13,11 +13,8 @@ public class DatabaseConnection {
         try {
             // Get mysql password from creds.txt
             String mysqlPassword = readPassword();
-            System.out.println(mysqlPassword);
             // Create connection to database
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/sys", "root", mysqlPassword);
-
-
         } catch(Exception e) {
             System.out.println(e);
         }
@@ -34,7 +31,6 @@ public class DatabaseConnection {
             if (myReader.hasNextLine()) {
                 // Return credentials content
                 return myReader.nextLine();
-
             }
             // Close reader
             myReader.close();
@@ -69,6 +65,7 @@ public class DatabaseConnection {
         }
     }
 
+    /* TODO: Move to Customer class */
     public void insertCustomer(String customerFName, String customerLName, String customerPhone, String customerEmail, int customerBillingAddressID, String customerPaymentMethod) throws SQLException {
         // The mysql insert statement
         String query = " INSERT INTO customers (customer_fname, customer_lname, customer_phone, customer_email, customer_billing_address_id, customer_payment_method)"

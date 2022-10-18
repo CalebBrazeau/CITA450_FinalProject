@@ -1,7 +1,7 @@
 package com.example.cita450_finalproject;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class Room
 {
@@ -28,29 +28,40 @@ public class Room
     //DATABASE
     DatabaseConnection dbConnection;    //connection to database
 
-    //Method Instantitor
-    private void Instantior( /*int int_RoomID*/)
+    //Method Instantiator
+    public Room()
     {
-        //establish connection to database
+        // establish connection to database
         dbConnection = new DatabaseConnection();
 
-        //set variabels
-
+        //set variables
 
     }
 
     //METHOD handle what is being shown when something is searched
-    public ResultSet PullInformation(String str_SearchCondidtion)
-    {
+    public ResultSet pullInformation(String str_SearchCondition) throws SQLException {
+        // If there is no search condition, return
+        if (str_SearchCondition == null) { return null; }
+
+        // Variable to store query results
         ResultSet resultSet;
+
+        // Switch expression, new to me but IntelliJ suggested it ¯\_(ツ)_/¯
+        String query = switch (str_SearchCondition) {
+            case "Room Number" -> "SELECT * FROM rooms WHERE something equals something";
+            case "Customer Name" -> "SELECT * FROM rooms WHERE Another thing equals something";
+            default -> "SELECT * FROM rooms";
+        };
+
+        resultSet = dbConnection.selectQuery(query);
         //if the search condition is room number
             //pull up the rooms information that matches that room number
 
         //if the search condition is customer name
             //pull up any rooms that that customer is currently assigned to
 
-        //if the search condition is handicap accessesible
-            //pull up any rooms that are hanicap accessible
+        //if the search condition is handicap accessible
+            //pull up any rooms that are handicap accessible
 
         //if the search condition is floor number
             //pull up all rooms on that floor
@@ -67,23 +78,24 @@ public class Room
         //return int_RoomID;
     }
 
+    // Commented out until implementation
     //METHOD Check in
-    public void Checkin()
-    {
-        //if the room is avaiable
-        if(!CheckAvailable())
-        {
-            //error room not avaibale
-            return;
-        }
-        else
-        {
-            //mark room as available
-            UpdateAvailable();
-
-            //set customerid
-        }
-    }
+//    public void Checkin()
+//    {
+//        //if the room is avaiable
+//        if(!CheckAvailable())
+//        {
+//            //error room not avaibale
+//            return;
+//        }
+//        else
+//        {
+//            //mark room as available
+//            UpdateAvailable();
+//
+//            //set customerid
+//        }
+//    }
 
     //METHOD Check out
     public void Checkout(int int_RoomID)
