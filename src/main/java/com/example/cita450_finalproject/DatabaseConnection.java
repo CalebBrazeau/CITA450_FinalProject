@@ -65,8 +65,6 @@ public class DatabaseConnection {
         }
     }
 
-<<<<<<< HEAD
-
     public void updateCustomerID(int roomID, int customerID)
     {
         try {
@@ -84,9 +82,8 @@ public class DatabaseConnection {
         }
     }
 
-=======
     /* TODO: Move to Customer class */
->>>>>>> e8f7908d41a7b37462194949c6a48aea70bce20d
+
     public void insertCustomer(String customerFName, String customerLName, String customerPhone, String customerEmail, int customerBillingAddressID, String customerPaymentMethod) throws SQLException {
         // The mysql insert statement
         String query = " INSERT INTO customers (customer_fname, customer_lname, customer_phone, customer_email, customer_billing_address_id, customer_payment_method)"

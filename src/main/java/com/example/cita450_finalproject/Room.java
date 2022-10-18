@@ -79,24 +79,19 @@ public class Room
     }
 
     //METHOD Check in
-<<<<<<< HEAD
-    public void Checkin(int int_RoomID, int CustomerID)
-    {
+    public void Checkin(int int_RoomID, int CustomerID) {
         //if the room is avaiable
-        if(!CheckAvailable(int_RoomID))
-        {
+        if (!CheckAvailable(int_RoomID)) {
             //error room not avaibale
             return;
-        }
-        else
-        {
+        } else {
             //mark room as available
             UpdateAvailable(int_RoomID);
 
             //set customerid
-            UpdateCustomerID(int_RoomID);
+            UpdateCustomerID(int_RoomID, CustomerID);
         }
-=======
+    }
     public void checkIn(int int_RoomID)
     {
         // TODO: Maybe show an error message so the user knows what happened
@@ -105,7 +100,6 @@ public class Room
 
         // Update room availability
         UpdateAvailable(int_RoomID);
->>>>>>> e8f7908d41a7b37462194949c6a48aea70bce20d
     }
 
     //METHOD Check out
@@ -114,7 +108,6 @@ public class Room
         //if the room is available
         if (CheckAvailable(int_RoomID))
         {
-<<<<<<< HEAD
             //error room not avaibale
             System.out.println( "ERROR:: ROOM: "+ int_RoomID + " Status: Room was not checked in.");
             return;
@@ -138,17 +131,16 @@ public class Room
 
 
 
-=======
+
             // error room not available
             System.out.println( "ERROR:: ROOM: "+ int_RoomID + " Status: Room not available.");
             return;
-        }
+
         //eventually this will be set to needs cleaning then from there cleaning would set this to true, but for now keeping it simple
         //change room to dirty
-        System.out.println( " ROOM: "+ int_RoomID + " Status: needs cleaning");
+        //System.out.println( " ROOM: "+ int_RoomID + " Status: needs cleaning");
         //mark room as available
-        UpdateAvailable(int_RoomID);
->>>>>>> e8f7908d41a7b37462194949c6a48aea70bce20d
+        //(int_RoomID);
     }
     //METHOD Update Room Avaliability
     private void UpdateAvailable(int int_RoomID)
@@ -175,10 +167,6 @@ public class Room
         }
         //debug
         System.out.println(bol_isAvailable);
-<<<<<<< HEAD
-
-=======
->>>>>>> e8f7908d41a7b37462194949c6a48aea70bce20d
     }
     //METHOD Check Room Avaiability
     private boolean CheckAvailable(int int_RoomID)
@@ -202,13 +190,11 @@ public class Room
         } catch (Exception e) {
             System.out.println(e);
         }
-<<<<<<< HEAD
+
         //return default
-        return  bol_defualt;
-=======
 
         return  bol_default;
->>>>>>> e8f7908d41a7b37462194949c6a48aea70bce20d
+
     }
     //METHOD Update Room Avaliability
     private void UpdateCustomerID(int int_RoomID, int int_CustID)
