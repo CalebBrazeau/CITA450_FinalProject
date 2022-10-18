@@ -1,5 +1,6 @@
 package com.example.cita450_finalproject;
 
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -69,6 +70,47 @@ public class DashboardController implements Initializable {
                     roomInfo.getBoolean(10)
             );
         }
+    }
+
+    @FXML
+    private void checkIn() throws SQLException {
+        // If nothing is selected return
+        if (listRooms.getSelectionModel().getSelectedItem() == null) { return; }
+
+        // Get selected room from list of rooms
+        String selectedItem = listRooms.getSelectionModel().getSelectedItem().toString();
+
+        // Append first three characters of selected item to a string (First three will be the room ID)
+        StringBuilder roomID = new StringBuilder();
+        roomID.append(selectedItem.charAt(0));
+        roomID.append(selectedItem.charAt(1));
+        roomID.append(selectedItem.charAt(2));
+
+        // Attempt check in
+        room.checkIn(Integer.parseInt(String.valueOf(roomID)));
+
+        // Update rooms list
+        displayRoomInfo();
+    }
+    @FXML
+    private void checkOut() throws SQLException {
+        // If nothing is selected return
+        if (listRooms.getSelectionModel().getSelectedItem() == null) { return; }
+
+        // Get selected room from list of rooms
+        String selectedItem = listRooms.getSelectionModel().getSelectedItem().toString();
+
+        // Append first three characters of selected item to a string (First three will be the room ID)
+        StringBuilder roomID = new StringBuilder();
+        roomID.append(selectedItem.charAt(0));
+        roomID.append(selectedItem.charAt(1));
+        roomID.append(selectedItem.charAt(2));
+
+        // Attempt check out
+        room.checkOut(Integer.parseInt(String.valueOf(roomID)));
+
+        // Update rooms list
+        displayRoomInfo();
     }
     private void loadNewCustomerForm() {
         Parent root;

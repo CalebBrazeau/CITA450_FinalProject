@@ -78,45 +78,32 @@ public class Room
         //return int_RoomID;
     }
 
-    // Commented out until implementation
     //METHOD Check in
-//    public void Checkin()
-//    {
-//        //if the room is avaiable
-//        if(!CheckAvailable())
-//        {
-//            //error room not avaibale
-//            return;
-//        }
-//        else
-//        {
-//            //mark room as available
-//            UpdateAvailable();
-//
-//            //set customerid
-//        }
-//    }
+    public void checkIn(int int_RoomID)
+    {
+        // TODO: Maybe show an error message so the user knows what happened
+        // Return if the room is not available
+        if(!CheckAvailable(int_RoomID)) { return; }
+
+        // Update room availability
+        UpdateAvailable(int_RoomID);
+    }
 
     //METHOD Check out
-    public void Checkout(int int_RoomID)
+    public void checkOut(int int_RoomID)
     {
-        //if the room is avaiable
+        //if the room is available
         if (CheckAvailable(int_RoomID))
         {
-            //error room not avaibale
+            // error room not available
             System.out.println( "ERROR:: ROOM: "+ int_RoomID + " Status: Room not available.");
             return;
         }
-        else
-        {
-            //eventually this will be set to needs cleaning then from there cleaning would set this to true, but for now keeping it simple
-            //change room to dirty
-            System.out.println( " ROOM: "+ int_RoomID + " Status: needs cleaning");
-            //mark room as available
-            UpdateAvailable(int_RoomID);
-
-
-        }
+        //eventually this will be set to needs cleaning then from there cleaning would set this to true, but for now keeping it simple
+        //change room to dirty
+        System.out.println( " ROOM: "+ int_RoomID + " Status: needs cleaning");
+        //mark room as available
+        UpdateAvailable(int_RoomID);
     }
     //METHOD Update Room Avaliability
     private void UpdateAvailable(int int_RoomID)
@@ -124,7 +111,7 @@ public class Room
         boolean bol_isAvailable = CheckAvailable(int_RoomID);
 
         //if checking out
-        if( bol_isAvailable = false)
+        if(!bol_isAvailable)
         {
             //change the variable to available
             bol_isAvailable = true;
@@ -143,14 +130,12 @@ public class Room
         }
         //debug
         System.out.println(bol_isAvailable);
-
-
     }
     //METHOD Check Room Avaiability
     private boolean CheckAvailable(int int_RoomID)
     {
         boolean bol_isAvailable; //true = room is avaibale false = room is not
-        boolean bol_defualt = false;
+        boolean bol_default = false;
 
         try {
             //variables
@@ -159,15 +144,17 @@ public class Room
             String SQL_Query = "SELECT is_available FROM rooms WHERE room_id = " + int_RoomID; //sql statemenet
             ResultSet refinedSearch = dbConnection.selectQuery(SQL_Query);                     //pull avaiablity from table
 
-            //set availabilty based off of the refined search
-            bol_isAvailable = refinedSearch.getBoolean(1);
-
-            return bol_isAvailable;
+            // If there is a value returned from the query
+            if (refinedSearch.next()) {
+                //set availabilty based off of the refined search
+                bol_isAvailable = refinedSearch.getBoolean(1);
+                return bol_isAvailable;
+            }
         } catch (Exception e) {
             System.out.println(e);
         }
 
-        return  bol_defualt;
+        return  bol_default;
     }
     //METHOD Check Floor Number for Room
    // private int CheckFloorNum()
