@@ -51,7 +51,7 @@ public class Room
         String query = switch (str_SearchCondition) {
             //if the search condition is room number
             //pull up the rooms information that matches that room number
-            case "Room Number" -> "SELECT * FROM rooms WHERE room_id IS " + str_Searched+ ";";
+            case "Room Number" -> "SELECT * FROM rooms WHERE room_id = " + str_Searched+ ";";
 
             //if the search condition is customer ID
             //pull up any rooms that that customer is currently assigned to
