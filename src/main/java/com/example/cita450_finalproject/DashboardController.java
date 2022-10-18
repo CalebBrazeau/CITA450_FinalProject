@@ -63,24 +63,27 @@ public class DashboardController implements Initializable {
         searched = searchTextBox.getText();
 
 
-        // Pull room information
-        ResultSet roomInfo = room.pullInformation(searchKey, searched);
+        if( searched != null) {
+            // Pull room information
+            ResultSet roomInfo = room.pullInformation(searchKey, searched);
+
 
         // While there are results from the select query
         while (roomInfo.next()) {
             // Add results to listed rooms table
             listRooms.getItems().add(
                     roomInfo.getInt(1) + " " +
-                    roomInfo.getInt(2) + " " +
-                    roomInfo.getString(3) + " " +
-                    roomInfo.getString(4) + " " +
-                    roomInfo.getBoolean(5) + " " +
-                    roomInfo.getBoolean(6) + " " +
-                    roomInfo.getInt(7) + " " +
-                    roomInfo.getInt(8) + " " +
-                    roomInfo.getBoolean(9) + " " +
-                    roomInfo.getBoolean(10)
+                            roomInfo.getInt(2) + " " +
+                            roomInfo.getString(3) + " " +
+                            roomInfo.getString(4) + " " +
+                            roomInfo.getBoolean(5) + " " +
+                            roomInfo.getBoolean(6) + " " +
+                            roomInfo.getInt(7) + " " +
+                            roomInfo.getInt(8) + " " +
+                            roomInfo.getBoolean(9) + " " +
+                            roomInfo.getBoolean(10)
             );
+        }
         }
     }
 
