@@ -1,7 +1,7 @@
 package com.example.cita450_finalproject;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class Room
 {
@@ -28,29 +28,40 @@ public class Room
     //DATABASE
     DatabaseConnection dbConnection;    //connection to database
 
-    //Method Instantitor
-    private void Instantior( /*int int_RoomID*/)
+    //Method Instantiator
+    public Room()
     {
-        //establish connection to database
+        // establish connection to database
         dbConnection = new DatabaseConnection();
 
-        //set variabels
-
+        //set variables
 
     }
 
     //METHOD handle what is being shown when something is searched
-    public ResultSet PullInformation(String str_SearchCondidtion)
-    {
+    public ResultSet pullInformation(String str_SearchCondition) throws SQLException {
+        // If there is no search condition, return
+        if (str_SearchCondition == null) { return null; }
+
+        // Variable to store query results
         ResultSet resultSet;
+
+        // Switch expression, new to me but IntelliJ suggested it ¯\_(ツ)_/¯
+        String query = switch (str_SearchCondition) {
+            case "Room Number" -> "SELECT * FROM rooms WHERE something equals something";
+            case "Customer Name" -> "SELECT * FROM rooms WHERE Another thing equals something";
+            default -> "SELECT * FROM rooms";
+        };
+
+        resultSet = dbConnection.selectQuery(query);
         //if the search condition is room number
             //pull up the rooms information that matches that room number
 
         //if the search condition is customer name
             //pull up any rooms that that customer is currently assigned to
 
-        //if the search condition is handicap accessesible
-            //pull up any rooms that are hanicap accessible
+        //if the search condition is handicap accessible
+            //pull up any rooms that are handicap accessible
 
         //if the search condition is floor number
             //pull up all rooms on that floor
@@ -68,43 +79,31 @@ public class Room
     }
 
     //METHOD Check in
-    public void Checkin()
+    public void checkIn(int int_RoomID)
     {
-        //if the room is avaiable
-        if(!CheckAvailable())
-        {
-            //error room not avaibale
-            return;
-        }
-        else
-        {
-            //mark room as available
-            UpdateAvailable();
+        // TODO: Maybe show an error message so the user knows what happened
+        // Return if the room is not available
+        if(!CheckAvailable(int_RoomID)) { return; }
 
-            //set customerid
-        }
+        // Update room availability
+        UpdateAvailable(int_RoomID);
     }
 
     //METHOD Check out
-    public void Checkout(int int_RoomID)
+    public void checkOut(int int_RoomID)
     {
-        //if the room is avaiable
+        //if the room is available
         if (CheckAvailable(int_RoomID))
         {
-            //error room not avaibale
+            // error room not available
             System.out.println( "ERROR:: ROOM: "+ int_RoomID + " Status: Room not available.");
             return;
         }
-        else
-        {
-            //eventually this will be set to needs cleaning then from there cleaning would set this to true, but for now keeping it simple
-            //change room to dirty
-            System.out.println( " ROOM: "+ int_RoomID + " Status: needs cleaning");
-            //mark room as available
-            UpdateAvailable(int_RoomID);
-
-
-        }
+        //eventually this will be set to needs cleaning then from there cleaning would set this to true, but for now keeping it simple
+        //change room to dirty
+        System.out.println( " ROOM: "+ int_RoomID + " Status: needs cleaning");
+        //mark room as available
+        UpdateAvailable(int_RoomID);
     }
     //METHOD Update Room Avaliability
     private void UpdateAvailable(int int_RoomID)
@@ -112,7 +111,7 @@ public class Room
         boolean bol_isAvailable = CheckAvailable(int_RoomID);
 
         //if checking out
-        if( bol_isAvailable = false)
+        if(!bol_isAvailable)
         {
             //change the variable to available
             bol_isAvailable = true;
@@ -131,14 +130,12 @@ public class Room
         }
         //debug
         System.out.println(bol_isAvailable);
-
-
     }
     //METHOD Check Room Avaiability
     private boolean CheckAvailable(int int_RoomID)
     {
         boolean bol_isAvailable; //true = room is avaibale false = room is not
-        boolean bol_defualt = false;
+        boolean bol_default = false;
 
         try {
             //variables
@@ -147,15 +144,17 @@ public class Room
             String SQL_Query = "SELECT is_available FROM rooms WHERE room_id = " + int_RoomID; //sql statemenet
             ResultSet refinedSearch = dbConnection.selectQuery(SQL_Query);                     //pull avaiablity from table
 
-            //set availabilty based off of the refined search
-            bol_isAvailable = refinedSearch.getBoolean(1);
-
-            return bol_isAvailable;
+            // If there is a value returned from the query
+            if (refinedSearch.next()) {
+                //set availabilty based off of the refined search
+                bol_isAvailable = refinedSearch.getBoolean(1);
+                return bol_isAvailable;
+            }
         } catch (Exception e) {
             System.out.println(e);
         }
 
-        return  bol_defualt;
+        return  bol_default;
     }
     //METHOD Check Floor Number for Room
    // private int CheckFloorNum()
