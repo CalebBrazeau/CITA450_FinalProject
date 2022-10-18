@@ -46,8 +46,7 @@ public class Room
         // Variable to store query results
         ResultSet resultSet;
 
-        while( str_Searched != null)
-        {
+
         // Switch expression, new to me but IntelliJ suggested it ¯\_(ツ)_/¯
         String query = switch (str_SearchCondition) {
             //if the search condition is room number
@@ -64,7 +63,7 @@ public class Room
 
             //a little more complicated //if the search condition is floor number
             //pull up all rooms on that floor
-            case "Floor Number" -> "SELECT * FROM rooms WHERE room_id IS " + str_Searched;
+            case "Floor Number" -> "SELECT * FROM rooms WHERE Left(room_id, " + str_Searched + ");";
 
             //if the search condition is available
             //pull up all rooms that have that are available
@@ -80,16 +79,8 @@ public class Room
             resultSet = dbConnection.selectQuery(query);
 
             return resultSet;
-        }
-        return null;
 
 
-    }
-
-    //METHOD get room ID
-   // public int GetRoomID()
-    {
-        //return int_RoomID;
     }
 
     //METHOD Check in
