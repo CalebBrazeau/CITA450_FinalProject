@@ -39,7 +39,7 @@ public class Room
     }
 
     //METHOD handle what is being shown when something is searched
-    public ResultSet pullInformation(String str_SearchCondition) throws SQLException {
+    public ResultSet pullInformation(String str_SearchCondition, String str_Searched) throws SQLException {
         // If there is no search condition, return
         if (str_SearchCondition == null) { return null; }
 
@@ -48,26 +48,35 @@ public class Room
 
         // Switch expression, new to me but IntelliJ suggested it ¯\_(ツ)_/¯
         String query = switch (str_SearchCondition) {
-            case "Room Number" -> "SELECT * FROM rooms WHERE something equals something";
-            case "Customer Name" -> "SELECT * FROM rooms WHERE Another thing equals something";
+            //if the search condition is room number
+            //pull up the rooms information that matches that room number
+            case "Room Number" -> "SELECT * FROM rooms WHERE room_id IS " +str_Searched;
+
+            //if the search condition is customer ID
+            //pull up any rooms that that customer is currently assigned to
+            case "Customer ID" -> "SELECT * FROM rooms WHERE customer_id ID IS "+ str_Searched;
+
+            //if the search condition is handicap accessible
+            //pull up any rooms that are handicap accessible
+            case "Handicap Accessible" -> "SELECT * FROM rooms WHERE is_handicap_accessible IS true ";
+
+            //a little more complicated //if the search condition is floor number
+            //pull up all rooms on that floor
+            case "Floor Number" -> "SELECT * FROM rooms WHERE room_id IS "+ str_Searched;
+
+            //if the search condition is available
+            //pull up all rooms that have that are available
+            case "Available" -> "SELECT * FROM rooms WHERE is_available IS true";
+
+            //if the search condition is number of beds
+            //pull up all rooms that have that number of beds
+            case "" -> "SELECT * FROM rooms WHERE number_of_beds IS " + str_Searched;
+
+            //nothing is selected
             default -> "SELECT * FROM rooms";
         };
 
         resultSet = dbConnection.selectQuery(query);
-        //if the search condition is room number
-            //pull up the rooms information that matches that room number
-
-        //if the search condition is customer name
-            //pull up any rooms that that customer is currently assigned to
-
-        //if the search condition is handicap accessible
-            //pull up any rooms that are handicap accessible
-
-        //if the search condition is floor number
-            //pull up all rooms on that floor
-
-        //if the search condition is number of beds
-            //pull up all rooms that have that number of beds
 
         return resultSet;
     }
@@ -318,7 +327,6 @@ public class Room
 
         try {
             //variables
-
 
             String SQL_Query = "SELECT is_handicap_accessible FROM rooms WHERE room_id = " + int_RoomID; //sql statemenet
             ResultSet refinedSearch = dbConnection.selectQuery(SQL_Query);                     //pull avaiablity from table
