@@ -72,7 +72,7 @@ public class Room
 
             //if the search condition is number of beds
             //pull up all rooms that have that number of beds
-            case "" -> "SELECT * FROM rooms WHERE number_of_beds IS " + str_Searched;
+            case "Number of Beds" -> "SELECT * FROM rooms WHERE number_of_beds IS " + str_Searched;
 
             //nothing is selected
             default -> "SELECT * FROM rooms";

@@ -44,6 +44,7 @@ public class DashboardController implements Initializable {
         choiceSearchBy.getItems().add("Available");
     }
 
+    @FXML
     private void displayRoomInfo() throws SQLException {
         // Clear rooms list
         listRooms.getItems().clear();
@@ -57,11 +58,14 @@ public class DashboardController implements Initializable {
         if (choiceSearchBy.getSelectionModel().getSelectedItem() != null) {
             // Set search key to selected items string value
             searchKey = choiceSearchBy.getSelectionModel().getSelectedItem().toString();
+            //debug statement
+            System.out.println(searchKey);
         }
 
         //check if anything was searched
         searched = searchTextBox.getText();
-
+        //debug statement
+        System.out.println(searched);
 
         if( searched != null) {
             // Pull room information
