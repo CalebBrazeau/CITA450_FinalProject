@@ -61,9 +61,9 @@ public class Room
             //pull up any rooms that are handicap accessible
             case "Handicap Accessible" -> "SELECT * FROM rooms WHERE is_handicap_accessible = true ";
 
-            //a little more complicated //if the search condition is floor number
+           //if the search condition is floor number
             //pull up all rooms on that floor
-            case "Floor Number" -> "SELECT * FROM rooms WHERE Left(room_id, " + str_Searched + ");";
+            case "Floor Number" -> "SELECT * FROM rooms WHERE room_id LIKE '" + str_Searched + "%'";
 
             //if the search condition is available
             //pull up all rooms that have that are available
