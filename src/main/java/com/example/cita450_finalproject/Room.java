@@ -55,11 +55,11 @@ public class Room
 
             //if the search condition is customer ID
             //pull up any rooms that that customer is currently assigned to
-            case "Customer ID" -> "SELECT * FROM rooms WHERE customer_id ID IS " + str_Searched+ ";";
+            case "Customer ID" -> "SELECT * FROM rooms WHERE customer_id ID = " + str_Searched+ ";";
 
             //if the search condition is handicap accessible
             //pull up any rooms that are handicap accessible
-            case "Handicap Accessible" -> "SELECT * FROM rooms WHERE is_handicap_accessible IS true ";
+            case "Handicap Accessible" -> "SELECT * FROM rooms WHERE is_handicap_accessible = true ";
 
             //a little more complicated //if the search condition is floor number
             //pull up all rooms on that floor
@@ -71,7 +71,7 @@ public class Room
 
             //if the search condition is number of beds
             //pull up all rooms that have that number of beds
-            case "Number of Beds" -> "SELECT * FROM rooms WHERE number_of_beds IS " + str_Searched + ";";
+            case "Number of Beds" -> "SELECT * FROM rooms WHERE number_of_beds =" + str_Searched + ";";
 
             //nothing is selected
             default -> "SELECT * FROM rooms";
