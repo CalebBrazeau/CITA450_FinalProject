@@ -1,5 +1,7 @@
 package com.example.cita450_finalproject;
 
+import javafx.scene.control.Alert;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -81,9 +83,14 @@ public class Room
     //METHOD Check in
     public void checkIn(int int_RoomID)
     {
-        // TODO: Maybe show an error message so the user knows what happened
         // Return if the room is not available
-        if(!CheckAvailable(int_RoomID)) { return; }
+        if(!CheckAvailable(int_RoomID)) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Uh Oh");
+            alert.setHeaderText("Room is not available!");
+            alert.show();
+            return;
+        }
 
         // Update room availability
         UpdateAvailable(int_RoomID);
@@ -105,7 +112,7 @@ public class Room
         //mark room as available
         UpdateAvailable(int_RoomID);
     }
-    //METHOD Update Room Avaliability
+    //METHOD Update Room Availability
     private void UpdateAvailable(int int_RoomID)
     {
         boolean bol_isAvailable = CheckAvailable(int_RoomID);

@@ -28,6 +28,7 @@ public class DashboardController implements Initializable {
 
             setupSearchBy();
             displayRoomInfo();
+            loadNewCustomerForm();
         } catch (Exception e) {
             e.printStackTrace();
         }

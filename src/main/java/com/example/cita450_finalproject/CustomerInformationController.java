@@ -6,7 +6,6 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
@@ -18,12 +17,12 @@ public class CustomerInformationController implements Initializable {
     public TextField textEmail;
     public ChoiceBox choicePaymentMethod;
 
-    private DatabaseConnection db;
+    Customer customer;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            db = new DatabaseConnection();
+            customer = new Customer();
             setupPaymentMethods();
         } catch(Exception e) {
             System.out.println(e);
@@ -37,50 +36,12 @@ public class CustomerInformationController implements Initializable {
 
     @FXML
     private void collectCustomerInfo() throws SQLException {
-        /* TODO: Check if customer exists
-            Assign them to a room
-            If not, create new customer
-            Assign them to a room
-         */
-
-        // Query to check if a customer exists (Can match more cases)
-        String query = "SELECT * FROM customers WHERE customer_fname = '" + textFName.getText() +
-                "' AND customer_lname = '"  + textLName.getText() + "'";
-
-        ResultSet rs = db.selectQuery(query);
-
-        if(rs.next()) { // Customer Exists
-            // Customer info if they exists
-            System.out.println(rs.getInt(1));
-            System.out.println(rs.getString(2));
-            System.out.println(rs.getString(3));
-            System.out.println(rs.getString(4));
-            System.out.println(rs.getString(5));
-            System.out.println(rs.getInt(6));
-            System.out.println(rs.getString(7));
-            // Assign customer to room
-            return;
-        }
-
-        query = "SELECT COUNT(customer_billing_address_ID) FROM customers";
-
-        // Run query in db object
-        rs = db.selectQuery(query);
-
-        // If there are results from the query
-        if (rs.next()) {
-            // Add one to returned results to get the next billing address ID
-            int billingAddressID = rs.getInt(1) + 1;
-
-            // Insert customer using db object
-            db.insertCustomer(
-                    textFName.getText(),
-                    textLName.getText(),
-                    textPhoneNumber.getText(),
-                    textEmail.getText(),
-                    billingAddressID,
-                    choicePaymentMethod.getSelectionModel().getSelectedItem().toString()
-            );
-        }
+        customer.insertNewCustomer(
+                textFName.getText(),
+                textLName.getText(),
+                textPhoneNumber.getText(),
+                textEmail.getText(),
+                choicePaymentMethod.getSelectionModel().getSelectedItem().toString()
+        );
     }
 }
