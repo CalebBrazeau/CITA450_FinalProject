@@ -82,6 +82,22 @@ public class DatabaseConnection {
         }
     }
 
+    public void unassignCustomerFromRoom(int roomID) {
+        try {
+            // Prepare update statement
+            PreparedStatement updateStatement = con.prepareStatement("UPDATE rooms SET customer_id = ? WHERE room_id = ?");
+
+            // Set update values (Replaces the '?' with values bellow)
+            updateStatement.setNull(1, 0); // NULL
+            updateStatement.setInt(2, roomID);
+
+            // Execute update statement
+            updateStatement.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
     /* TODO: Move to Customer class */
 
     public void insertCustomer(String customerFName, String customerLName, String customerPhone, String customerEmail, int customerBillingAddressID, String customerPaymentMethod) throws SQLException {

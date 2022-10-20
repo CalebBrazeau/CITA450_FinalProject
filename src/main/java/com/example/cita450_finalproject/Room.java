@@ -2,6 +2,7 @@ package com.example.cita450_finalproject;
 
 import javafx.scene.control.Alert;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -137,7 +138,8 @@ public class Room
         //if the room is clean
 
             //mark room as available
-         //   UpdateAvailable(int_RoomID);
+            UpdateAvailable(int_RoomID);
+            dbConnection.unassignCustomerFromRoom(int_RoomID);
             //room status debug
          //   System.out.println( " ROOM: "+ int_RoomID + " Status: Room available");
 
@@ -145,8 +147,8 @@ public class Room
 
 
             // error room not available
-            System.out.println( "ERROR:: ROOM: "+ int_RoomID + " Status: Room not available.");
-            return;
+//            System.out.println( "ERROR:: ROOM: "+ int_RoomID + " Status: Room not available.");
+//            return;
 
         //eventually this will be set to needs cleaning then from there cleaning would set this to true, but for now keeping it simple
         //change room to dirty

@@ -5,9 +5,12 @@ import java.sql.SQLException;
 
 public class Customer {
     DatabaseConnection dbConnection;
+    Room room;
+
     public Customer() {
         try {
             dbConnection = new DatabaseConnection();
+            room = new Room();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -24,18 +27,27 @@ public class Customer {
         String query = "SELECT * FROM customers WHERE customer_fname = '" + customerFName +
                 "' AND customer_lname = '"  + customerLName + "'";
 
-        // Execute query on database object
-        ResultSet rs = dbConnection.selectQuery(query);
-
-        // If there are results from the database the customer exists
-        return rs;
+        // Return query results
+        return dbConnection.selectQuery(query);
     }
 
-    public void insertNewCustomer(String customerFName, String customerLName, String customerPhone, String customerEmail, String customerPaymentMethod) throws SQLException {
+    public int getCustomerID(String customerFName, String customerLName, String customerPhone, String customerEmail, String customerPaymentMethod) throws SQLException {
+        ResultSet rs = dbConnection.selectQuery("SELECT customer_id FROM customers WHERE customer_fname = '" + customerFName +
+                "' AND customer_lname = '" + customerLName +
+                "' AND customer_phone = '" + customerPhone +
+                "' AND customer_email = '" + customerEmail +
+                "' AND customer_payment_method = '" + customerPaymentMethod + "'");
+        if (rs.next()) {
+            return rs.getInt(1);
+        }
+        return 0;
+    }
+
+    public void insertNewCustomer(String customerFName, String customerLName, String customerPhone, String customerEmail, String customerPaymentMethod, int roomID) throws SQLException {
         // Check if customer exists by attempting to get the customer info
         ResultSet customerInfo = getCustomerInfo(customerFName, customerLName);
         // If customer info is not null a customer with that first and last name already exists
-        if (customerInfo != null) {
+        if (customerInfo.isBeforeFirst()) {
             // Print all matching customer info
             while (customerInfo.next()) {
                 System.out.println(customerInfo.getInt(1));
@@ -70,5 +82,8 @@ public class Customer {
                     customerPaymentMethod
             );
         }
+
+        // Assign Customer to Room
+        dbConnection.updateCustomerID(roomID, getCustomerID(customerFName, customerLName, customerPhone, customerEmail, customerPaymentMethod));
     }
 }

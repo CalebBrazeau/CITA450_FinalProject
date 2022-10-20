@@ -18,6 +18,7 @@ public class CustomerInformationController implements Initializable {
     public ChoiceBox choicePaymentMethod;
 
     Customer customer;
+    String roomID;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -41,7 +42,12 @@ public class CustomerInformationController implements Initializable {
                 textLName.getText(),
                 textPhoneNumber.getText(),
                 textEmail.getText(),
-                choicePaymentMethod.getSelectionModel().getSelectedItem().toString()
+                choicePaymentMethod.getSelectionModel().getSelectedItem().toString(),
+                Integer.parseInt(roomID)
         );
+    }
+
+    public void setRoomID(String roomID) {
+        this.roomID = roomID;
     }
 }

@@ -30,7 +30,6 @@ public class DashboardController implements Initializable {
 
             setupSearchBy();
             displayRoomInfo();
-            loadNewCustomerForm();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -111,7 +110,9 @@ public class DashboardController implements Initializable {
 
         // Update rooms list
         displayRoomInfo();
+        loadNewCustomerForm(String.valueOf(roomID));
     }
+
     @FXML
     private void checkOut() throws SQLException {
         // If nothing is selected return
@@ -132,13 +133,18 @@ public class DashboardController implements Initializable {
         // Update rooms list
         displayRoomInfo();
     }
-    private void loadNewCustomerForm() {
-        Parent root;
+
+    private void loadNewCustomerForm(String roomID) {
         try {
-            root = FXMLLoader.load(HelloApplication.class.getResource("customer-information.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("customer-information.fxml"));
+            Parent root = loader.load();
+
+            CustomerInformationController customerController = loader.getController();
+            customerController.setRoomID(roomID);
+
             Stage stage = new Stage();
-            stage.setTitle("Customer Information");
-            stage.setScene(new Scene(root, 600, 400));
+            stage.setScene(new Scene(root));
+            stage.setTitle("Enter Customer Information");
             stage.show();
         }
         catch (IOException e) {
