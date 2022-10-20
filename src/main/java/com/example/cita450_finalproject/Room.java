@@ -131,22 +131,22 @@ public class Room
         //debug
         System.out.println(bol_isAvailable);
     }
-    //METHOD Check Room Avaiability
+    //METHOD Check Room Availability
     private boolean CheckAvailable(int int_RoomID)
     {
-        boolean bol_isAvailable; //true = room is avaibale false = room is not
+        boolean bol_isAvailable; //true = room is available false = room is not
         boolean bol_default = false;
 
         try {
             //variables
 
 
-            String SQL_Query = "SELECT is_available FROM rooms WHERE room_id = " + int_RoomID; //sql statemenet
-            ResultSet refinedSearch = dbConnection.selectQuery(SQL_Query);                     //pull avaiablity from table
+            String SQL_Query = "SELECT is_available FROM rooms WHERE room_id = " + int_RoomID; //sql statement
+            ResultSet refinedSearch = dbConnection.selectQuery(SQL_Query);                     //pull availability from table
 
             // If there is a value returned from the query
             if (refinedSearch.next()) {
-                //set availabilty based off of the refined search
+                //set availability based off of the refined search
                 bol_isAvailable = refinedSearch.getBoolean(1);
                 return bol_isAvailable;
             }
@@ -156,6 +156,33 @@ public class Room
 
         return  bol_default;
     }
+
+        //METHOD Check Room Is Clean
+    private boolean RoomClean(int int_RoomID)
+    {
+        boolean bol_clean; //true = room is available false = room is not
+        boolean bol_default = false;
+
+        try {
+            //variables
+            String SQL_Query = "SELECT is_clean FROM rooms WHERE room_id = " + int_RoomID; //sql statement
+            ResultSet refinedSearch = dbConnection.selectQuery(SQL_Query);                //pull availability from table
+
+            // If there is a value returned from the query
+            if (refinedSearch.next()) {
+                //set availability based off of the refined search
+                bol_clean = refinedSearch.getBoolean(1);
+                return bol_clean;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        return  bol_default;
+    }
+
+
+
     //METHOD Check Floor Number for Room
    // private int CheckFloorNum()
     {
