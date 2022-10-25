@@ -257,6 +257,33 @@ public class Room
         return  int_default;
     }
 
+
+    private void UpdateRoomClean(int int_RoomID)
+    {
+        boolean bol_clean = RoomClean(int_RoomID);
+
+        //if checking out
+        if(!bol_clean)
+        {
+            //change the variable to roomclean
+            bol_clean = true;
+            //make the room available by sending the variable
+            dbConnection.updateRoomClean(int_RoomID, bol_clean); //update
+        }
+
+        //if checking in
+        else
+        {
+            //change the variable to roomclean
+            bol_clean = false;
+            //make the room unavailable by sending the variable
+            dbConnection.updateRoomClean(int_RoomID, bol_clean);
+
+        }
+        //debug
+        System.out.println(bol_clean);
+    }
+
         //METHOD Check Room Is Clean
     private boolean RoomClean(int int_RoomID)
     {
