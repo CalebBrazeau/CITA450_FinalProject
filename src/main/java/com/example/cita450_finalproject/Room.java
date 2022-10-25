@@ -268,7 +268,7 @@ public class Room
             //change the variable to roomclean
             bol_clean = true;
             //make the room available by sending the variable
-            dbConnection.updateRoomClean(int_RoomID, bol_clean); //update
+            dbConnection.updateRoomClean(int_RoomID, bol_clean); //<<<<<<<<---------------update room clean
         }
 
         //if checking in
