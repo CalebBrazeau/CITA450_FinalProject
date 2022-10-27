@@ -4,6 +4,7 @@ import javafx.scene.control.Alert;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
 public class Room
@@ -58,7 +59,7 @@ public class Room
 
             //if the search condition is customer ID
             //pull up any rooms that that customer is currently assigned to
-            case "Customer ID" -> "SELECT * FROM rooms WHERE customer_id ID = " + str_Searched+ ";";
+            case "Customer ID" -> "SELECT * FROM rooms WHERE customer_id = " + str_Searched+ ";";
 
             //if the search condition is handicap accessible
             //pull up any rooms that are handicap accessible
@@ -82,24 +83,8 @@ public class Room
             resultSet = dbConnection.selectQuery(query);
 
             return resultSet;
-
-
     }
 
-    //METHOD Check in
-    public void Checkin(int int_RoomID, int CustomerID) {
-        //if the room is avaiable
-        if (!CheckAvailable(int_RoomID)) {
-            //error room not avaibale
-            return;
-        } else {
-            //mark room as available
-            UpdateAvailable(int_RoomID);
-
-            //set customerid
-            UpdateCustomerID(int_RoomID, CustomerID);
-        }
-    }
     public void checkIn(int int_RoomID)
     {
         // Return if the room is not available
@@ -177,7 +162,6 @@ public class Room
             bol_isAvailable = false;
             //make the room unavailable by sending the variable
             dbConnection.updateAvailability(int_RoomID, bol_isAvailable);
-
         }
         //debug
         System.out.println(bol_isAvailable);
