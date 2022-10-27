@@ -117,4 +117,20 @@ public class DatabaseConnection {
         // Execute the prepared statement
         preparedStmt.execute();
     }
+
+    public void updateRoomClean(int int_roomID, boolean bol_clean) {
+        try {
+            // Prepare update statement
+            PreparedStatement updateStatement = con.prepareStatement("UPDATE rooms SET is_clean = ? WHERE room_id = ?");
+
+            // Set update values (Replaces the '?' with values bellow)
+            updateStatement.setBoolean(1, bol_clean);  //Hey pal look Chino and Caleb is disappointed that you didn't know
+            updateStatement.setInt(2, int_roomID); //how to do this is part and all the parts SMH, SMWD.
+                                                                //P.S. JUST PRESS 1 PAL PLZ FOR ME CHINO CALEB LOVE BRO!
+            // Execute update statement
+            updateStatement.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
 }

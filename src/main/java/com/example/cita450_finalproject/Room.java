@@ -246,7 +246,7 @@ public class Room
             String SQL_Query = "SELECT customer_id FROM rooms WHERE room_id = " + int_RoomID; //sql statemenet
             ResultSet refinedSearch = dbConnection.selectQuery(SQL_Query);                     //pull avaiablity from table
 
-            //set availabilty based off of the refined search
+            //set availability based off of the refined search
             int_CustomerID = refinedSearch.getInt(1);
 
             return int_CustomerID;
@@ -256,8 +256,7 @@ public class Room
         //return default
         return  int_default;
     }
-
-
+    //METHOD Update Room Clean
     private void UpdateRoomClean(int int_RoomID)
     {
         boolean bol_clean = RoomClean(int_RoomID);
@@ -268,7 +267,8 @@ public class Room
             //change the variable to roomclean
             bol_clean = true;
             //make the room available by sending the variable
-            dbConnection.updateRoomClean(int_RoomID, bol_clean); //<<<<<<<<---------------update room clean
+            dbConnection.updateRoomClean(int_RoomID, true); //<<<<<<<<---------------update room clean
+
         }
 
         //if checking in
@@ -277,12 +277,14 @@ public class Room
             //change the variable to roomclean
             bol_clean = false;
             //make the room unavailable by sending the variable
-            dbConnection.updateRoomClean(int_RoomID, bol_clean);
+            dbConnection.updateRoomClean(int_RoomID,  false);
 
         }
         //debug
         System.out.println(bol_clean);
+
     }
+
 
         //METHOD Check Room Is Clean
     private boolean RoomClean(int int_RoomID)
@@ -293,11 +295,11 @@ public class Room
         try {
             //variables
             String SQL_Query = "SELECT is_clean FROM rooms WHERE room_id = " + int_RoomID; //sql statement
-            ResultSet refinedSearch = dbConnection.selectQuery(SQL_Query);                //pull availability from table
+            ResultSet refinedSearch = dbConnection.selectQuery(SQL_Query);                //pull room from table
 
             // If there is a value returned from the query
             if (refinedSearch.next()) {
-                //set availability based off of the refined search
+                //set room clean based off of the refined search
                 bol_clean = refinedSearch.getBoolean(1);
                 return bol_clean;
             }
@@ -381,7 +383,7 @@ public class Room
     //METHOD Check Handicap Accessible
    private boolean CheckHandicap(int int_RoomID)
     {
-        boolean bol_isHandicap; //true means its is hanicapAccessible
+        boolean bol_isHandicap; //true means its is handicapAccessible
         boolean bol_defualt = false;
 
         try {
