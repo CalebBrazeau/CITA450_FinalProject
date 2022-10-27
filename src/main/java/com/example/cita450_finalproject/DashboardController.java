@@ -1,5 +1,7 @@
 package com.example.cita450_finalproject;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -13,6 +15,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
@@ -49,6 +52,9 @@ public class DashboardController implements Initializable {
         // Clear rooms list
         listRooms.getItems().clear();
 
+        listRooms.getItems().add(String.format("%-7s | %-7s | %-9s | %-11s | %-11s | %-11s | %-11s | %-11s | %-7s", "Room #", "# Beds", "Bed Size", "Bed Size", "Handicap?", "Bathtub?", "Price", "Available?", "Clean?"));
+//        System.out.printf("%-11s |  %-11s |  %-11s |  %-11s |  %-11s |  %-11s |  %-11s |  %-11s | ", "Room #", "# Beds", "Bed Size", "Bed Size", "Handicap?", "Bathtub?", "Price", "Available?");
+
         // Key to search by in database, default empty string to get all room info
         String searchKey = "";
 
@@ -58,36 +64,31 @@ public class DashboardController implements Initializable {
         if (choiceSearchBy.getSelectionModel().getSelectedItem() != null) {
             // Set search key to selected items string value
             searchKey = choiceSearchBy.getSelectionModel().getSelectedItem().toString();
-            //debug statement
-            System.out.println(searchKey);
         }
 
         //check if anything was searched
         searched = searchTextBox.getText();
-        //debug statement
-        System.out.println(searched);
 
         if( searched != null) {
             // Pull room information
             ResultSet roomInfo = room.pullInformation(searchKey, searched);
 
-
-        // While there are results from the select query
-        while (roomInfo.next()) {
-            // Add results to listed rooms table
-            listRooms.getItems().add(
-                    roomInfo.getInt(1) + " " +
-                            roomInfo.getInt(2) + " " +
-                            roomInfo.getString(3) + " " +
-                            roomInfo.getString(4) + " " +
-                            roomInfo.getBoolean(5) + " " +
-                            roomInfo.getBoolean(6) + " " +
-                            roomInfo.getInt(7) + " " +
-                            roomInfo.getInt(8) + " " +
-                            roomInfo.getBoolean(9) + " " +
-                            roomInfo.getBoolean(10)
-            );
-        }
+            // While there are results from the select query
+            while (roomInfo.next()) {
+                // Add results to listed rooms table
+                listRooms.getItems().add(
+                        String.format("%-7d | ", roomInfo.getInt(1)) +
+                        String.format("%-7d | ", roomInfo.getInt(2)) +
+                        String.format("%-9s | ", roomInfo.getString(3)) +
+                        String.format("%-11s | ", roomInfo.getString(4)) +
+                        String.format("%-11b | ", roomInfo.getBoolean(5)) +
+                        String.format("%-11b | ", roomInfo.getBoolean(6)) +
+//                        String.format("%-11d | ", roomInfo.getInt(7)) +
+                        String.format("%-11d | ", roomInfo.getInt(8)) +
+                        String.format("%-11b | ", roomInfo.getBoolean(9)) +
+                        String.format("%-7b", roomInfo.getBoolean(10))
+                );
+            }
         }
     }
 
