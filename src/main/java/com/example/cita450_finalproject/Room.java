@@ -108,6 +108,14 @@ public class Room
         {
             //error room not avaibale
             System.out.println( "ERROR:: ROOM: "+ int_RoomID + " Status: Room was not checked in.");
+
+            // Create new alert of type warning
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            // Set content text to explain error
+            alert.setContentText("Room was not checked in!");
+            // Display alert
+            alert.show();
+
             return;
         }
 
@@ -251,7 +259,7 @@ public class Room
             //change the variable to roomclean
             bol_clean = true;
             //make the room available by sending the variable
-            dbConnection.updateRoomClean(int_RoomID, true); //<<<<<<<<---------------update room clean
+            dbConnection.updateRoomClean(int_RoomID, true); //update room clean
 
         }
 

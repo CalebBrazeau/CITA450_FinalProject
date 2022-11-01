@@ -97,7 +97,7 @@ public class DashboardController implements Initializable {
 
     @FXML
     private void checkIn() throws SQLException {
-        // If nothing is selected or first item is selected throw error and return.
+        // If nothing is selected or first item is selected show error and return.
         if (listRooms.getSelectionModel().getSelectedItem() == null || listRooms.getSelectionModel().getSelectedIndex() < 1) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setHeaderText("Please select a room");
@@ -125,8 +125,14 @@ public class DashboardController implements Initializable {
 
     @FXML
     private void checkOut() throws SQLException {
-        // If nothing is selected return
-        if (listRooms.getSelectionModel().getSelectedItem() == null) { return; }
+        // If nothing is selected or first item is selected show error and return.
+        if (listRooms.getSelectionModel().getSelectedItem() == null || listRooms.getSelectionModel().getSelectedIndex() < 1) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setHeaderText("Please select a room");
+            alert.show();
+
+            return;
+        }
 
         // Get selected room from list of rooms
         String selectedItem = listRooms.getSelectionModel().getSelectedItem().toString();
@@ -136,7 +142,7 @@ public class DashboardController implements Initializable {
         roomID.append(selectedItem.charAt(0));
         roomID.append(selectedItem.charAt(1));
         roomID.append(selectedItem.charAt(2));
-
+        
         // Attempt check out
         room.checkOut(Integer.parseInt(String.valueOf(roomID)));
 
