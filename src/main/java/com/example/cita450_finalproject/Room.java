@@ -115,9 +115,9 @@ public class Room
         //customer = null
 
         //change room to dirty
-        /*do that*/
+
         //room status debug
-       // System.out.println( " ROOM: "+ int_RoomID + " Status: needs cleaning");
+        System.out.println( " ROOM: "+ int_RoomID + " Status: needs cleaning");
         //time will pass.... eventually it will be marked clean
 
         //if the room is clean
@@ -128,8 +128,7 @@ public class Room
             //room status debug
          //   System.out.println( " ROOM: "+ int_RoomID + " Status: Room available");
 
-
-
+        UpdateRoomClean(int_RoomID);    //Calls the method of UpdateRoomClean in CheckOut
 
             // error room not available
 //            System.out.println( "ERROR:: ROOM: "+ int_RoomID + " Status: Room not available.");
@@ -241,25 +240,27 @@ public class Room
         return  int_default;
     }
     //METHOD Update Room Clean
-    private void UpdateRoomClean(int int_RoomID)
+    public void UpdateRoomClean(int int_RoomID)
     {
         boolean bol_clean = RoomClean(int_RoomID);
 
-        //if checking out
-        if(!bol_clean)
+        //if janitor marks clean
+
+        if(!bol_clean)          //if room not clean then it is dirty
         {
-            //change the variable to roomclean
-            bol_clean = true;
+            //change the variable to room clean
+            bol_clean = true; // janitor marks clean
             //make the room available by sending the variable
             dbConnection.updateRoomClean(int_RoomID, true); //<<<<<<<<---------------update room clean
 
         }
 
-        //if checking in
+        //if the room is clean then the system will mark as dirty
+        // Customer leaves so the room is dirty and needs to be clean
         else
         {
-            //change the variable to roomclean
-            bol_clean = false;
+            //change the variable to room clean
+            bol_clean = false;      //Marks the room dirty which Janitors will come
             //make the room unavailable by sending the variable
             dbConnection.updateRoomClean(int_RoomID,  false);
 
@@ -273,8 +274,8 @@ public class Room
         //METHOD Check Room Is Clean
     private boolean RoomClean(int int_RoomID)
     {
-        boolean bol_clean; //true = room is available false = room is not
-        boolean bol_default = false;
+        boolean bol_clean; //true = room is available
+        boolean bol_default = false;    //false = room is not
 
         try {
             //variables
