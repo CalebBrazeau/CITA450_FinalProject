@@ -1,15 +1,16 @@
-// Variables and such
+/****** Variables and such ******/
 * {
     -dark-primary-purple: rgb(187,134,252);
     -dark-secondary-teal: rgb(3, 218, 198);
     -dark-error: rgb(207, 102, 121);
 }
-
+/****** Iunno ******/
 .root {
     -fx-font-size: 12px;
     -fx-background-color: rgb(36,36,36);
 }
 
+/****** Start Button Styling ******/
 .button {
     -fx-text-fill: rgb(18,18,18);
     -fx-background-color: -dark-primary-purple;
@@ -23,14 +24,15 @@
 .button:pressed {
     -fx-opacity: 1;
 }
+/****** End Button Styling ******/
 
+/****** Start Text/Label Styling ******/
 .label {
     -fx-text-fill: rgb(255,255,255);
 }
+/****** End Text/Label Styling ******/
 
-.combo-box {
-    -fx-background-color: green;
-}
+/****** Start List View Styling ******/
 .list-view {
     -fx-background-color: rgb(36, 36, 36);
     -fx-border-radius: 7px;
@@ -50,7 +52,9 @@
 .cell:selected {
     -fx-background-color: rgba(18,18,18, .14);
 }
+/****** End List View Styling ******/
 
+/****** Start Text Field Styling ******/
 .text-field {
     -fx-background-color: -dark-primary-purple;
 }
@@ -59,7 +63,9 @@
     -fx-border-color: rgba(255, 255, 255, .5);
     -fx-border-radius: 5px;
 }
+/****** End Text Field Styling ******/
 
+/****** Start Choice Box Styling ******/
 .choice-box {
     -fx-background-color: -dark-primary-purple;
 }
@@ -75,3 +81,4 @@
 .choice-box .menu-item > .label {
     -fx-text-fill: black;
 }
+/****** End Choice Box Styling ******/
