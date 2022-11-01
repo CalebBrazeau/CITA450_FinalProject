@@ -52,12 +52,12 @@ public class JanitorDashboardController implements Initializable{
                     String.format("%-7d | ", roomInfo.getInt(1)) + // Room ID
                     String.format("%-7b", roomInfo.getBoolean(10))); // Is Clean
         }//end of WHILE
-        
+
     }//end of method displayRooms
 
     //method when button clicked
     @FXML
-    private void Markingclean() throws SQLException { //look for selected item
+    private void MarkingClean() throws SQLException { //look for selected item
 
         String selectedItem = listRooms.getSelectionModel().getSelectedItem().toString();
 
