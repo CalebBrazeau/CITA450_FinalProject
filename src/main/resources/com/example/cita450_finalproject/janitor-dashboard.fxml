@@ -10,7 +10,7 @@
         <Pane layoutX="14.0" layoutY="63.0" prefHeight="324.0" prefWidth="575.0">
          <children>
             <Button id="Btn_MarkClean" layoutX="426.0" layoutY="285.0" mnemonicParsing="false" onAction="#MarkingClean" text="Mark Clean" />
-            <ListView id="RoomList" layoutX="25.0" layoutY="62.0" prefHeight="196.0" prefWidth="492.0" />
+            <ListView id="RoomList" fx:id="RoomList" layoutX="25.0" layoutY="62.0" prefHeight="196.0" prefWidth="492.0" />
          </children>
         </Pane>
     </children>

@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 public class JanitorDashboardController implements Initializable{
     //variables
-    public ListView listRooms;  //this is the table that will show up on the screen.
+    public ListView RoomList;  //this is the table that will show up on the screen.
     public Room rooms;          //the rooms and the functions to show their infomation
 
     @Override
@@ -36,19 +36,20 @@ public class JanitorDashboardController implements Initializable{
         String searchCondition = "Clean";
         String searched = "False";
 
+        //RoomList.getItems().add(String.format("%-7s | %-7s ", "Room #",  "Is Clean"));
 
         // Clear rooms list
-        listRooms.getItems().clear();
+        RoomList.getItems().clear();
 
         //show the rooms room number and clean
-        listRooms.getItems().add(String.format("%-7s | %-7s ", "Room #",  "Is Clean"));
+        RoomList.getItems().add(String.format("%-7s | %-7s ", "Room #",  "Is Clean"));
         ResultSet roomInfo = rooms.pullInformation(searchCondition, searched);
 
         //While there are results from the select query
         while (roomInfo.next())
         {
             // Add results to listed rooms table
-            listRooms.getItems().add(
+            RoomList.getItems().add(
                     String.format("%-7d | ", roomInfo.getInt(1)) + // Room ID
                     String.format("%-7b", roomInfo.getBoolean(10))); // Is Clean
         }//end of WHILE
@@ -59,7 +60,7 @@ public class JanitorDashboardController implements Initializable{
     @FXML
     private void MarkingClean() throws SQLException { //look for selected item
 
-        String selectedItem = listRooms.getSelectionModel().getSelectedItem().toString();
+        String selectedItem = RoomList.getSelectionModel().getSelectedItem().toString();
 
         // Append first three characters of selected item to a string (First three will be the room ID)
         StringBuilder roomID = new StringBuilder();

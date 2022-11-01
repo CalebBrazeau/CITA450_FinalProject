@@ -78,7 +78,7 @@ public class Room
             case "Number of Beds" -> "SELECT * FROM rooms WHERE number_of_beds =" + str_Searched + ";";
 
             //specifically for the janitor screen
-            case "Clean" -> "SELECT * FROM rooms WHERE is_clean =" + str_Searched + ";";
+            case "Clean" -> "SELECT * FROM rooms WHERE is_clean IS false;";
 
             //nothing is selected
             default -> "SELECT * FROM rooms";
@@ -251,11 +251,9 @@ public class Room
         return  int_default;
     }
     //METHOD Update Room Clean
-<<<<<<< HEAD
+
     public void UpdateRoomClean(int int_RoomID)
-=======
-    public void UpdateRoomClean(int int_RoomID) // chino changed to public
->>>>>>> 074120a00284cb61305b5f423c7d724477f06140
+
     {
         boolean bol_clean = RoomClean(int_RoomID);
 
