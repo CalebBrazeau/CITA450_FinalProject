@@ -36,7 +36,7 @@ public class DashboardController implements Initializable {
             setupSearchBy();
             displayRoomInfo();
         } catch (Exception e) {
-            e.printStackTrace();
+                e.printStackTrace();
         }
     }
 
@@ -55,7 +55,7 @@ public class DashboardController implements Initializable {
         listRooms.getItems().clear();
 
         listRooms.getItems().add(String.format("%-7s | %-7s | %-9s | %-11s | %-11s | %-11s | %-11s | %-11s | %-7s", "Room #", "# Beds", "Bed Size", "Bed Size", "Handicap?", "Bathtub?", "Price", "Available?", "Clean?"));
-//        System.out.printf("%-11s |  %-11s |  %-11s |  %-11s |  %-11s |  %-11s |  %-11s |  %-11s | ", "Room #", "# Beds", "Bed Size", "Bed Size", "Handicap?", "Bathtub?", "Price", "Available?");
+        System.out.printf("%-11s |  %-11s |  %-11s |  %-11s |  %-11s |  %-11s |  %-11s |  %-11s | ", "Room #", "# Beds", "Bed Size", "Bed Size", "Handicap?", "Bathtub?", "Price", "Available?");
 
         // Key to search by in database, default empty string to get all room info
         String searchKey = "";
@@ -150,7 +150,7 @@ public class DashboardController implements Initializable {
         displayRoomInfo();
     }
 
-    private void loadNewCustomerForm(String roomID) {
+    private void loadNewCustomerForm(String roomID) { // CHINO LOOK HERE YAY
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("customer-information.fxml"));
             Parent root = loader.load();
