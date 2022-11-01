@@ -10,13 +10,13 @@
       <Pane layoutX="14.0" layoutY="63.0" prefHeight="324.0" prefWidth="871.0">
          <children>
             <Label layoutX="14.0" layoutY="14.0" text="Search By:" />
-            <ChoiceBox fx:id="choiceSearchBy" layoutX="91.0" layoutY="10.0" prefWidth="150.0" />
-            <TextField fx:id="searchTextBox" layoutX="684.0" layoutY="10.0" />
-            <Label layoutX="628.0" layoutY="14.0" text="Search:" />
-            <Button fx:id="btnSearch" layoutX="794.0" layoutY="10.0" mnemonicParsing="false" onAction="#displayRoomInfo" text="Search" />
+            <ChoiceBox fx:id="choiceSearchBy" layoutX="84.0" layoutY="10.0" prefWidth="150.0" />
+            <TextField fx:id="searchTextBox" layoutX="599.0" layoutY="10.0" />
+            <Label layoutX="549.0" layoutY="14.0" text="Search:" />
+            <Button fx:id="btnSearch" layoutX="771.0" layoutY="10.0" mnemonicParsing="false" onAction="#displayRoomInfo" prefHeight="24.0" prefWidth="86.0" text="Search" />
             <ListView fx:id="listRooms" layoutX="14.0" layoutY="44.0" prefHeight="237.0" prefWidth="842.0" style="-fx-font-size: 12px; -fx-font-family: monospace;" />
             <Button fx:id="btnCheckOut" layoutX="14.0" layoutY="286.0" mnemonicParsing="false" onAction="#checkOut" text="Check Out" />
-            <Button fx:id="btnCheckIn" layoutX="779.0" layoutY="286.0" mnemonicParsing="false" onAction="#checkIn" text="Check In" />
+            <Button fx:id="btnCheckIn" layoutX="770.0" layoutY="286.0" mnemonicParsing="false" onAction="#checkIn" prefHeight="24.0" prefWidth="86.0" text="Check In" />
          </children>
       </Pane>
    </children>

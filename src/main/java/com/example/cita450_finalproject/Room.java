@@ -77,6 +77,9 @@ public class Room
             //pull up all rooms that have that number of beds
             case "Number of Beds" -> "SELECT * FROM rooms WHERE number_of_beds =" + str_Searched + ";";
 
+            //specifically for the janitor screen
+            case "Clean" -> "SELECT * FROM rooms WHERE is_clean =" + str_Searched + ";";
+
             //nothing is selected
             default -> "SELECT * FROM rooms";
         };
@@ -108,6 +111,14 @@ public class Room
         {
             //error room not avaibale
             System.out.println( "ERROR:: ROOM: "+ int_RoomID + " Status: Room was not checked in.");
+
+            // Create new alert of type warning
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            // Set content text to explain error
+            alert.setContentText("Room was not checked in!");
+            // Display alert
+            alert.show();
+
             return;
         }
 
@@ -240,7 +251,11 @@ public class Room
         return  int_default;
     }
     //METHOD Update Room Clean
+<<<<<<< HEAD
     public void UpdateRoomClean(int int_RoomID)
+=======
+    public void UpdateRoomClean(int int_RoomID) // chino changed to public
+>>>>>>> 074120a00284cb61305b5f423c7d724477f06140
     {
         boolean bol_clean = RoomClean(int_RoomID);
 
@@ -251,7 +266,7 @@ public class Room
             //change the variable to room clean
             bol_clean = true; // janitor marks clean
             //make the room available by sending the variable
-            dbConnection.updateRoomClean(int_RoomID, true); //<<<<<<<<---------------update room clean
+            dbConnection.updateRoomClean(int_RoomID, true); //update room clean
 
         }
 

@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -17,6 +18,7 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class DashboardController implements Initializable {
@@ -34,7 +36,7 @@ public class DashboardController implements Initializable {
             setupSearchBy();
             displayRoomInfo();
         } catch (Exception e) {
-            e.printStackTrace();
+                e.printStackTrace();
         }
     }
 
@@ -53,7 +55,7 @@ public class DashboardController implements Initializable {
         listRooms.getItems().clear();
 
         listRooms.getItems().add(String.format("%-7s | %-7s | %-9s | %-11s | %-11s | %-11s | %-11s | %-11s | %-7s", "Room #", "# Beds", "Bed Size", "Bed Size", "Handicap?", "Bathtub?", "Price", "Available?", "Clean?"));
-//        System.out.printf("%-11s |  %-11s |  %-11s |  %-11s |  %-11s |  %-11s |  %-11s |  %-11s | ", "Room #", "# Beds", "Bed Size", "Bed Size", "Handicap?", "Bathtub?", "Price", "Available?");
+        System.out.printf("%-11s |  %-11s |  %-11s |  %-11s |  %-11s |  %-11s |  %-11s |  %-11s | ", "Room #", "# Beds", "Bed Size", "Bed Size", "Handicap?", "Bathtub?", "Price", "Available?");
 
         // Key to search by in database, default empty string to get all room info
         String searchKey = "";
@@ -69,7 +71,7 @@ public class DashboardController implements Initializable {
         //check if anything was searched
         searched = searchTextBox.getText();
 
-        if( searched != null) {
+        if(searched != null) {
             // Pull room information
             ResultSet roomInfo = room.pullInformation(searchKey, searched);
 
@@ -77,16 +79,17 @@ public class DashboardController implements Initializable {
             while (roomInfo.next()) {
                 // Add results to listed rooms table
                 listRooms.getItems().add(
-                        String.format("%-7d | ", roomInfo.getInt(1)) +
-                        String.format("%-7d | ", roomInfo.getInt(2)) +
-                        String.format("%-9s | ", roomInfo.getString(3)) +
-                        String.format("%-11s | ", roomInfo.getString(4)) +
-                        String.format("%-11b | ", roomInfo.getBoolean(5)) +
-                        String.format("%-11b | ", roomInfo.getBoolean(6)) +
-//                        String.format("%-11d | ", roomInfo.getInt(7)) +
-                        String.format("%-11d | ", roomInfo.getInt(8)) +
-                        String.format("%-11b | ", roomInfo.getBoolean(9)) +
-                        String.format("%-7b", roomInfo.getBoolean(10))
+                        String.format("%-7d | ", roomInfo.getInt(1)) + // Room ID
+                                String.format("%-7d | ", roomInfo.getInt(2)) + // Number of Beds
+                                String.format("%-9s | ", roomInfo.getString(3)) + // Bed 1 Size
+                                String.format("%-11s | ", roomInfo.getString(4)) + // Bed 2 Size
+                                String.format("%-11b | ", roomInfo.getBoolean(5)) + // Is Handicap Accessible
+                                String.format("%-11b | ", roomInfo.getBoolean(6)) + // Has Bathtub
+//                        String.format("%-11d | ", roomInfo.getInt(7)) + // Room Service ID
+                                String.format("%-11d | ", roomInfo.getInt(8)) + // Cost Per Night
+                                String.format("%-11b | ", roomInfo.getBoolean(9)) + // Is Available
+                                String.format("%-7b", roomInfo.getBoolean(10)) // Is Clean
+//                                    String.format("%-7b", roomInfo.getBoolean(11)) // Customer ID
                 );
             }
         }
@@ -94,8 +97,14 @@ public class DashboardController implements Initializable {
 
     @FXML
     private void checkIn() throws SQLException {
-        // If nothing is selected return
-        if (listRooms.getSelectionModel().getSelectedItem() == null) { return; }
+        // If nothing is selected or first item is selected show error and return.
+        if (listRooms.getSelectionModel().getSelectedItem() == null || listRooms.getSelectionModel().getSelectedIndex() < 1) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setHeaderText("Please select a room");
+            alert.show();
+
+            return;
+        }
 
         // Get selected room from list of rooms
         String selectedItem = listRooms.getSelectionModel().getSelectedItem().toString();
@@ -116,8 +125,14 @@ public class DashboardController implements Initializable {
 
     @FXML
     private void checkOut() throws SQLException {
-        // If nothing is selected return
-        if (listRooms.getSelectionModel().getSelectedItem() == null) { return; }
+        // If nothing is selected or first item is selected show error and return.
+        if (listRooms.getSelectionModel().getSelectedItem() == null || listRooms.getSelectionModel().getSelectedIndex() < 1) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setHeaderText("Please select a room");
+            alert.show();
+
+            return;
+        }
 
         // Get selected room from list of rooms
         String selectedItem = listRooms.getSelectionModel().getSelectedItem().toString();
@@ -127,7 +142,7 @@ public class DashboardController implements Initializable {
         roomID.append(selectedItem.charAt(0));
         roomID.append(selectedItem.charAt(1));
         roomID.append(selectedItem.charAt(2));
-
+        
         // Attempt check out
         room.checkOut(Integer.parseInt(String.valueOf(roomID)));
 
@@ -135,7 +150,7 @@ public class DashboardController implements Initializable {
         displayRoomInfo();
     }
 
-    private void loadNewCustomerForm(String roomID) {
+    private void loadNewCustomerForm(String roomID) { // CHINO LOOK HERE YAY
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("customer-information.fxml"));
             Parent root = loader.load();
@@ -143,27 +158,16 @@ public class DashboardController implements Initializable {
             CustomerInformationController customerController = loader.getController();
             customerController.setRoomID(roomID);
 
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("main.css").toExternalForm());
+
             Stage stage = new Stage();
-            stage.setScene(new Scene(root));
+            stage.setScene(scene);
             stage.setTitle("Enter Customer Information");
             stage.show();
         }
         catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private void search()
-    {
-        //variabels
-        //Drop Down Menu Choices/Search Conditions
-        /*
-        "Room Number"
-        "Customer ID"
-        "Floor"
-        "Handicap Accessible"
-        "Number of Beds"
-        */
-        String str_Searched; //what the user typed into the text box
     }
 }

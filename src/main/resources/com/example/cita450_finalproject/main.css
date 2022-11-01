@@ -1,3 +1,10 @@
+// Variables and such
+* {
+    -dark-primary-purple: rgb(187,134,252);
+    -dark-secondary-teal: rgb(3, 218, 198);
+    -dark-error: rgb(207, 102, 121);
+}
+
 .root {
     -fx-font-size: 12px;
     -fx-background-color: rgb(36,36,36);
@@ -5,7 +12,16 @@
 
 .button {
     -fx-text-fill: rgb(18,18,18);
-    -fx-background-color: rgb(187,134,252);
+    -fx-background-color: -dark-primary-purple;
+}
+
+.button:hover {
+    -fx-border-color: rgba(255, 255, 255, .5);
+    -fx-opacity: .8;
+}
+
+.button:pressed {
+    -fx-opacity: 1;
 }
 
 .label {
@@ -14,4 +30,48 @@
 
 .combo-box {
     -fx-background-color: green;
+}
+.list-view {
+    -fx-background-color: rgb(36, 36, 36);
+    -fx-border-radius: 7px;
+    -fx-border-color: rgba(255, 255, 255, .5);
+}
+
+.indexed-cell:even {
+    -fx-text-fill: rgb(255,255,255);
+    -fx-background-color: rgb(52, 52, 52);
+}
+
+.indexed-cell:odd {
+    -fx-text-fill: rgb(255,255,255);
+    -fx-background-color: rgb(60, 60, 60);
+}
+
+.cell:selected {
+    -fx-background-color: rgba(18,18,18, .14);
+}
+
+.text-field {
+    -fx-background-color: -dark-primary-purple;
+}
+
+.text-field:focused {
+    -fx-border-color: rgba(255, 255, 255, .5);
+    -fx-border-radius: 5px;
+}
+
+.choice-box {
+    -fx-background-color: -dark-primary-purple;
+}
+
+.choice-box > .label {
+    -fx-text-fill: black;
+}
+
+.choice-box .context-menu {
+    -fx-background-color: -dark-secondary-teal;
+}
+
+.choice-box .menu-item > .label {
+    -fx-text-fill: black;
 }
