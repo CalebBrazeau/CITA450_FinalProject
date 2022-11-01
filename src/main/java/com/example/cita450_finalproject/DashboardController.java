@@ -102,7 +102,7 @@ public class DashboardController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setHeaderText("Please select a room");
             alert.show();
-            
+
             return;
         }
 
