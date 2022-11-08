@@ -239,7 +239,6 @@ public class Room
             //change the variable to room clean
             bol_clean = true; // janitor marks clean
             //make the room available by sending the variable
-            dbConnection.updateRoomClean(int_RoomID, true); //update room clean <<<---some type of conflict with dbConnection
             dbConnection.updateRoomClean(int_RoomID, bol_clean); //update room clean
             //make the room available
             UpdateAvailable(int_RoomID);
@@ -253,7 +252,6 @@ public class Room
             bol_clean = false;      //Marks the room dirty which Janitors will come
             //make the room unavailable by sending the variable
             dbConnection.updateRoomClean(int_RoomID, bol_clean);
-
         }
         //debug
         System.out.println(bol_clean);
