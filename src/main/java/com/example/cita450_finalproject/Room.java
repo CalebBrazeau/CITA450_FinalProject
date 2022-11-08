@@ -122,7 +122,7 @@ public class Room
             return;
         }
 
-        //unassign the customer from the room
+        //unassigned the customer from the room
         //customer = null
 
         //change room to dirty
@@ -204,7 +204,7 @@ public class Room
         return  bol_default;
 
     }
-    //METHOD Update Room Avaliability
+    //METHOD Update Room Availability
     private void UpdateCustomerID(int int_RoomID, int int_CustID)
     {
        int int_CustomerID = CheckCustomerID(int_RoomID); //the customers id
@@ -213,7 +213,7 @@ public class Room
         //if checking out, (there is a customer assigned to the room)
         if( int_CustomerID != int_NullCustomerID)
         {
-            //unassign the customer from the room
+            //unassigned the customer from the room
             int_CustomerID = int_NullCustomerID;
             //make the room available by sending the variable
             dbConnection.updateCustomerID(int_RoomID, int_CustomerID);
@@ -264,8 +264,7 @@ public class Room
             //change the variable to room clean
             bol_clean = true; // janitor marks clean
             //make the room available by sending the variable
-            dbConnection.updateRoomClean(int_RoomID, true); //update room clean
-
+            dbConnection.updateRoomClean(int_RoomID, true); //update room clean <<<---some type of conflict with dbConnection
         }
 
         //if the room is clean then the system will mark as dirty
