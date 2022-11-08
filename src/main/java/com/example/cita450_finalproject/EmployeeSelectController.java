@@ -39,7 +39,7 @@ public class EmployeeSelectController
         //try
         try {
             //load the employee select screen
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("MaintnessORJanitorSelect.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("MaintenanceORJanitorSelect.fxml"));
             Parent root = loader.load();
 
             //create the scene and add a style sheet
