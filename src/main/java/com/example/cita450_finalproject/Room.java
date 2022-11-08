@@ -76,6 +76,9 @@ public class Room
             //specifically for the janitor screen
             case "Clean" -> "SELECT * FROM rooms WHERE is_clean IS false;";
 
+            //search by customer id
+            case"Customer ID " -> "SELECT * FROM rooms WHERE customer_id =" + str_Searched + ";";
+
             //nothing is selected
             default -> "SELECT * FROM rooms";
         };
@@ -257,7 +260,7 @@ public class Room
         System.out.println(bol_clean);
 
     }
-    
+
     //METHOD Check Room Is Clean
     private boolean RoomClean(int int_RoomID)
     {
