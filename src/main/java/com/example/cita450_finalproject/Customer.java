@@ -86,4 +86,8 @@ public class Customer {
         // Assign Customer to Room
         dbConnection.updateCustomerID(roomID, getCustomerID(customerFName, customerLName, customerPhone, customerEmail, customerPaymentMethod));
     }
+
+    public void cancel(int roomID) {
+        room.checkOut(roomID);
+    }
 }

@@ -2,11 +2,15 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="400.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cita450_finalproject.DashboardController">
    <children>
       <Label layoutX="14.0" layoutY="14.0" text="User - Front Desk" />
-      <Label layoutX="405.0" layoutY="22.0" text="Room Lookup" />
+      <Label layoutX="330.0" layoutY="22.0" text="Room Lookup">
+         <font>
+            <Font size="35.0" />
+         </font></Label>
       <Pane layoutX="14.0" layoutY="63.0" prefHeight="324.0" prefWidth="871.0">
          <children>
             <Label layoutX="14.0" layoutY="14.0" text="Search By:" />
@@ -14,7 +18,7 @@
             <TextField fx:id="searchTextBox" layoutX="599.0" layoutY="10.0" />
             <Label layoutX="549.0" layoutY="14.0" text="Search:" />
             <Button fx:id="btnSearch" layoutX="771.0" layoutY="10.0" mnemonicParsing="false" onAction="#displayRoomInfo" prefHeight="24.0" prefWidth="86.0" text="Search" />
-            <ListView fx:id="listRooms" layoutX="14.0" layoutY="44.0" prefHeight="237.0" prefWidth="842.0" style="-fx-font-size: 12px; -fx-font-family: monospace;" />
+            <ListView fx:id="listRooms" layoutX="14.0" layoutY="44.0" prefHeight="237.0" prefWidth="842.0" />
             <Button fx:id="btnCheckOut" layoutX="14.0" layoutY="286.0" mnemonicParsing="false" onAction="#checkOut" text="Check Out" />
             <Button fx:id="btnCheckIn" layoutX="770.0" layoutY="286.0" mnemonicParsing="false" onAction="#checkIn" prefHeight="24.0" prefWidth="86.0" text="Check In" />
          </children>

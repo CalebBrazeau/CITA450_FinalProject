@@ -54,11 +54,21 @@ public class CustomerInformationController implements Initializable {
         // Create new alert object of type confirmation
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         // Set text to show customer is checked into room
-        alert.setHeaderText("Checked in Customer to room " + roomID);
+        alert.setHeaderText("Checked Customer into room " + roomID);
         // Display the alert
         alert.show();
 
         // Close customer-information.fxml window
+        closeWindow();
+    }
+
+    @FXML
+    private void cancel() {
+        // Cancel adding customer
+        // TODO: This function is calling checkout on the Room class which means the room will be marked dirty. Dashboard is also not updated.
+        customer.cancel(Integer.parseInt(roomID));
+
+        // Close that bad bitch
         closeWindow();
     }
 

@@ -16,32 +16,29 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `customers`
+-- Table structure for table `sys_config`
 --
 
-DROP TABLE IF EXISTS `customers`;
+DROP TABLE IF EXISTS `sys_config`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `customers` (
-  `customer_id` int NOT NULL AUTO_INCREMENT,
-  `customer_fname` varchar(45) NOT NULL,
-  `customer_lname` varchar(45) NOT NULL,
-  `customer_phone` varchar(45) DEFAULT NULL,
-  `customer_email` varchar(64) DEFAULT NULL,
-  `customer_billing_address_id` int NOT NULL,
-  `customer_payment_method` varchar(45) NOT NULL,
-  PRIMARY KEY (`customer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `sys_config` (
+  `variable` varchar(128) NOT NULL,
+  `value` varchar(128) DEFAULT NULL,
+  `set_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `set_by` varchar(128) DEFAULT NULL,
+  PRIMARY KEY (`variable`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `customers`
+-- Dumping data for table `sys_config`
 --
 
-LOCK TABLES `customers` WRITE;
-/*!40000 ALTER TABLE `customers` DISABLE KEYS */;
-INSERT INTO `customers` VALUES (1,'kjnkjnknjk','jnk','jnkn','jnkn',1,'CASH'),(2,'knjjnkjnknk','jnkjnknknkn','jnkjnknjkn','jkjnkjn',2,'CASH'),(3,'Mustafa','Elfituri','666666666','sdsdsdSD',3,'CASH'),(4,'jniuhi','ohoiho','hiuhoiuhoiu','yoygou',4,'CASH'),(5,'oaisjdo','io','jiuhob','ouhiouhiu',5,'CASH');
-/*!40000 ALTER TABLE `customers` ENABLE KEYS */;
+LOCK TABLES `sys_config` WRITE;
+/*!40000 ALTER TABLE `sys_config` DISABLE KEYS */;
+INSERT INTO `sys_config` VALUES ('diagnostics.allow_i_s_tables','OFF','2022-09-28 05:20:48',NULL),('diagnostics.include_raw','OFF','2022-09-28 05:20:48',NULL),('ps_thread_trx_info.max_length','65535','2022-09-28 05:20:48',NULL),('statement_performance_analyzer.limit','100','2022-09-28 05:20:48',NULL),('statement_performance_analyzer.view',NULL,'2022-09-28 05:20:48',NULL),('statement_truncate_len','64','2022-09-28 05:20:48',NULL);
+/*!40000 ALTER TABLE `sys_config` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

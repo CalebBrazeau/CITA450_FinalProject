@@ -1,12 +1,7 @@
 package com.example.cita450_finalproject;
-
 import javafx.scene.control.Alert;
-
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-
 public class Room
 {
     /*
@@ -15,17 +10,21 @@ public class Room
      *
      * Purpose:
      * This class serves to hold all the information about the room in the hotel.
-     * It should be able to:
-     * -Check in and Check Out a Customer to a room
-     * -Check room availability
-     * -Update room availability
-     * -Check floor number for room
-     * -Check number of beds in room
-     * -Check size of beds in room
-     * -Check handicap accessible
-     * -See who is currently in a room
-     * -assign a customer to a room
-     * -pull the search information for a room
+     * -Handles checking customers in and out of rooms
+     * -Checks room's availability
+     * -Updates room's availability
+     * -Checks the floor number for a room
+     * -Checks the number of beds in a room
+     * -Check size of beds in a room
+     * -Checks handicap accessiblity for rooms
+     * -Checks which customer is currently in a room
+     * -Assign a customer to a room
+     * -Pulls the search information for a room
+     * Done by Chino ^
+     *
+     * Done by Ricardo Gibson:
+     * -Checks if a room is clean
+     * -Updates if a room is clean
      */
 
 
@@ -37,9 +36,6 @@ public class Room
     {
         // establish connection to database
         dbConnection = new DatabaseConnection();
-
-        //set variables
-
     }
 
     //METHOD handle what is being shown when something is searched
@@ -49,7 +45,6 @@ public class Room
 
         // Variable to store query results
         ResultSet resultSet;
-
 
         // Switch expression, new to me but IntelliJ suggested it ¯\_(ツ)_/¯
         String query = switch (str_SearchCondition) {
@@ -88,6 +83,7 @@ public class Room
             return resultSet;
     }
 
+    //METHOD Check in
     public void checkIn(int int_RoomID)
     {
         // Return if the room is not available
@@ -109,9 +105,6 @@ public class Room
         //if the room is available
         if (CheckAvailable(int_RoomID))
         {
-            //error room not avaibale
-            System.out.println( "ERROR:: ROOM: "+ int_RoomID + " Status: Room was not checked in.");
-
             // Create new alert of type warning
             Alert alert = new Alert(Alert.AlertType.WARNING);
             // Set content text to explain error
@@ -121,43 +114,27 @@ public class Room
 
             return;
         }
-
+        //otherwise the room is occupied
         //unassigned the customer from the room
         //customer = null
+        //unassign the customer from the room
+        dbConnection.unassignCustomerFromRoom(int_RoomID);
 
-        //change room to dirty
+        //mark the room as dirty
+        UpdateRoomClean(int_RoomID);
 
-        //room status debug
-        System.out.println( " ROOM: "+ int_RoomID + " Status: needs cleaning");
-        //time will pass.... eventually it will be marked clean
-
-        //if the room is clean
-
-            //mark room as available
-            UpdateAvailable(int_RoomID);
-            dbConnection.unassignCustomerFromRoom(int_RoomID);
-            //room status debug
-         //   System.out.println( " ROOM: "+ int_RoomID + " Status: Room available");
-
-        UpdateRoomClean(int_RoomID);    //Calls the method of UpdateRoomClean in CheckOut
-
-            // error room not available
-//            System.out.println( "ERROR:: ROOM: "+ int_RoomID + " Status: Room not available.");
-//            return;
-
-        //eventually this will be set to needs cleaning then from there cleaning would set this to true, but for now keeping it simple
-        //change room to dirty
-        //System.out.println( " ROOM: "+ int_RoomID + " Status: needs cleaning");
-        //mark room as available
-        //(int_RoomID);
+        //I am commenting this out because the room should not be marked available
+        //until the room is marked clean by the janitor.
+        //UpdateAvailable(int_RoomID);
     }
     //METHOD Update Room Availability
     private void UpdateAvailable(int int_RoomID)
     {
-        boolean bol_isAvailable = CheckAvailable(int_RoomID);
+        boolean bol_isAvailable = CheckAvailable(int_RoomID); //room availabilty
+        boolean bol_isClean = RoomClean(int_RoomID);       //room clean status
 
-        //if checking out
-        if(!bol_isAvailable)
+        //if room has been checked out and room is clean
+        if(!bol_isAvailable & bol_isClean)
         {
             //change the variable to available
             bol_isAvailable = true;
@@ -173,8 +150,6 @@ public class Room
             //make the room unavailable by sending the variable
             dbConnection.updateAvailability(int_RoomID, bol_isAvailable);
         }
-        //debug
-        System.out.println(bol_isAvailable);
     }
     //METHOD Check Room Availability
     private boolean CheckAvailable(int int_RoomID)
@@ -253,9 +228,9 @@ public class Room
     //METHOD Update Room Clean
 
     public void UpdateRoomClean(int int_RoomID)
-
     {
-        boolean bol_clean = RoomClean(int_RoomID);
+        //variables
+        boolean bol_clean = RoomClean(int_RoomID); // is the room clean
 
         //if janitor marks clean
 
@@ -265,6 +240,9 @@ public class Room
             bol_clean = true; // janitor marks clean
             //make the room available by sending the variable
             dbConnection.updateRoomClean(int_RoomID, true); //update room clean <<<---some type of conflict with dbConnection
+            dbConnection.updateRoomClean(int_RoomID, bol_clean); //update room clean
+            //make the room available
+            UpdateAvailable(int_RoomID);
         }
 
         //if the room is clean then the system will mark as dirty
@@ -274,7 +252,7 @@ public class Room
             //change the variable to room clean
             bol_clean = false;      //Marks the room dirty which Janitors will come
             //make the room unavailable by sending the variable
-            dbConnection.updateRoomClean(int_RoomID,  false);
+            dbConnection.updateRoomClean(int_RoomID, bol_clean);
 
         }
         //debug
@@ -283,7 +261,7 @@ public class Room
     }
 
 
-        //METHOD Check Room Is Clean
+    //METHOD Check Room Is Clean
     private boolean RoomClean(int int_RoomID)
     {
         boolean bol_clean; //true = room is available
@@ -306,100 +284,4 @@ public class Room
 
         return  bol_default;
     }
-
-
-
-    //METHOD Check Floor Number for Room
-   private int CheckFloorNum(int int_RoomID)
-    {
-        int int_FloorNumber; //which floor the room is on
-        int int_defualt = 1;//default floor is one
-
-        //if the room id number starts with a 1
-        if (100 <= int_RoomID && int_RoomID < 200)
-        {
-            //the room is on the first floor
-            int_FloorNumber = 1;
-        }
-        //if the room id number starts with a 2
-        else if (200 <= int_RoomID && int_RoomID < 300)
-        {
-            //the room is on the second floor
-            int_FloorNumber = 2;
-        }
-        //if the room id number starts with a 3
-        else if (300 <= int_RoomID && int_RoomID < 400)
-        {
-            //the room is on the 3rd floor
-            int_FloorNumber = 3;
-        }
-        //if the room id number starts with a 4
-        else if (400 <= int_RoomID && int_RoomID < 500)
-        {
-            //the room is on the 4th floor
-            int_FloorNumber = 4;
-        }
-        else
-        {
-            //return default
-            return  int_defualt;
-        }
-       return int_FloorNumber;
-
-        /*if floors are added on then i would need a variable to be number of floors
-        and a while statement that says while the room is within the floors do assign it
-        to that floor else there is an error
-        this can also be done more effiently by reading the first char in the room number
-        and checking if its the between the lowest floor number and the highest floor number
-        and the saying whatever number it is is the number of the floor, if its not then it
-        cant be a real room number*/
-
-    }
-    //METHOD Check Number Beds in Room
-   private int CheckNumBeds(int int_RoomID)
-    {
-       int int_numbOfBeds; //how many beds are in the room
-       int int_default = 1; //default number of beds is one
-
-        try {
-
-            String SQL_Query = "SELECT number_of_beds FROM rooms WHERE room_id = " + int_RoomID; //sql statemenet
-            ResultSet refinedSearch = dbConnection.selectQuery(SQL_Query);                     //pull avaiablity from table
-
-            //set number of beds based off of the refined search
-            int_numbOfBeds = refinedSearch.getInt(1);
-
-            return int_numbOfBeds;
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-
-        //return default
-        return  int_default;
-    }
-    //METHOD Check Handicap Accessible
-   private boolean CheckHandicap(int int_RoomID)
-    {
-        boolean bol_isHandicap; //true means its is handicapAccessible
-        boolean bol_defualt = false;
-
-        try {
-            //variables
-
-            String SQL_Query = "SELECT is_handicap_accessible FROM rooms WHERE room_id = " + int_RoomID; //sql statemenet
-            ResultSet refinedSearch = dbConnection.selectQuery(SQL_Query);                     //pull avaiablity from table
-
-            //set availabilty based off of the refined search
-            bol_isHandicap = refinedSearch.getBoolean(1);
-
-            return bol_isHandicap;
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        // return default
-        return bol_defualt;
-
-    }
-
-
 }//end of Class "Room"
