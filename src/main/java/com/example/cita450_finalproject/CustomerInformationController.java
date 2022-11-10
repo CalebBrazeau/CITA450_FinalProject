@@ -98,7 +98,7 @@ public class CustomerInformationController implements Initializable {
         // Close that bad bitch
         closeWindow();
     }
-
+//chino needs this information
     private void closeWindow() {
         // get a handle to the stage
         Stage stage = (Stage) btnInsert.getScene().getWindow();
