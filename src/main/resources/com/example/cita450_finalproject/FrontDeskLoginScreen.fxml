@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.cita450_finalproject.FrontDeskLoginScreen"
+            prefHeight="294.0" prefWidth="340.0">
+    <TextField fx:id="UserNameTextBox" layoutX="100.0" layoutY="150.0" />
+    <TextField fx:id="PassWordTextBox" layoutX="100.0" layoutY="250.0" />
+    <Label layoutX="10.0" layoutY="33.0" text="Beach Hotel - Front Desk Login">
+        <font>
+            <Font size="23.0" />
+        </font>
+    </Label>
+    <Label layoutX="100.0" layoutY="100.0" text="User Name">
+        <font>
+            <Font size="18.0" />
+        </font>
+    </Label>
+    <Label layoutX="100.0" layoutY="200.0" text="Password">
+        <font>
+            <Font size="18.0" />
+        </font>
+    </Label>
+    <Button id="Btn_Back" fx:id="backButton" layoutX="240.0" layoutY="8.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="92.0" text="Back" />
+
+
+</AnchorPane>
