@@ -258,7 +258,6 @@ public class Room
 
     }
 
-
     //METHOD Check Room Is Clean
     private boolean RoomClean(int int_RoomID)
     {
