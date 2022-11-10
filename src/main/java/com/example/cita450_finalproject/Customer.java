@@ -1,5 +1,7 @@
 package com.example.cita450_finalproject;
 
+import javafx.scene.control.Alert;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -9,56 +11,41 @@ public class Customer {
 
     public Customer() {
         try {
+            // Create new DatabaseConnection object
             dbConnection = new DatabaseConnection();
+            // Create new Room object
             room = new Room();
         } catch (Exception e) {
+            // Uh oh
             e.printStackTrace();
         }
     }
 
-    public ResultSet getCustomerInfo(int int_customerID) throws SQLException {
-        String str_query = "SELECT * FROM customers WHERE customer_id = " + int_customerID;
-
-        return dbConnection.selectQuery(str_query);
-    }
-
-    public ResultSet getCustomerInfo(String customerFName, String customerLName) throws SQLException {
-        // Query to check if a customer exists (Can match more cases)
-        String query = "SELECT * FROM customers WHERE customer_fname = '" + customerFName +
-                "' AND customer_lname = '"  + customerLName + "'";
-
-        // Return query results
-        return dbConnection.selectQuery(query);
-    }
-
-    public int getCustomerID(String customerFName, String customerLName, String customerPhone, String customerEmail, String customerPaymentMethod) throws SQLException {
+    // Method to get customers ID using full name, phone number, and email
+    public int getCustomerID(String customerFName, String customerLName, String customerPhone, String customerEmail) throws SQLException {
+        // Get and store customer ID from database
         ResultSet rs = dbConnection.selectQuery("SELECT customer_id FROM customers WHERE customer_fname = '" + customerFName +
                 "' AND customer_lname = '" + customerLName +
                 "' AND customer_phone = '" + customerPhone +
-                "' AND customer_email = '" + customerEmail +
-                "' AND customer_payment_method = '" + customerPaymentMethod + "'");
+                "' AND customer_email = '" + customerEmail + "'");
+        // Check if there is returned data
         if (rs.next()) {
+            // Return customer ID
             return rs.getInt(1);
         }
+        // Return 0 if no customer ID is found
         return 0;
     }
 
     public void insertNewCustomer(String customerFName, String customerLName, String customerPhone, String customerEmail, String customerPaymentMethod, int roomID) throws SQLException {
         // Check if customer exists by attempting to get the customer info
-        ResultSet customerInfo = getCustomerInfo(customerFName, customerLName);
-        // If customer info is not null a customer with that first and last name already exists
-        if (customerInfo.isBeforeFirst()) {
-            // Print all matching customer info
-            while (customerInfo.next()) {
-                System.out.println(customerInfo.getInt(1));
-                System.out.println(customerInfo.getString(2));
-                System.out.println(customerInfo.getString(3));
-                System.out.println(customerInfo.getString(4));
-                System.out.println(customerInfo.getString(5));
-                System.out.println(customerInfo.getInt(6));
-                System.out.println(customerInfo.getString(7));
-            }
-            return; // Exit function so another entry is not added to database
+        int customerID = getCustomerID(customerFName, customerLName, customerPhone, customerEmail);
+
+        // If returned customer ID is greater than zero, a customer with that information already exists.
+        if (customerID > 0) {
+            // Assign Customer to Room
+            dbConnection.updateCustomerID(roomID, customerID);
+            return;
         }
 
         // Get number of billing address to create a new unique ID
@@ -83,10 +70,23 @@ public class Customer {
             );
         }
 
-        // Assign Customer to Room
-        dbConnection.updateCustomerID(roomID, getCustomerID(customerFName, customerLName, customerPhone, customerEmail, customerPaymentMethod));
+        // Get new customer ID
+        int newCustomerID = getCustomerID(customerFName, customerLName, customerPhone, customerEmail);
+
+        // If the customer ID is greater than 0 where was an ID pulled from the db
+        if (newCustomerID > 0) {
+            // Assign Customer to Room
+            dbConnection.updateCustomerID(roomID, customerID);
+        }
+
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setHeaderText("Could not check in customer!");
+        alert.show();
+        // If Check in fails, call cancel method to make room available again
+        cancel(roomID);
     }
 
+    // Method to cancel checking a customer in
     public void cancel(int roomID) {
         room.checkOut(roomID);
     }

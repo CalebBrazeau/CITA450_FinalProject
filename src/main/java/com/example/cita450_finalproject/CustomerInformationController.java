@@ -2,10 +2,7 @@ package com.example.cita450_finalproject;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -42,40 +39,47 @@ public class CustomerInformationController implements Initializable {
 
     @FXML
     private void collectCustomerInfo() throws SQLException {
-        if (textFName.getText() != null
-        && textLName.getText() != null
-        && isValidPhoneNumber(textPhoneNumber.getText())
-        && isValidEmail(textEmail.getText())
-        && choicePaymentMethod.getSelectionModel().getSelectedItem() != null) {
+        // Check if all input fields are valid
+        if (hasAllFieldsFilled()) {
+            // Insert customer information into database
             customer.insertNewCustomer(
                     textFName.getText(),
                     textLName.getText(),
                     textPhoneNumber.getText(),
                     textEmail.getText(),
                     choicePaymentMethod.getSelectionModel().getSelectedItem().toString(),
-                    Integer.parseInt(roomID)
-            );
-            // Show check in confirmation box
-            // Create new alert object of type confirmation
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            // Set text to show customer is checked into room
-            alert.setHeaderText("Checked Customer into room " + roomID);
-            // Display the alert
-            alert.show();
+                    Integer.parseInt(roomID));
 
-            // Close customer-information.fxml window
-            closeWindow();
+                // Show check in confirmation box
+                // Create new alert object of type confirmation
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                // Set text to show customer is checked into room
+                alert.setHeaderText("Checked Customer into room " + roomID);
+                // Display the alert
+                alert.show();
 
-            return;
+                // Close customer-information.fxml window
+//            closeWindow();
+                // Return to exit method
+                return;
         }
 
         // Create new alert object of type error
         Alert alert = new Alert(Alert.AlertType.ERROR);
         // Set text to show customer is checked into room
-        alert.setHeaderText("Missing customer information!");
+        alert.setHeaderText("Missing or improper customer information!");
         // Display the alert
         alert.show();
 }
+
+    // Method to check if all fields are filled and valid inputs
+    private boolean hasAllFieldsFilled() {
+        return textFName.getText() != null
+                && textLName.getText() != null
+                && isValidPhoneNumber(textPhoneNumber.getText())
+                && isValidEmail(textEmail.getText())
+                && choicePaymentMethod.getSelectionModel().getSelectedItem() != null;
+    }
 
     // Method to validate email input
     private boolean isValidEmail(String email) {
@@ -86,7 +90,7 @@ public class CustomerInformationController implements Initializable {
     // Method to validate email input
     private boolean isValidPhoneNumber(String number) {
         // Check if passed in phone number is valid using regular expressions
-        return Pattern.matches("^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]\\d{3}[\\s.-]\\d{4}$\n", number);
+        return Pattern.matches("^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.\\-]\\d{3}[\\s.\\-]\\d{4}$", number);
     }
 
     @FXML
