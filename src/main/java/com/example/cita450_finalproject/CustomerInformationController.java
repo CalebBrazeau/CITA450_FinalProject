@@ -59,7 +59,7 @@ public class CustomerInformationController implements Initializable {
                 alert.show();
 
                 // Close customer-information.fxml window
-//            closeWindow();
+                closeWindow();
                 // Return to exit method
                 return;
         }
