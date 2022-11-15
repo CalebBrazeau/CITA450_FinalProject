@@ -100,8 +100,8 @@ public class Room
 
     //METHOD Check out
     public void checkOut(int int_RoomID) throws SQLException {
-        //if the room is available
-        if (CheckAvailable(int_RoomID))
+        //if the room is available or not clean
+        if (CheckAvailable(int_RoomID) || !RoomClean(int_RoomID))
         {
             // Create new alert of type warning
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -112,19 +112,12 @@ public class Room
 
             return;
         }
-
         //otherwise the room is occupied
-        //unassigned the customer from the room
-        //customer = null
         //unassign the customer from the room
         dbConnection.unassignCustomerFromRoom(int_RoomID);
-
         //mark the room as dirty
         UpdateRoomClean(int_RoomID);
 
-        //I am commenting this out because the room should not be marked available
-        //until the room is marked clean by the janitor.
-        //UpdateAvailable(int_RoomID);
     }
     //METHOD Update Room Availability
     private void UpdateAvailable(int int_RoomID) throws SQLException {
