@@ -32,11 +32,14 @@ public class CustomerInformationController implements Initializable {
         }
     }
 
+    // Method to add payment methods to the payment method choice box
     private void setupPaymentMethods() {
+        // Add payment options to payment method choice box
         choicePaymentMethod.getItems().add("VISA");
         choicePaymentMethod.getItems().add("CASH");
     }
 
+    // Method to collect and insert customer data into the database
     @FXML
     private void collectCustomerInfo() throws SQLException {
         // Check if all input fields are valid
@@ -93,6 +96,7 @@ public class CustomerInformationController implements Initializable {
         return Pattern.matches("^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.\\-]\\d{3}[\\s.\\-]\\d{4}$", number);
     }
 
+    // Method to cancel checking in a customer
     @FXML
     private void cancel() throws SQLException {
         // Cancel adding customer
@@ -102,7 +106,8 @@ public class CustomerInformationController implements Initializable {
         // Close that bad bitch
         closeWindow();
     }
-//chino needs this information
+
+    // Method to close the current window
     private void closeWindow() {
         // get a handle to the stage
         Stage stage = (Stage) btnInsert.getScene().getWindow();
@@ -110,6 +115,7 @@ public class CustomerInformationController implements Initializable {
         stage.close();
     }
 
+    // Method to set the class' roomID variable
     public void setRoomID(String roomID) {
         this.roomID = roomID;
     }
