@@ -3,16 +3,16 @@ package com.example.cita450_finalproject;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.TextField;
 
 import java.io.IOException;
 
 public class StaffLoginScreenMainController
 {
-    //Usernames and Passwords
-    String str_userFrontDesk = "FrontDesk";
-    String str_userCleaning = "Janitor";
-    String str_userMaintenance = "Repairs";
+    public TextField UserNameTextBox;
+    public TextField PassWordTextBox;
 
+    //Passwords
     String str_passFrontDesk ="Rooms";
     String str_passCleaning = "Mop";
     String str_passMaintencance = "Hammer";
@@ -21,14 +21,15 @@ public class StaffLoginScreenMainController
     private String getUserName()
     {
         //get the username from the textbox;
-        String str_UserName;
-    
+        String str_UserName= UserNameTextBox.getText();
+
         return str_UserName;
     }
+    @FXML
     private String getPassword()
     {
         //get the Password from the textbox;
-        String str_Password;
+        String str_Password = PassWordTextBox.getText();
 
         return str_Password;
     }
@@ -38,34 +39,73 @@ public class StaffLoginScreenMainController
         boolean bol_SucessfulLogin;
         boolean bol_defaul = false;
         //get the username
+        String username = getUserName();
         //get the password
+        String password = getPassword();
 
-        //switch
-        //case front desk
-            //check password
-            //return
-            //break
-        //case cleaning
-            //check password
-             //return
-            //break
-        //case maintenance
-            //check password
-        //return
-            //break
-        //no matching case
-            //error invalid username
-            return bol_defaul;
+        switch (username) {
+            //front desk employee
+            case "FrontDesk":
+                //check password if it is correct
+                if(password == str_passFrontDesk)
+                {
+                    //mark password as correct
+                    bol_SucessfulLogin = true;
+
+                    //return
+                    return bol_SucessfulLogin;
+                }
+                else {return bol_defaul;}
+            //cleaning employees
+            case "Janitor":
+                //check password if it is correct
+                if(password == str_passCleaning)
+                {
+                    //mark password as correct
+                    bol_SucessfulLogin = true;
+
+                    //return
+                    return bol_SucessfulLogin;
+                }
+                else {return bol_defaul;}
+            //Maintenance employees
+            case "Repairs":
+                //check password if it is correct
+                if(password == str_passMaintencance)
+                {
+                    //mark password as correct
+                    bol_SucessfulLogin = true;
+
+                    //return
+                    return bol_SucessfulLogin;
+                }
+                else {return bol_defaul;}
+
+            //invalid username
+            default:
+                return bol_defaul;
+
+        }
     }
     private void Login()
     {
-        //if login sucessful
-        //go to next screen
+
+        //if login was sucessful
+        if(CheckLogin())
+        {
+            //go to next screen
+            LoadNextScreen();
+        }
         //else
-        //display an error message
+        else
+        {
+            //display an error message
+        }
+
 
     }
 
+    @FXML
     private void LoadNextScreen()
     {
         try

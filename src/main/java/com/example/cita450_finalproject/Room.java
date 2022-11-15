@@ -112,6 +112,7 @@ public class Room
 
             return;
         }
+
         //otherwise the room is occupied
         //unassigned the customer from the room
         //customer = null
