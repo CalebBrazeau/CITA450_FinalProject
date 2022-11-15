@@ -1,7 +1,5 @@
 package com.example.cita450_finalproject;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -16,9 +14,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class DashboardController implements Initializable {
@@ -31,6 +27,7 @@ public class DashboardController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
+            // Create Room Object
             room = new Room();
 
             setupSearchBy();
@@ -41,6 +38,7 @@ public class DashboardController implements Initializable {
     }
 
     private void setupSearchBy() {
+        // Add search keys to search by choice box
         choiceSearchBy.getItems().add("Room Number");
         choiceSearchBy.getItems().add("Customer ID");
         choiceSearchBy.getItems().add("Floor Number");
@@ -54,8 +52,8 @@ public class DashboardController implements Initializable {
         // Clear rooms list
         listRooms.getItems().clear();
 
+        // Add formatted column headers to list of rooms
         listRooms.getItems().add(String.format("%-7s | %-7s | %-9s | %-11s | %-11s | %-11s | %-11s | %-11s | %-7s", "Room #", "# Beds", "Bed Size", "Bed Size", "Handicap?", "Bathtub?", "Price", "Available?", "Clean?"));
-        System.out.printf("%-11s |  %-11s |  %-11s |  %-11s |  %-11s |  %-11s |  %-11s |  %-11s | ", "Room #", "# Beds", "Bed Size", "Bed Size", "Handicap?", "Bathtub?", "Price", "Available?");
 
         // Key to search by in database, default empty string to get all room info
         String searchKey = "";
@@ -85,11 +83,11 @@ public class DashboardController implements Initializable {
                                 String.format("%-11s | ", roomInfo.getString(4)) + // Bed 2 Size
                                 String.format("%-11b | ", roomInfo.getBoolean(5)) + // Is Handicap Accessible
                                 String.format("%-11b | ", roomInfo.getBoolean(6)) + // Has Bathtub
-//                        String.format("%-11d | ", roomInfo.getInt(7)) + // Room Service ID
+                                // String.format("%-11d | ", roomInfo.getInt(7)) + // Room Service ID
                                 String.format("%-11d | ", roomInfo.getInt(8)) + // Cost Per Night
                                 String.format("%-11b | ", roomInfo.getBoolean(9)) + // Is Available
                                 String.format("%-7b", roomInfo.getBoolean(10)) // Is Clean
-//                                    String.format("%-7b", roomInfo.getBoolean(11)) // Customer ID
+                                // String.format("%-7b", roomInfo.getBoolean(11)) // Customer ID
                 );
             }
         }
@@ -150,7 +148,7 @@ public class DashboardController implements Initializable {
         displayRoomInfo();
     }
 
-    private void loadNewCustomerForm(String roomID) { // CHINO LOOK HERE YAY
+    private void loadNewCustomerForm(String roomID) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("customer-information.fxml"));
             Parent root = loader.load();

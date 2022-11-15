@@ -87,7 +87,7 @@ public class Customer {
     }
 
     // Method to cancel checking a customer in
-    public void cancel(int roomID) {
+    public void cancel(int roomID) throws SQLException {
         room.checkOut(roomID);
     }
 }
