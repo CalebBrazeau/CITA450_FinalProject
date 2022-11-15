@@ -94,7 +94,7 @@ public class CustomerInformationController implements Initializable {
     }
 
     @FXML
-    private void cancel() {
+    private void cancel() throws SQLException {
         // Cancel adding customer
         // TODO: This function is calling checkout on the Room class which means the room will be marked dirty. Dashboard is also not updated.
         customer.cancel(Integer.parseInt(roomID));

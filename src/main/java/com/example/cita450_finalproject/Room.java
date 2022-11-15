@@ -32,8 +32,7 @@ public class Room
     DatabaseConnection dbConnection;    //connection to database
 
     //Method Instantiator
-    public Room()
-    {
+    public Room() throws SQLException {
         // establish connection to database
         dbConnection = new DatabaseConnection();
     }
@@ -85,8 +84,7 @@ public class Room
     }
 
     //METHOD Check in
-    public void checkIn(int int_RoomID)
-    {
+    public void checkIn(int int_RoomID) throws SQLException {
         // Return if the room is not available
         if(!CheckAvailable(int_RoomID)) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -101,8 +99,7 @@ public class Room
     }
 
     //METHOD Check out
-    public void checkOut(int int_RoomID)
-    {
+    public void checkOut(int int_RoomID) throws SQLException {
         //if the room is available
         if (CheckAvailable(int_RoomID))
         {
@@ -129,8 +126,7 @@ public class Room
         //UpdateAvailable(int_RoomID);
     }
     //METHOD Update Room Availability
-    private void UpdateAvailable(int int_RoomID)
-    {
+    private void UpdateAvailable(int int_RoomID) throws SQLException {
         boolean bol_isAvailable = CheckAvailable(int_RoomID); //room availabilty
         boolean bol_isClean = RoomClean(int_RoomID);       //room clean status
 
@@ -181,8 +177,7 @@ public class Room
 
     }
     //METHOD Update Room Availability
-    private void UpdateCustomerID(int int_RoomID, int int_CustID)
-    {
+    private void UpdateCustomerID(int int_RoomID, int int_CustID) throws SQLException {
        int int_CustomerID = CheckCustomerID(int_RoomID); //the customers id
        int int_NullCustomerID = 0;
 
@@ -228,8 +223,7 @@ public class Room
     }
     //METHOD Update Room Clean
 
-    public void UpdateRoomClean(int int_RoomID)
-    {
+    public void UpdateRoomClean(int int_RoomID) throws SQLException {
         //variables
         boolean bol_clean = RoomClean(int_RoomID); // is the room clean
 

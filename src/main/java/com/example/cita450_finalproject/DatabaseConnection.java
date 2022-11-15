@@ -5,22 +5,19 @@ import java.util.Scanner;
 
 public class DatabaseConnection {
     Connection con;
-    public DatabaseConnection() {
+    public DatabaseConnection() throws SQLException {
         connect();
     }
 
-    private void connect() {
-        try {
-            // Get mysql password from creds.txt
-            String mysqlPassword = readPassword();
-            // Create connection to database
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/sys", "root", mysqlPassword);
-        } catch(Exception e) {
-            System.out.println(e);
-        }
+    // Method to create a connection to the mysql database
+    private void connect() throws SQLException {
+        // Get mysql password from creds.txt
+        String mysqlPassword = readPassword();
+        // Create connection to database
+        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/sys", "root", mysqlPassword);
     }
 
-    // Probably not the best way, but it works
+    // Method to read and return the password from creds.txt
     private String readPassword() {
         try {
             // Open Credentials file
@@ -35,12 +32,12 @@ public class DatabaseConnection {
             // Close reader
             myReader.close();
         } catch (FileNotFoundException e) {
-            System.out.println("Uh Oh.");
             e.printStackTrace();
         }
         return "";
     }
 
+    // Method to execute a select query on the database
     public ResultSet selectQuery(String query) throws SQLException {
         // Create query statement
         Statement stmt = con.createStatement();
@@ -49,57 +46,46 @@ public class DatabaseConnection {
         return stmt.executeQuery(query);
     }
 
-    public void updateAvailability(int roomID, boolean isAvailable) {
-        try {
-            // Prepare update statement
-            PreparedStatement updateStatement = con.prepareStatement("UPDATE rooms SET is_available = ? WHERE room_id = ?");
+    // Method to update the 'is_available' column of a specified room
+    public void updateAvailability(int roomID, boolean isAvailable) throws SQLException {
+        // Prepare update statement
+        PreparedStatement updateStatement = con.prepareStatement("UPDATE rooms SET is_available = ? WHERE room_id = ?");
 
-            // Set update values (Replaces the '?' with values bellow)
-            updateStatement.setBoolean(1, isAvailable);
-            updateStatement.setInt(2, roomID);
+        // Set update values (Replaces the '?' with values bellow)
+        updateStatement.setBoolean(1, isAvailable);
+        updateStatement.setInt(2, roomID);
 
-            // Execute update statement
-            updateStatement.executeUpdate();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+        // Execute update statement
+        updateStatement.executeUpdate();
     }
 
-    public void updateCustomerID(int roomID, int customerID)
-    {
-        try {
-            // Prepare update statement
-            PreparedStatement updateStatement = con.prepareStatement("UPDATE rooms SET customer_id = ? WHERE room_id = ?");
+    // Method to set the customer_id field of a specified room
+    public void updateCustomerID(int roomID, int customerID) throws SQLException {
+        // Prepare update statement
+        PreparedStatement updateStatement = con.prepareStatement("UPDATE rooms SET customer_id = ? WHERE room_id = ?");
 
-            // Set update values (Replaces the '?' with values bellow)
-            updateStatement.setInt(1, customerID);
-            updateStatement.setInt(2, roomID);
+        // Set update values (Replaces the '?' with values bellow)
+        updateStatement.setInt(1, customerID);
+        updateStatement.setInt(2, roomID);
 
-            // Execute update statement
-            updateStatement.executeUpdate();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+        // Execute update statement
+        updateStatement.executeUpdate();
     }
 
-    public void unassignCustomerFromRoom(int roomID) {
-        try {
-            // Prepare update statement
-            PreparedStatement updateStatement = con.prepareStatement("UPDATE rooms SET customer_id = ? WHERE room_id = ?");
+    // Method to set the customer_id field of a specified room to null
+    public void unassignCustomerFromRoom(int roomID) throws SQLException {
+        // Prepare update statement
+        PreparedStatement updateStatement = con.prepareStatement("UPDATE rooms SET customer_id = ? WHERE room_id = ?");
 
-            // Set update values (Replaces the '?' with values bellow)
-            updateStatement.setNull(1, 0); // NULL
-            updateStatement.setInt(2, roomID);
+        // Set update values (Replaces the '?' with values bellow)
+        updateStatement.setNull(1, 0); // NULL
+        updateStatement.setInt(2, roomID);
 
-            // Execute update statement
-            updateStatement.executeUpdate();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+        // Execute update statement
+        updateStatement.executeUpdate();
     }
 
-    /* TODO: Move to Customer class */
-
+    // Method to insert customer data into the customer table
     public void insertCustomer(String customerFName, String customerLName, String customerPhone, String customerEmail, int customerBillingAddressID, String customerPaymentMethod) throws SQLException {
         // The mysql insert statement
         String query = " INSERT INTO customers (customer_fname, customer_lname, customer_phone, customer_email, customer_billing_address_id, customer_payment_method)"
@@ -118,19 +104,16 @@ public class DatabaseConnection {
         preparedStmt.execute();
     }
 
-    public void updateRoomClean(int int_roomID, boolean bol_clean) {
-        try {
-            // Prepare update statement
-            PreparedStatement updateStatement = con.prepareStatement("UPDATE rooms SET is_clean = ? WHERE room_id = ?");
+    // Method to update the is_clean column of a specified room
+    public void updateRoomClean(int int_roomID, boolean bol_clean) throws SQLException {
+        // Prepare update statement
+        PreparedStatement updateStatement = con.prepareStatement("UPDATE rooms SET is_clean = ? WHERE room_id = ?");
 
-            // Set update values (Replaces the '?' with values bellow)
-            updateStatement.setBoolean(1, bol_clean);  //Hey pal look Chino and Caleb is disappointed that you didn't know
-            updateStatement.setInt(2, int_roomID); //how to do this is part and all the parts SMH, SMWD.
-                                                                //P.S. JUST PRESS 1 PAL PLZ FOR ME CHINO CALEB LOVE BRO!
-            // Execute update statement
-            updateStatement.executeUpdate();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+        // Set update values (Replaces the '?' with values bellow)
+        updateStatement.setBoolean(1, bol_clean);
+        updateStatement.setInt(2, int_roomID);
+
+        // Execute update statement
+        updateStatement.executeUpdate();
     }
 }
