@@ -16,27 +16,19 @@ public class JanitorDashboardController implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
-        try
-        {
-            //create rooms to search through
+        try {
             rooms = new Room();
             displayRooms();
-        }//end try X_X
-       catch (Exception e)
-       {
+        } catch (Exception e) {
             e.printStackTrace();
-        }//end catch
+        }
     }//end method
 
     private void displayRooms() throws SQLException
     {
-
-
         //for finding which rooms to pull up
         String searchCondition = "Clean";
         String searched = "False";
-
-        //RoomList.getItems().add(String.format("%-7s | %-7s ", "Room #",  "Is Clean"));
 
         // Clear rooms list
         RoomList.getItems().clear();
@@ -59,7 +51,6 @@ public class JanitorDashboardController implements Initializable{
     //method when button clicked
     @FXML
     private void MarkingClean() throws SQLException { //look for selected item
-
         String selectedItem = RoomList.getSelectionModel().getSelectedItem().toString();
 
         // Append first three characters of selected item to a string (First three will be the room ID)
@@ -73,8 +64,5 @@ public class JanitorDashboardController implements Initializable{
 
         // Update rooms list
         displayRooms();
-
     }//endMethod
-
-
 }//end class
