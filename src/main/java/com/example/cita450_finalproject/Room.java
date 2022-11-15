@@ -78,14 +78,16 @@ public class Room
             //nothing is selected
             default -> "SELECT * FROM rooms";
         };
-            resultSet = dbConnection.selectQuery(query);
+        // Run the query on the database object
+        resultSet = dbConnection.selectQuery(query);
 
-            return resultSet;
+        // Return query results
+        return resultSet;
     }
 
     //METHOD Check in
     public void checkIn(int int_RoomID) throws SQLException {
-        // Return if the room is not available
+        // Show error message and return if the room is not available
         if(!CheckAvailable(int_RoomID)) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Uh Oh");
@@ -112,22 +114,17 @@ public class Room
 
             return;
         }
-        //otherwise the room is occupied
-        //unassigned the customer from the room
-        //customer = null
+
         //unassign the customer from the room
         dbConnection.unassignCustomerFromRoom(int_RoomID);
 
         //mark the room as dirty
         UpdateRoomClean(int_RoomID);
-
-        //I am commenting this out because the room should not be marked available
-        //until the room is marked clean by the janitor.
-        //UpdateAvailable(int_RoomID);
     }
+
     //METHOD Update Room Availability
     private void UpdateAvailable(int int_RoomID) throws SQLException {
-        boolean bol_isAvailable = CheckAvailable(int_RoomID); //room availabilty
+        boolean bol_isAvailable = CheckAvailable(int_RoomID); //room availability
         boolean bol_isClean = RoomClean(int_RoomID);       //room clean status
 
         //if room has been checked out and room is clean
@@ -138,7 +135,6 @@ public class Room
             //make the room available by sending the variable
             dbConnection.updateAvailability(int_RoomID, bol_isAvailable);
         }
-
         //if checking in
         else
         {
@@ -148,6 +144,7 @@ public class Room
             dbConnection.updateAvailability(int_RoomID, bol_isAvailable);
         }
     }
+
     //METHOD Check Room Availability
     private boolean CheckAvailable(int int_RoomID)
     {
@@ -155,9 +152,6 @@ public class Room
         boolean bol_default = false;
 
         try {
-            //variables
-
-
             String SQL_Query = "SELECT is_available FROM rooms WHERE room_id = " + int_RoomID; //sql statement
             ResultSet refinedSearch = dbConnection.selectQuery(SQL_Query);                     //pull availability from table
 
@@ -165,17 +159,17 @@ public class Room
             if (refinedSearch.next()) {
                 //set availability based off of the refined search
                 bol_isAvailable = refinedSearch.getBoolean(1);
+                // Return availability
                 return bol_isAvailable;
             }
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         //return default
-
         return  bol_default;
-
     }
+
     //METHOD Update Room Availability
     private void UpdateCustomerID(int int_RoomID, int int_CustID) throws SQLException {
        int int_CustomerID = CheckCustomerID(int_RoomID); //the customers id
@@ -201,6 +195,7 @@ public class Room
         }
 
     }
+
     //METHOD Check if the customers ID
     private int CheckCustomerID(int int_RoomID)
     {
@@ -214,22 +209,22 @@ public class Room
             //set availability based off of the refined search
             int_CustomerID = refinedSearch.getInt(1);
 
+            // Return customer's ID
             return int_CustomerID;
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         //return default
         return  int_default;
     }
-    //METHOD Update Room Clean
 
+    //METHOD Update Room Clean
     public void UpdateRoomClean(int int_RoomID) throws SQLException {
         //variables
         boolean bol_clean = RoomClean(int_RoomID); // is the room clean
 
         //if janitor marks clean
-
-        if(!bol_clean)          //if room not clean then it is dirty
+        if(!bol_clean) //if room not clean then it is dirty
         {
             //change the variable to room clean
             bol_clean = true; // janitor marks clean
@@ -246,11 +241,7 @@ public class Room
             bol_clean = false;      //Marks the room dirty which Janitors will come
             //make the room unavailable by sending the variable
             dbConnection.updateRoomClean(int_RoomID, bol_clean);
-
         }
-        //debug
-        System.out.println(bol_clean);
-
     }
 
     //METHOD Check Room Is Clean
@@ -268,10 +259,12 @@ public class Room
             if (refinedSearch.next()) {
                 //set room clean based off of the refined search
                 bol_clean = refinedSearch.getBoolean(1);
+
+                // Return clean status
                 return bol_clean;
             }
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         return  bol_default;
