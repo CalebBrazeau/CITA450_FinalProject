@@ -15,8 +15,8 @@ public class UserSelect1Controller
     {
         //try
         try {
-            //load the employee select screen
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("EmployeeSelect.fxml"));
+            //load the login screen
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("StaffLoginScreenMain.fxml"));
             Parent root = loader.load();
 
             //create the scene and add a style sheet
