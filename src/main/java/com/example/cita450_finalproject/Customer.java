@@ -37,6 +37,7 @@ public class Customer {
         return 0;
     }
 
+    // Method to insert new customer data into the database
     public void insertNewCustomer(String customerFName, String customerLName, String customerPhone, String customerEmail, String customerPaymentMethod, int roomID) throws SQLException {
         // Check if customer exists by attempting to get the customer info
         int customerID = getCustomerID(customerFName, customerLName, customerPhone, customerEmail);
@@ -87,7 +88,5 @@ public class Customer {
     }
 
     // Method to cancel checking a customer in
-    public void cancel(int roomID) throws SQLException {
-        room.checkOut(roomID);
-    }
+    public void cancel(int roomID) throws SQLException { room.checkOut(roomID); }
 }
