@@ -148,6 +148,7 @@ public class DashboardController implements Initializable {
         displayRoomInfo();
     }
 
+
     private void loadNewCustomerForm(String roomID) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("customer-information.fxml"));

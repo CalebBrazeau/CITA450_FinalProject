@@ -3,7 +3,12 @@ package com.example.cita450_finalproject;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -34,6 +39,8 @@ public class StaffLoginScreenMainController
     private boolean CheckLogin() throws SQLException {
         // establish connection to database
         DatabaseConnection dbConnection = new DatabaseConnection();
+        ResultSet resultSet;
+        ResultSet selectEmployeeID;
 
         boolean bol_SucessfulLogin;
         boolean bol_default = false;
@@ -44,23 +51,41 @@ public class StaffLoginScreenMainController
 
         //check logins with the table
 
+        //search the database where the username and the password match what was entered
+        resultSet = dbConnection.selectQuery("Select * FROM employee WHERE username = '" + username + "' AND password = '" + password + "';");
         //if the Username can be found in the table
-            //check if the passwords match
-            //if they do
-                //set bol_sucessfulLogin to true
-            //else (it didnt match)
-                //set bol_sucessfullogin to false
-            //return bol_sucessfulLogin
-        //otherwise they couldnt find the username
+        if (resultSet.isBeforeFirst())
+        {
+            bol_SucessfulLogin = true;
+            selectEmployeeID = dbConnection.selectQuery("SELECT employee_id WHERE username = '" + username + "' AND password = '" + password + "';");
+            return  bol_SucessfulLogin;
+
+
+        }
+        //otherwise the username and password don't match or aren't in the system
         return bol_default;
     }
+
+    private int getJobID( int employeeID) throws SQLException {
+        int int_jobID;
+        DatabaseConnection dbConnection = new DatabaseConnection();
+        ResultSet selectJobID;
+
+        selectJobID = dbConnection.selectQuery("SELECT employee_id WHERE employee_id = '" + employeeID+ "';");
+        
+        return int_jobID;
+    }
     @FXML
-    private void Login() throws SQLException {
+    private void Login() throws SQLException
+    {
+        System.out.print("Got to Login");
 
         //if login was sucessful
         if(CheckLogin())
         {
             //go to next screen
+            System.out.print("Got to CheckLogin and was sucessful");
+            System.out.print("trying to load next screen");
             LoadNextScreen();
         }
         //else
@@ -76,10 +101,18 @@ public class StaffLoginScreenMainController
     @FXML
     private void LoadNextScreen()
     {
+        System.out.print("Got to LoadNextScreen Method");
         try
         {   //load the employee select screen
             FXMLLoader loader = new FXMLLoader(getClass().getResource("EmployeeSelect.fxml"));
             Parent root = loader.load();
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("main.css").toExternalForm());
+
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("Employee Select");
+            stage.show();
         }
         catch (IOException e)
         {
