@@ -6,16 +6,12 @@ import javafx.scene.Parent;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class StaffLoginScreenMainController
 {
     public TextField UserNameTextBox;
     public TextField PassWordTextBox;
-
-    //Passwords
-    String str_passFrontDesk ="Rooms";
-    String str_passCleaning = "Mop";
-    String str_passMaintencance = "Hammer";
 
     @FXML
     private String getUserName()
@@ -34,61 +30,32 @@ public class StaffLoginScreenMainController
         return str_Password;
     }
 
-    private boolean CheckLogin()
-    {
+    @FXML
+    private boolean CheckLogin() throws SQLException {
+        // establish connection to database
+        DatabaseConnection dbConnection = new DatabaseConnection();
+
         boolean bol_SucessfulLogin;
-        boolean bol_defaul = false;
+        boolean bol_default = false;
         //get the username
         String username = getUserName();
         //get the password
         String password = getPassword();
 
-        switch (username) {
-            //front desk employee
-            case "FrontDesk":
-                //check password if it is correct
-                if(password == str_passFrontDesk)
-                {
-                    //mark password as correct
-                    bol_SucessfulLogin = true;
+        //check logins with the table
 
-                    //return
-                    return bol_SucessfulLogin;
-                }
-                else {return bol_defaul;}
-            //cleaning employees
-            case "Janitor":
-                //check password if it is correct
-                if(password == str_passCleaning)
-                {
-                    //mark password as correct
-                    bol_SucessfulLogin = true;
-
-                    //return
-                    return bol_SucessfulLogin;
-                }
-                else {return bol_defaul;}
-            //Maintenance employees
-            case "Repairs":
-                //check password if it is correct
-                if(password == str_passMaintencance)
-                {
-                    //mark password as correct
-                    bol_SucessfulLogin = true;
-
-                    //return
-                    return bol_SucessfulLogin;
-                }
-                else {return bol_defaul;}
-
-            //invalid username
-            default:
-                return bol_defaul;
-
-        }
+        //if the Username can be found in the table
+            //check if the passwords match
+            //if they do
+                //set bol_sucessfulLogin to true
+            //else (it didnt match)
+                //set bol_sucessfullogin to false
+            //return bol_sucessfulLogin
+        //otherwise they couldnt find the username
+        return bol_default;
     }
-    private void Login()
-    {
+    @FXML
+    private void Login() throws SQLException {
 
         //if login was sucessful
         if(CheckLogin())
@@ -100,6 +67,7 @@ public class StaffLoginScreenMainController
         else
         {
             //display an error message
+
         }
 
 

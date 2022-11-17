@@ -4,10 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.cita450_finalproject.StaffLoginScreenMainController"
-            prefHeight="294.0" prefWidth="340.0">
+<AnchorPane prefHeight="294.0" prefWidth="340.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cita450_finalproject.StaffLoginScreenMainController">
     <TextField fx:id="UserNameTextBox" layoutX="100.0" layoutY="100.0" />
     <TextField fx:id="PassWordTextBox" layoutX="100.0" layoutY="150.0" />
     <Label layoutX="10.0" layoutY="33.0" text="Beach Hotel - Staff Login">
@@ -26,7 +23,7 @@
         </font>
     </Label>
     <Button id="Btn_Back" fx:id="backButton" layoutX="240.0" layoutY="8.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="92.0" text="Back" />
-    <Button id="Btn_Back" fx:id="loginButton" layoutX="100" layoutY="200.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="150.0" text="Login" />
+    <Button id="Btn_Back" fx:id="loginButton" layoutX="100" layoutY="200.0" mnemonicParsing="false" onAction="#Login" prefHeight="24.0" prefWidth="150.0" text="Login" />
 
 
 </AnchorPane>
