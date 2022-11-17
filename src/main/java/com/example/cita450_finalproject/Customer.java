@@ -78,6 +78,9 @@ public class Customer {
         if (newCustomerID > 0) {
             // Assign Customer to Room
             dbConnection.updateCustomerID(roomID, customerID);
+
+            // Return to not run any other code
+            return;
         }
 
         Alert alert = new Alert(Alert.AlertType.WARNING);
