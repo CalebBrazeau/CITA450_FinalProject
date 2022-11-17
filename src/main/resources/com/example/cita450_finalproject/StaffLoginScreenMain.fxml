@@ -8,24 +8,25 @@
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.cita450_finalproject.StaffLoginScreenMainController"
             prefHeight="294.0" prefWidth="340.0">
-    <TextField fx:id="UserNameTextBox" layoutX="100.0" layoutY="150.0" />
-    <TextField fx:id="PassWordTextBox" layoutX="100.0" layoutY="250.0" />
+    <TextField fx:id="UserNameTextBox" layoutX="100.0" layoutY="100.0" />
+    <TextField fx:id="PassWordTextBox" layoutX="100.0" layoutY="150.0" />
     <Label layoutX="10.0" layoutY="33.0" text="Beach Hotel - Staff Login">
         <font>
             <Font size="23.0" />
         </font>
     </Label>
-    <Label layoutX="100.0" layoutY="100.0" text="User Name">
+    <Label layoutX="100.0" layoutY="75.0" text="User Name">
         <font>
             <Font size="18.0" />
         </font>
     </Label>
-    <Label layoutX="100.0" layoutY="200.0" text="Password">
+    <Label layoutX="100.0" layoutY="125.0" text="Password">
         <font>
             <Font size="18.0" />
         </font>
     </Label>
     <Button id="Btn_Back" fx:id="backButton" layoutX="240.0" layoutY="8.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="92.0" text="Back" />
+    <Button id="Btn_Back" fx:id="loginButton" layoutX="100" layoutY="200.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="150.0" text="Login" />
 
 
 </AnchorPane>

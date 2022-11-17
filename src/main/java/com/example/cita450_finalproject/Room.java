@@ -117,7 +117,6 @@ public class Room
 
         //unassign the customer from the room
         dbConnection.unassignCustomerFromRoom(int_RoomID);
-
         //mark the room as dirty
         UpdateRoomClean(int_RoomID);
     }
