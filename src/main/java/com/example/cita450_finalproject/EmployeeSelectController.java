@@ -3,12 +3,14 @@ package com.example.cita450_finalproject;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import javafx.fxml.FXML;
 public class EmployeeSelectController
 {
+    public Button backButton;
     @FXML
     private void SelectFrontDesk()
     {
@@ -57,4 +59,11 @@ public class EmployeeSelectController
             e.printStackTrace();
         }//end catch
     }//end method
+    @FXML
+    private void closeWindow() {
+        // get a handle to the stage
+        Stage stage = (Stage) backButton.getScene().getWindow();
+        // DESTROY THE CHILD, CORRUPT THEM ALL
+        stage.close();
+    }
 }

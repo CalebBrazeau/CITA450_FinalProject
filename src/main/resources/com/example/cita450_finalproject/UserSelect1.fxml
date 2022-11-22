@@ -7,7 +7,7 @@
 <AnchorPane prefHeight="294.0" prefWidth="340.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cita450_finalproject.UserSelect1Controller">
    <children>
       <Button id="Btn_Customer" layoutX="51.0" layoutY="153.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="240.0" text="Customer" />
-      <Button id="btn_staff" layoutX="51.0" layoutY="83.0" mnemonicParsing="false" onAction="#SelectStaff" prefHeight="50.0" prefWidth="240.0" text="Hotel Staff" />
+      <Button id="btn_staff" fx:id="btn_staff" layoutX="51.0" layoutY="83.0" mnemonicParsing="false" onAction="#SelectStaff" prefHeight="50.0" prefWidth="240.0" text="Hotel Staff" />
       <Label layoutX="39.0" layoutY="33.0" text="Beach Hotel - POS Unit">
          <font>
             <Font size="23.0" />

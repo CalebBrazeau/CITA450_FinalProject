@@ -67,13 +67,15 @@ public class StaffLoginScreenMainController
     }
 
     private int getJobID( int employeeID) throws SQLException {
-        int int_jobID;
+        int int_jobId;
         DatabaseConnection dbConnection = new DatabaseConnection();
         ResultSet selectJobID;
 
-        selectJobID = dbConnection.selectQuery("SELECT employee_id WHERE employee_id = '" + employeeID+ "';");
-        
-        return int_jobID;
+        selectJobID = dbConnection.selectQuery("SELECT job_Id WHERE employee_id = '" + employeeID+ "';");
+        int_jobId =  selectJobID.getObject("job_Id", Integer.class);
+
+        System.out.print(int_jobId);
+        return int_jobId;
     }
     @FXML
     private void Login() throws SQLException

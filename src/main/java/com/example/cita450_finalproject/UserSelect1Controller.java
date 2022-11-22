@@ -3,6 +3,7 @@ package com.example.cita450_finalproject;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -10,11 +11,13 @@ import javafx.fxml.FXML;
 
 public class UserSelect1Controller
 {
+    public Button btn_staff;
    @FXML
     private void SelectStaff()
     {
         //try
         try {
+            closeWindow();
             //load the login screen
             FXMLLoader loader = new FXMLLoader(getClass().getResource("StaffLoginScreenMain.fxml"));
             Parent root = loader.load();
@@ -28,12 +31,22 @@ public class UserSelect1Controller
             stage.setScene(scene);
             stage.setTitle("Select User");
             stage.show();
+
+
         }//end try
         catch (IOException e)
         {
             e.printStackTrace();
         }//end catch
     }//end method
+
+    @FXML
+    private void closeWindow() {
+        // get a handle to the stage
+        Stage stage = (Stage) btn_staff.getScene().getWindow();
+        // DESTROY THE CHILD, CORRUPT THEM ALL
+        stage.close();
+    }
 
 }//end class
 
