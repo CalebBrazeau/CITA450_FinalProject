@@ -86,9 +86,10 @@ public class StaffLoginScreenMainController
         ResultSet selectJobID;
 
         //get the job_id connected with the employee id
-        selectJobID = dbConnection.selectQuery("SELECT * WHERE username = '" + userName+ "'FROM employee;");
+        selectJobID = dbConnection.selectQuery("SELECT * From employee WHERE username = '" + userName+ "' ;");
         System.out.println(selectJobID + "Got here" );
-        int_jobId = selectJobID.getInt(4);
+        //int_jobId = selectJobID.getInt(4);
+        int_jobId = selectJobID.getObject("job_Id", Integer.class);
         System.out.println("jobID"+int_jobId );
 
         //return the job id
