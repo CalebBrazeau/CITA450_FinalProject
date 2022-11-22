@@ -79,14 +79,14 @@ public class StaffLoginScreenMainController
         return int_employeeId;
     }
 
-    private int getJobID( int employeeID) throws SQLException
+    private int getJobID(String userName) throws SQLException
     {
         int int_jobId;
         DatabaseConnection dbConnection = new DatabaseConnection();
         ResultSet selectJobID;
 
         //get the job_id connected with the employee id
-        selectJobID = dbConnection.selectQuery("SELECT job_Id WHERE employee_id = '" + employeeID+ "';");
+        selectJobID = dbConnection.selectQuery("SELECT job_Id WHERE username = '" + userName+ "';");
         int_jobId = selectJobID.getInt(4);
 
         //return the job id
@@ -100,8 +100,8 @@ public class StaffLoginScreenMainController
         {
             //get the username employeeId and jobid
             String username = getUserName();
-            int emplyee_Id = getEmplyeeID(username);
-            int job_Id = getJobID(emplyee_Id);
+            //int employee_Id = getEmplyeeID(username);
+            int job_Id = getJobID(username);
             //go to next screen
             closeWindow();
             LoadNextScreen(job_Id);
