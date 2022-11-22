@@ -12,7 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 public class StaffLoginScreenMainController
 {
@@ -43,7 +42,6 @@ public class StaffLoginScreenMainController
         // establish connection to database
         DatabaseConnection dbConnection = new DatabaseConnection();
         ResultSet resultSet;
-        ResultSet selectEmployeeID;
 
         boolean bol_SucessfulLogin;
         boolean bol_default = false;
@@ -54,7 +52,6 @@ public class StaffLoginScreenMainController
         String password = getPassword();
 
         //check logins with the table
-
         //search the database where the username and the password match what was entered
         resultSet = dbConnection.selectQuery("Select * FROM employee WHERE username = '" + username + "' AND password = '" + password + "';");
 
@@ -69,47 +66,82 @@ public class StaffLoginScreenMainController
         return bol_default;
     }
 
-    private int getJobID( int employeeID) throws SQLException {
+    private int getEmplyeeID(String userName) throws SQLException {
+        int int_employeeId;
+        DatabaseConnection dbConnection = new DatabaseConnection();
+        ResultSet selectJobID;
+
+        //get the employee id connected to the username
+        selectJobID = dbConnection.selectQuery("SELECT employee_Id WHERE username = '" + userName+ "';");
+        int_employeeId = selectJobID.getInt(1);
+
+        //return the employeeID
+        return int_employeeId;
+    }
+
+    private int getJobID( int employeeID) throws SQLException
+    {
         int int_jobId;
         DatabaseConnection dbConnection = new DatabaseConnection();
         ResultSet selectJobID;
 
+        //get the job_id connected with the employee id
         selectJobID = dbConnection.selectQuery("SELECT job_Id WHERE employee_id = '" + employeeID+ "';");
-        int_jobId =  selectJobID.getObject("job_Id", Integer.class);
-        System.out.print(int_jobId);
+        int_jobId = selectJobID.getInt(4);
+
+        //return the job id
         return int_jobId;
     }
     @FXML
     private void Login() throws SQLException
     {
-        System.out.print("Got to Login");
-
         //if login was sucessful
         if(CheckLogin())
         {
+            //get the username employeeId and jobid
+            String username = getUserName();
+            int emplyee_Id = getEmplyeeID(username);
+            int job_Id = getJobID(emplyee_Id);
             //go to next screen
-            System.out.print("Got to CheckLogin and was sucessful");
-            System.out.print("trying to load next screen");
             closeWindow();
-            LoadNextScreen();
-        }
+            LoadNextScreen(job_Id);
+        }//end if
         //else
         else
         {
             //display an error message
 
-        }
-
-
-    }
+        }//end else
+    }//end method
 
     @FXML
-    private void LoadNextScreen()
+    private void LoadNextScreen(int job_Id)
     {
+        int frontDeskID = 1;
+        int cleaninfID = 2;
+        int maintenanceID = 3;
+
         System.out.print("Got to LoadNextScreen Method");
         try
-        {   //load the employee select screen
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("EmployeeSelect.fxml"));
+        {   //load the correct employee screen
+            FXMLLoader loader;
+            if(job_Id == frontDeskID)
+            {
+                loader = new FXMLLoader(getClass().getResource("dashboard.fxml"));
+            }
+            else if (job_Id == cleaninfID)
+            {
+                loader = new FXMLLoader(getClass().getResource("janitor-dashboard.fxml"));
+            }
+            else if(job_Id == maintenanceID)
+            {
+                loader = new FXMLLoader(getClass().getResource("MaintenanceOrJanitorSelect.fxml"));
+            }
+            else
+            {
+                loader = new FXMLLoader(getClass().getResource("EmployeeSelect.fxml"));
+            }
+
             Parent root = loader.load();
             Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("main.css").toExternalForm());

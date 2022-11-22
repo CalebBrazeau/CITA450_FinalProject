@@ -1,9 +1,15 @@
 package com.example.cita450_finalproject;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,6 +18,8 @@ public class JanitorDashboardController implements Initializable{
     //variables
     public ListView RoomList;  //this is the table that will show up on the screen.
     public Room rooms;          //the rooms and the functions to show their infomation
+
+    public Button backButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
@@ -23,6 +31,29 @@ public class JanitorDashboardController implements Initializable{
             e.printStackTrace();
         }
     }//end method
+
+    @FXML
+    private void LoadPrevoiusScreen()
+    {
+        System.out.print("Got to LoadPrevoiusScreen Method");
+        closeWindow();
+        try
+        {   //load the employee select screen
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("StaffLoginScreenMain.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("main.css").toExternalForm());
+
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("User Select");
+            stage.show();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }//end catch
+    }
 
     private void displayRooms() throws SQLException
     {
@@ -65,4 +96,12 @@ public class JanitorDashboardController implements Initializable{
         // Update rooms list
         displayRooms();
     }//endMethod
+
+    @FXML
+    private void closeWindow() {
+        // get a handle to the stage
+        Stage stage = (Stage) backButton.getScene().getWindow();
+        // DESTROY THE CHILD, CORRUPT THEM ALL
+        stage.close();
+    }
 }//end class

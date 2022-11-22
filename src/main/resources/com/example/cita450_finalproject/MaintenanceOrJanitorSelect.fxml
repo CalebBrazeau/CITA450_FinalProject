@@ -6,7 +6,7 @@
 
 <AnchorPane prefHeight="294.0" prefWidth="340.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cita450_finalproject.MaintnessORJanitorSelectController">
    <children>
-      <Button id="Btn_MarkClean" fx:id="backButton" layoutX="240.0" layoutY="8.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="92.0" text="Back" />
+      <Button id="Btn_MarkClean" fx:id="backButton" layoutX="240.0" layoutY="8.0" mnemonicParsing="false" onAction="#LoadPrevoiusScreen" prefHeight="24.0" prefWidth="92.0" text="Back" />
       <Button id="btn_cleaning" layoutX="51.0" layoutY="83.0" mnemonicParsing="false" onAction="#SelectCleaning" prefHeight="50.0" prefWidth="240.0" text="Cleaning" />
       <Button id="btn_maint" layoutX="51.0" layoutY="153.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="240.0" text="Maintenance" />
       <Label layoutX="14.0" layoutY="14.0" text="Please Select User - Hotel Staff" />

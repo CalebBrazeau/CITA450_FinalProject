@@ -19,6 +19,6 @@
             <Font size="35.0" />
          </font>
       </Label>
-      <Button id="Btn_MarkClean" fx:id="backButton" layoutX="442.0" layoutY="18.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="92.0" text="Back" />
+      <Button id="Btn_MarkClean" fx:id="backButton" layoutX="442.0" layoutY="18.0" mnemonicParsing="false" onAction="#LoadPrevoiusScreen" prefHeight="24.0" prefWidth="92.0" text="Back" />
     </children>
 </AnchorPane>

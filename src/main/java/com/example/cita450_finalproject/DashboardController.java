@@ -5,10 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -23,6 +20,8 @@ public class DashboardController implements Initializable {
     public TextField searchTextBox;
 
     private Room room;
+
+    private Button backButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -168,5 +167,35 @@ public class DashboardController implements Initializable {
         catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void LoadPrevoiusScreen()
+    {
+        System.out.print("Got to LoadPrevoiusScreen Method");
+        closeWindow();
+        try
+        {   //load the employee select screen
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("UserSelect1.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("main.css").toExternalForm());
+
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("User Select");
+            stage.show();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }//end catch
+    }
+    @FXML
+    private void closeWindow() {
+        // get a handle to the stage
+        Stage stage = (Stage) backButton.getScene().getWindow();
+        // DESTROY THE CHILD, CORRUPT THEM ALL
+        stage.close();
     }
 }
