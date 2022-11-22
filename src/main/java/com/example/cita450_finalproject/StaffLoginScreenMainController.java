@@ -49,6 +49,7 @@ public class StaffLoginScreenMainController
         boolean bol_default = false;
         //get the username
         String username = getUserName();
+
         //get the password
         String password = getPassword();
 
@@ -56,14 +57,13 @@ public class StaffLoginScreenMainController
 
         //search the database where the username and the password match what was entered
         resultSet = dbConnection.selectQuery("Select * FROM employee WHERE username = '" + username + "' AND password = '" + password + "';");
+
         //if the Username can be found in the table
         if (resultSet.isBeforeFirst())
         {
+            //set login to sucessful
             bol_SucessfulLogin = true;
-            selectEmployeeID = dbConnection.selectQuery("SELECT employee_id WHERE username = '" + username + "' AND password = '" + password + "';");
             return  bol_SucessfulLogin;
-
-
         }
         //otherwise the username and password don't match or aren't in the system
         return bol_default;
@@ -76,7 +76,6 @@ public class StaffLoginScreenMainController
 
         selectJobID = dbConnection.selectQuery("SELECT job_Id WHERE employee_id = '" + employeeID+ "';");
         int_jobId =  selectJobID.getObject("job_Id", Integer.class);
-
         System.out.print(int_jobId);
         return int_jobId;
     }
