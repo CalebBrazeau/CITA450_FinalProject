@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -17,6 +18,8 @@ public class StaffLoginScreenMainController
 {
     public TextField UserNameTextBox;
     public TextField PassWordTextBox;
+
+    public Button loginButton;
 
     @FXML
     private String getUserName()
@@ -88,6 +91,7 @@ public class StaffLoginScreenMainController
             //go to next screen
             System.out.print("Got to CheckLogin and was sucessful");
             System.out.print("trying to load next screen");
+            closeWindow();
             LoadNextScreen();
         }
         //else
@@ -120,6 +124,36 @@ public class StaffLoginScreenMainController
         {
             e.printStackTrace();
         }//end catch
+    }
+
+    @FXML
+    private void LoadPrevoiusScreen()
+    {
+        System.out.print("Got to LoadPrevoiusScreen Method");
+        closeWindow();
+        try
+        {   //load the employee select screen
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("UserSelect1.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("main.css").toExternalForm());
+
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("User Select");
+            stage.show();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }//end catch
+    }
+    @FXML
+    private void closeWindow() {
+        // get a handle to the stage
+        Stage stage = (Stage) loginButton.getScene().getWindow();
+        // DESTROY THE CHILD, CORRUPT THEM ALL
+        stage.close();
     }
 
 }

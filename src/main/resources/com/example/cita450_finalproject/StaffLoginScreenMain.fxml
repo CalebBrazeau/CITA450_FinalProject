@@ -22,7 +22,7 @@
             <Font size="18.0" />
         </font>
     </Label>
-    <Button id="Btn_Back" fx:id="backButton" layoutX="240.0" layoutY="8.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="92.0" text="Back" />
+    <Button id="Btn_Back" fx:id="backButton" layoutX="240.0" layoutY="8.0" mnemonicParsing="false" onAction="#LoadPrevoiusScreen" prefHeight="24.0" prefWidth="92.0" text="Back" />
     <Button id="Btn_Back" fx:id="loginButton" layoutX="100" layoutY="200.0" mnemonicParsing="false" onAction="#Login" prefHeight="24.0" prefWidth="150.0" text="Login" />
 
 
