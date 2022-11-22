@@ -5,6 +5,7 @@ module com.example.cita450_finalproject {
     requires org.controlsfx.controls;
     requires org.kordamp.bootstrapfx.core;
     requires java.sql;
+    requires java.management;
 
     opens com.example.cita450_finalproject to javafx.fxml;
     exports com.example.cita450_finalproject;

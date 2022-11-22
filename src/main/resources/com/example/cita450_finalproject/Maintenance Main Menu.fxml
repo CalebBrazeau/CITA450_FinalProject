@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="305.0" prefWidth="378.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cita450_finalproject.MaintenanceMainMenuController">
+   <children>
+      <Label layoutX="7.0" layoutY="77.0" prefHeight="51.0" prefWidth="385.0" text="Maintenance Main Menu">
+         <font>
+            <Font name="Bell MT" size="35.0" />
+         </font></Label>
+      <Button layoutX="150.0" layoutY="148.0" mnemonicParsing="false" onAction="#SelectRequest" text="Add Request" />
+   </children>
+</AnchorPane>

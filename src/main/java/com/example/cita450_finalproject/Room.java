@@ -281,4 +281,9 @@ public class Room
 
         return  bol_default;
     }
+    public void AddRequest(int roomID, String comments, String brokenItem) throws SQLException
+    {
+        //Connecting the AddRequest to the dbConnection to the table
+        dbConnection.AddRequest(roomID, comments, brokenItem);
+    }
 }//end of Class "Room"

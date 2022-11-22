@@ -133,4 +133,22 @@ public class DatabaseConnection {
             System.out.println(e);
         }
     }
+    public void AddRequest(int roomID, String comments, String brokenItem) throws SQLException {
+
+        //This will insert the query  to the table called maintenance
+
+        String query = " INSERT INTO maintenance (room_ID, broken_item,comments)"
+                + " values (?, ?, ?)";
+
+
+        PreparedStatement preparedStmt = con.prepareStatement(query);
+        preparedStmt.setInt(1, (roomID));
+        preparedStmt.setString(2, comments);
+        preparedStmt.setString(3, brokenItem);
+
+        // Execute the prepared statement
+        preparedStmt.execute();
+    }
+
+
 }
