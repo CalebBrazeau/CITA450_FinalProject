@@ -54,7 +54,7 @@ public class JanitorDashboardController implements Initializable{
             e.printStackTrace();
         }//end catch
     }
-
+    @FXML
     private void displayRooms() throws SQLException
     {
         //for finding which rooms to pull up
