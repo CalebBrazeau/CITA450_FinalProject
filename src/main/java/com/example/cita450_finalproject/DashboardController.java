@@ -21,6 +21,7 @@ public class DashboardController implements Initializable {
 
     private Room room;
 
+    @FXML
     private Button backButton;
 
     @Override
