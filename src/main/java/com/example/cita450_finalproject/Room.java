@@ -1,33 +1,10 @@
 package com.example.cita450_finalproject;
+
 import javafx.scene.control.Alert;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 public class Room
 {
-    /*
-     * CLASS: Room
-     * Author: Chino Beach
-     *
-     * Purpose:
-     * This class serves to hold all the information about the room in the hotel.
-     * -Handles checking customers in and out of rooms
-     * -Checks room's availability
-     * -Updates room's availability
-     * -Checks the floor number for a room
-     * -Checks the number of beds in a room
-     * -Check size of beds in a room
-     * -Checks handicap accessiblity for rooms
-     * -Checks which customer is currently in a room
-     * -Assign a customer to a room
-     * -Pulls the search information for a room
-     * Done by Chino ^
-     *
-     * Done by Ricardo Gibson:
-     * -Checks if a room is clean
-     * -Updates if a room is clean
-     */
-
-
     //DATABASE
     DatabaseConnection dbConnection;    //connection to database
 
@@ -35,7 +12,7 @@ public class Room
     public Room() throws SQLException {
         // establish connection to database
         dbConnection = new DatabaseConnection();
-    }
+    }//end method
 
     //METHOD handle what is being shown when something is searched
     public ResultSet pullInformation(String str_SearchCondition, String str_Searched) throws SQLException {
@@ -77,13 +54,13 @@ public class Room
 
             //nothing is selected
             default -> "SELECT * FROM rooms";
-        };
+        };//end swtich
         // Run the query on the database object
         resultSet = dbConnection.selectQuery(query);
 
         // Return query results
         return resultSet;
-    }
+    }//end method
 
     //METHOD Check in
     public void checkIn(int int_RoomID) throws SQLException {
@@ -95,10 +72,9 @@ public class Room
             alert.show();
             return;
         }
-
         // Update room availability
         UpdateAvailable(int_RoomID);
-    }
+    }//end method
 
     //METHOD Check out
     public void checkOut(int int_RoomID) throws SQLException {
@@ -113,13 +89,17 @@ public class Room
             alert.show();
 
             return;
-        }
+        }//end if
 
+        //if the room is not aviable
+        else
+        {
         //unassign the customer from the room
         dbConnection.unassignCustomerFromRoom(int_RoomID);
         //mark the room as dirty
         UpdateRoomClean(int_RoomID);
-    }
+        }
+    }//end method
 
     //METHOD Update Room Availability
     private void UpdateAvailable(int int_RoomID) throws SQLException {
@@ -133,7 +113,7 @@ public class Room
             bol_isAvailable = true;
             //make the room available by sending the variable
             dbConnection.updateAvailability(int_RoomID, bol_isAvailable);
-        }
+        }//end if
         //if checking in
         else
         {
@@ -141,8 +121,8 @@ public class Room
             bol_isAvailable = false;
             //make the room unavailable by sending the variable
             dbConnection.updateAvailability(int_RoomID, bol_isAvailable);
-        }
-    }
+        }//end else
+    }//end method
 
     //METHOD Check Room Availability
     private boolean CheckAvailable(int int_RoomID)
@@ -163,67 +143,20 @@ public class Room
             }
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }//end catch
 
         //return default
         return  bol_default;
-    }
+    }//end method
 
-    //METHOD Update Room Availability
-    private void UpdateCustomerID(int int_RoomID, int int_CustID) throws SQLException {
-       int int_CustomerID = CheckCustomerID(int_RoomID); //the customers id
-       int int_NullCustomerID = 0;
-
-        //if checking out, (there is a customer assigned to the room)
-        if( int_CustomerID != int_NullCustomerID)
-        {
-            //unassigned the customer from the room
-            int_CustomerID = int_NullCustomerID;
-            //make the room available by sending the variable
-            dbConnection.updateCustomerID(int_RoomID, int_CustomerID);
-        }
-
-        //if checking in
-        else
-        {
-            //get the customers id
-            int_CustomerID = int_CustID ; //this will need to be done differntly
-            //assign the customer to a room
-            dbConnection.updateCustomerID(int_RoomID, int_CustomerID);
-
-        }
-
-    }
-
-    //METHOD Check if the customers ID
-    private int CheckCustomerID(int int_RoomID)
-    {
-        int int_CustomerID; //the customers ID
-        int int_default = 0; //no customer can have ID of 0
-        try {
-
-            String SQL_Query = "SELECT customer_id FROM rooms WHERE room_id = " + int_RoomID; //sql statemenet
-            ResultSet refinedSearch = dbConnection.selectQuery(SQL_Query);                     //pull avaiablity from table
-
-            //set availability based off of the refined search
-            int_CustomerID = refinedSearch.getInt(1);
-
-            // Return customer's ID
-            return int_CustomerID;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        //return default
-        return  int_default;
-    }
 
     //METHOD Update Room Clean
     public void UpdateRoomClean(int int_RoomID) throws SQLException {
         //variables
         boolean bol_clean = RoomClean(int_RoomID); // is the room clean
-
+        boolean bol_isAvaibale = CheckAvailable((int_RoomID)); // is the room available
         //if janitor marks clean
-        if(!bol_clean) //if room not clean then it is dirty
+        if(!bol_clean && !bol_isAvaibale) //if room not clean then it is dirty
         {
             //change the variable to room clean
             bol_clean = true; // janitor marks clean
@@ -240,8 +173,8 @@ public class Room
             bol_clean = false;      //Marks the room dirty which Janitors will come
             //make the room unavailable by sending the variable
             dbConnection.updateRoomClean(int_RoomID, bol_clean);
-        }
-    }
+        }//end else
+    }//end method
 
     //METHOD Check Room Is Clean
     private boolean RoomClean(int int_RoomID)
@@ -261,11 +194,13 @@ public class Room
 
                 // Return clean status
                 return bol_clean;
-            }
-        } catch (Exception e) {
+            }//end if
+        } //end try
+        catch (Exception e)
+        {
             e.printStackTrace();
-        }
-
+        }//end catch
+        //return the default
         return  bol_default;
-    }
+    }//end method
 }//end of Class "Room"
