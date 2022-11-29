@@ -4,12 +4,12 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="305.0" prefWidth="378.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cita450_finalproject.MaintenanceMainMenuController">
+<AnchorPane prefHeight="294.0" prefWidth="340.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cita450_finalproject.MaintenanceMainMenuController">
    <children>
-      <Label layoutX="7.0" layoutY="77.0" prefHeight="51.0" prefWidth="385.0" text="Maintenance Main Menu">
+      <Label layoutX="79.0" layoutY="33.0" text="Customer Menu">
          <font>
-            <Font name="Bell MT" size="35.0" />
+            <Font size="23.0" />
          </font></Label>
-      <Button layoutX="150.0" layoutY="148.0" mnemonicParsing="false" onAction="#SelectRequest" text="Add Request" />
+      <Button layoutX="51.0" layoutY="83.0" mnemonicParsing="false" onAction="#SelectRequest" prefHeight="50.0" prefWidth="240.0" text="Maintenance Request" />
    </children>
 </AnchorPane>
