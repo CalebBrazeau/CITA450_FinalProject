@@ -8,7 +8,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
@@ -17,28 +16,33 @@ import java.util.ResourceBundle;
 public class JanitorDashboardController implements Initializable{
     //variables
     public ListView RoomList;  //this is the table that will show up on the screen.
-    public Room rooms;          //the rooms and the functions to show their infomation
+    public Room rooms;          //the rooms and the functions to show their information
+    public Button backButton;   //this button returns to a previous screen
 
-    public Button backButton;
-
+    //Method Initialize: loads the screen up with the information that it needs
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
-        try {
+        try
+        {
+            //make a new instance of room information
             rooms = new Room();
+            //display relevant information in a table on the screen
             displayRooms();
-        } catch (Exception e) {
+        } //end try
+        catch (Exception e) {
             e.printStackTrace();
-        }
+        }//end catch
     }//end method
 
+    //METHOD to go back to the prevoius screen. This is called when the back button is selected
     @FXML
     private void LoadPrevoiusScreen()
     {
-        System.out.print("Got to LoadPrevoiusScreen Method");
+        //clost the window that is currently open for smooth transition
         closeWindow();
         try
-        {   //load the employee select screen
+        {   //load the employee select screen with the style sheet attached
             FXMLLoader loader = new FXMLLoader(getClass().getResource("StaffLoginScreenMain.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
@@ -46,25 +50,27 @@ public class JanitorDashboardController implements Initializable{
 
             Stage stage = new Stage();
             stage.setScene(scene);
-            stage.setTitle("User Select");
+            stage.setTitle("Staff Login");  //name of the new tab
             stage.show();
-        }
+        }//end try
         catch (IOException e)
         {
             e.printStackTrace();
         }//end catch
-    }
+    }//end method
+
+    //METHOD to display which rooms currently need to be cleaned.
     @FXML
     private void displayRooms() throws SQLException
     {
         //for finding which rooms to pull up
-        String searchCondition = "Clean";
-        String searched = "False";
+        String searchCondition = "Clean";   //searching for information in the clean category
+        String searched = "False";          //looking for rooms that are not clean
 
         // Clear rooms list
         RoomList.getItems().clear();
 
-        //show the rooms room number and clean
+        //show the rooms room number and clean status
         RoomList.getItems().add(String.format("%-7s | %-7s ", "Room #",  "Is Clean"));
         ResultSet roomInfo = rooms.pullInformation(searchCondition, searched);
 
@@ -79,9 +85,11 @@ public class JanitorDashboardController implements Initializable{
 
     }//end of method displayRooms
 
-    //method when button clicked
+    //method when mark clean button clicked. update that room to clean.
     @FXML
-    private void MarkingClean() throws SQLException { //look for selected item
+    private void MarkingClean() throws SQLException
+    {
+        //look for selected item
         String selectedItem = RoomList.getSelectionModel().getSelectedItem().toString();
 
         // Append first three characters of selected item to a string (First three will be the room ID)
@@ -97,11 +105,13 @@ public class JanitorDashboardController implements Initializable{
         displayRooms();
     }//endMethod
 
+    //method used to close the current screen. this is used when transiting to a new screen.
     @FXML
-    private void closeWindow() {
+    private void closeWindow()
+    {
         // get a handle to the stage
         Stage stage = (Stage) backButton.getScene().getWindow();
-        // DESTROY THE CHILD, CORRUPT THEM ALL
+        // DESTROY THE STAGE
         stage.close();
     }
 }//end class

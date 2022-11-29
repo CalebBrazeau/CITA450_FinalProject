@@ -4,10 +4,11 @@ import  java.sql.*;
 import java.util.Scanner;
 
 public class DatabaseConnection {
-    Connection con;
+    Connection con;     //the connection to the database
     public DatabaseConnection() throws SQLException {
+        //connect to the database
         connect();
-    }
+    }//end method
 
     // Method to create a connection to the mysql database
     private void connect() throws SQLException {
@@ -35,7 +36,7 @@ public class DatabaseConnection {
             e.printStackTrace();
         }
         return "";
-    }
+    }//end method
 
     // Method to execute a select query on the database
     public ResultSet selectQuery(String query) throws SQLException {
@@ -44,7 +45,7 @@ public class DatabaseConnection {
 
         // Execute and return query results
         return stmt.executeQuery(query);
-    }
+    }//end method
 
     // Method to update the 'is_available' column of a specified room
     public void updateAvailability(int roomID, boolean isAvailable) throws SQLException {
@@ -57,7 +58,7 @@ public class DatabaseConnection {
 
         // Execute update statement
         updateStatement.executeUpdate();
-    }
+    }//end method
 
     // Method to set the customer_id field of a specified room
     public void updateCustomerID(int roomID, int customerID) throws SQLException {
@@ -70,7 +71,7 @@ public class DatabaseConnection {
 
         // Execute update statement
         updateStatement.executeUpdate();
-    }
+    }//end method
 
     // Method to set the customer_id field of a specified room to null
     public void unassignCustomerFromRoom(int roomID) throws SQLException {
@@ -83,7 +84,7 @@ public class DatabaseConnection {
 
         // Execute update statement
         updateStatement.executeUpdate();
-    }
+    }//end method
 
     // Method to insert customer data into the customer table
     public void insertCustomer(String customerFName, String customerLName, String customerPhone, String customerEmail, int customerBillingAddressID, String customerPaymentMethod) throws SQLException {
@@ -102,7 +103,7 @@ public class DatabaseConnection {
 
         // Execute the prepared statement
         preparedStmt.execute();
-    }
+    }//end method
 
     // Method to update the is_clean column of a specified room
     public void updateRoomClean(int int_roomID, boolean bol_clean) throws SQLException {
@@ -115,5 +116,5 @@ public class DatabaseConnection {
 
         // Execute update statement
         updateStatement.executeUpdate();
-    }
-}
+    }//end method
+}//end class

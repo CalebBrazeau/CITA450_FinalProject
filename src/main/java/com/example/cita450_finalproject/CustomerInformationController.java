@@ -12,15 +12,15 @@ import java.util.regex.Pattern;
 
 public class CustomerInformationController implements Initializable {
 
-    public TextField textFName;
-    public TextField textLName;
-    public TextField textPhoneNumber;
-    public TextField textEmail;
-    public ChoiceBox choicePaymentMethod;
-    public Button btnInsert;
+    public TextField textFName;         //textbox for user to enter a first name
+    public TextField textLName;         //textbox for user to enter a last name
+    public TextField textPhoneNumber;   //textbox for a user to enter a phone #
+    public TextField textEmail;         //textbox for user to enter the email
+    public ChoiceBox choicePaymentMethod;   //choice box, select cash or CREDIT
+    public Button btnInsert;            //button to add customer to database
 
-    Customer customer;
-    String roomID;
+    Customer customer;      //stores information
+    String roomID;          //stores which room they want
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -29,15 +29,15 @@ public class CustomerInformationController implements Initializable {
             setupPaymentMethods();
         } catch(Exception e) {
             e.printStackTrace();
-        }
-    }
+        }//end catch
+    }//end method
 
     // Method to add payment methods to the payment method choice box
     private void setupPaymentMethods() {
         // Add payment options to payment method choice box
         choicePaymentMethod.getItems().add("VISA");
         choicePaymentMethod.getItems().add("CASH");
-    }
+    }//end method
 
     // Method to collect and insert customer data into the database
     @FXML
@@ -65,7 +65,7 @@ public class CustomerInformationController implements Initializable {
                 closeWindow();
                 // Return to exit method
                 return;
-        }
+        }//end if
 
         // Create new alert object of type error
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -73,7 +73,7 @@ public class CustomerInformationController implements Initializable {
         alert.setHeaderText("Missing or improper customer information!");
         // Display the alert
         alert.show();
-}
+}//end method
 
     // Method to check if all fields are filled and valid inputs
     private boolean hasAllFieldsFilled() {
@@ -82,19 +82,19 @@ public class CustomerInformationController implements Initializable {
                 && isValidPhoneNumber(textPhoneNumber.getText())
                 && isValidEmail(textEmail.getText())
                 && choicePaymentMethod.getSelectionModel().getSelectedItem() != null;
-    }
+    }//end method
 
     // Method to validate email input
     private boolean isValidEmail(String email) {
         // Check if passed in email is valid using regular expressions
         return Pattern.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", email);
-    }
+    }//method
 
     // Method to validate email input
     private boolean isValidPhoneNumber(String number) {
         // Check if passed in phone number is valid using regular expressions
         return Pattern.matches("^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.\\-]\\d{3}[\\s.\\-]\\d{4}$", number);
-    }
+    }//method
 
     // Method to cancel checking in a customer
     @FXML
@@ -105,7 +105,7 @@ public class CustomerInformationController implements Initializable {
 
         // Close that bad bitch
         closeWindow();
-    }
+    }//end method
 
     // Method to close the current window
     private void closeWindow() {
@@ -113,10 +113,10 @@ public class CustomerInformationController implements Initializable {
         Stage stage = (Stage) btnInsert.getScene().getWindow();
         // DESTROY THE CHILD, CORRUPT THEM ALL
         stage.close();
-    }
+    }//end method
 
     // Method to set the class' roomID variable
     public void setRoomID(String roomID) {
         this.roomID = roomID;
     }
-}
+}//end class

@@ -9,7 +9,7 @@ import javafx.fxml.FXML;
 import java.io.IOException;
 public class MaintnessORJanitorSelectController
 {
-    public Button backButton;
+    public Button backButton;   //button to go to previous screen
     @FXML
     private void SelectCleaning()
     {
@@ -34,10 +34,12 @@ public class MaintnessORJanitorSelectController
             e.printStackTrace();
         }//end catch
     }//end method
+
+    //method to go back a screen
     @FXML
     private void LoadPrevoiusScreen()
     {
-        System.out.print("Got to LoadPrevoiusScreen Method");
+        //close the window
         closeWindow();
         try
         {   //load the employee select screen
@@ -50,18 +52,20 @@ public class MaintnessORJanitorSelectController
             stage.setScene(scene);
             stage.setTitle("User Select");
             stage.show();
-        }
+        }//end try
         catch (IOException e)
         {
             e.printStackTrace();
         }//end catch
-    }
+    }//end method
+
+    //method to close the window
     @FXML
     private void closeWindow() {
         // get a handle to the stage
         Stage stage = (Stage) backButton.getScene().getWindow();
         // DESTROY THE CHILD, CORRUPT THEM ALL
         stage.close();
-    }
+    }//end method
 }//end class
 
