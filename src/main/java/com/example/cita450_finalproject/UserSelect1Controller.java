@@ -5,18 +5,20 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import javafx.fxml.FXML;
 
 public class UserSelect1Controller
 {
-    public Button btn_staff;
+    public Button btn_staff;    //this is a button that you press to indicate you are staff
+
+    //METHOD this method allows the user to select that they are staff and view the appropriate screen
    @FXML
     private void SelectStaff()
     {
         //try
         try {
+            //close the current window for smooth transaction
             closeWindow();
             //load the login screen
             FXMLLoader loader = new FXMLLoader(getClass().getResource("StaffLoginScreenMain.fxml"));
@@ -29,9 +31,8 @@ public class UserSelect1Controller
             //stage the scene
             Stage stage = new Stage();
             stage.setScene(scene);
-            stage.setTitle("Select User");
+            stage.setTitle("Staff Login");
             stage.show();
-
 
         }//end try
         catch (IOException e)
@@ -40,13 +41,13 @@ public class UserSelect1Controller
         }//end catch
     }//end method
 
+    //METHOD to close the current window
     @FXML
     private void closeWindow() {
         // get a handle to the stage
         Stage stage = (Stage) btn_staff.getScene().getWindow();
-        // DESTROY THE CHILD, CORRUPT THEM ALL
+        // DESTROY THE STAGE
         stage.close();
-    }
-
+    }//end method
 }//end class
 

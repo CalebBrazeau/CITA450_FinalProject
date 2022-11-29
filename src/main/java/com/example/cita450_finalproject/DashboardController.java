@@ -15,14 +15,12 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class DashboardController implements Initializable {
-    public ListView listRooms;
-    public ChoiceBox choiceSearchBy;
-    public TextField searchTextBox;
-
-    private Room room;
-
+    public ListView listRooms;      //visable lsit of rooms
+    public ChoiceBox choiceSearchBy; //where you select what you want to search by
+    public TextField searchTextBox; //what you are searching
+    private Room room;              //room information
     @FXML
-    private Button backButton;
+    private Button backButton;      //button selected to go back a screen
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -35,7 +33,9 @@ public class DashboardController implements Initializable {
         } catch (Exception e) {
                 e.printStackTrace();
         }
-    }
+    }//end method
+
+    //METHOD that lists available search functions
 
     private void setupSearchBy() {
         // Add search keys to search by choice box
@@ -45,7 +45,9 @@ public class DashboardController implements Initializable {
         choiceSearchBy.getItems().add("Handicap Accessible");
         choiceSearchBy.getItems().add("Number of Beds");
         choiceSearchBy.getItems().add("Available");
-    }
+    }//end method
+
+    //method to display room information
 
     @FXML
     private void displayRoomInfo() throws SQLException {
@@ -57,7 +59,6 @@ public class DashboardController implements Initializable {
 
         // Key to search by in database, default empty string to get all room info
         String searchKey = "";
-
         String searched;
 
         // Check if there is a search key selected
@@ -88,10 +89,12 @@ public class DashboardController implements Initializable {
                                 String.format("%-11b | ", roomInfo.getBoolean(9)) + // Is Available
                                 String.format("%-7b", roomInfo.getBoolean(10)) // Is Clean
                                 // String.format("%-7b", roomInfo.getBoolean(11)) // Customer ID
-                );
-            }
-        }
-    }
+                );//end the add
+            }//end while
+        }//end if
+    }//end method
+
+    //method to check a customer into a room
 
     @FXML
     private void checkIn() throws SQLException {
@@ -119,8 +122,9 @@ public class DashboardController implements Initializable {
         // Update rooms list
         displayRoomInfo();
         loadNewCustomerForm(String.valueOf(roomID));
-    }
+    }//end method
 
+    //method called to check someone out of a room
     @FXML
     private void checkOut() throws SQLException {
         // If nothing is selected or first item is selected show error and return.
@@ -146,9 +150,11 @@ public class DashboardController implements Initializable {
 
         // Update rooms list
         displayRoomInfo();
-    }
+    }//end method
 
+    //note ^^^^ should check if the room is checked in to avoid bug
 
+    //method to load up a new screen for adding a customer
     private void loadNewCustomerForm(String roomID) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("customer-information.fxml"));
@@ -164,16 +170,17 @@ public class DashboardController implements Initializable {
             stage.setScene(scene);
             stage.setTitle("Enter Customer Information");
             stage.show();
-        }
+        }//end try
         catch (IOException e) {
             e.printStackTrace();
-        }
-    }
+        }//end catch
+    }//end method
 
+    //method to load the last screen
     @FXML
     private void LoadPrevoiusScreen()
     {
-        System.out.print("Got to LoadPrevoiusScreen Method");
+       //close the window
         closeWindow();
         try
         {   //load the employee select screen
@@ -184,19 +191,21 @@ public class DashboardController implements Initializable {
 
             Stage stage = new Stage();
             stage.setScene(scene);
-            stage.setTitle("User Select");
+            stage.setTitle("Staff Login");
             stage.show();
         }
         catch (IOException e)
         {
             e.printStackTrace();
         }//end catch
-    }
+    }//end method
+
+    //method to close a window
     @FXML
     private void closeWindow() {
         // get a handle to the stage
         Stage stage = (Stage) backButton.getScene().getWindow();
         // DESTROY THE CHILD, CORRUPT THEM ALL
         stage.close();
-    }
-}
+    }//end method
+}//end class

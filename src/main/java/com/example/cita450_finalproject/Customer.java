@@ -18,8 +18,8 @@ public class Customer {
         } catch (Exception e) {
             // Uh oh
             e.printStackTrace();
-        }
-    }
+        }//end catch
+    }//end method
 
     // Method to get customers ID using full name, phone number, and email
     public int getCustomerID(String customerFName, String customerLName, String customerPhone, String customerEmail) throws SQLException {
@@ -32,10 +32,10 @@ public class Customer {
         if (rs.next()) {
             // Return customer ID
             return rs.getInt(1);
-        }
+        }//end if
         // Return 0 if no customer ID is found
         return 0;
-    }
+    }//end method
 
     // Method to insert new customer data into the database
     public void insertNewCustomer(String customerFName, String customerLName, String customerPhone, String customerEmail, String customerPaymentMethod, int roomID) throws SQLException {
@@ -47,7 +47,7 @@ public class Customer {
             // Assign Customer to Room
             dbConnection.updateCustomerID(roomID, customerID);
             return;
-        }
+        }//end if
 
         // Get number of billing address to create a new unique ID
         String query = "SELECT COUNT(customer_billing_address_ID) FROM customers";
@@ -68,8 +68,8 @@ public class Customer {
                     customerEmail,
                     billingAddressID,
                     customerPaymentMethod
-            );
-        }
+            );//end instert of information
+        }//end if
 
         // Get new customer ID
         int newCustomerID = getCustomerID(customerFName, customerLName, customerPhone, customerEmail);
@@ -81,15 +81,15 @@ public class Customer {
 
             // Return to not run any other code
             return;
-        }
+        }//end if
 
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setHeaderText("Could not check in customer!");
         alert.show();
         // If Check in fails, call cancel method to make room available again
         cancel(roomID);
-    }
+    }//end method
 
     // Method to cancel checking a customer in
     public void cancel(int roomID) throws SQLException { room.checkOut(roomID); }
-}
+}//end class
