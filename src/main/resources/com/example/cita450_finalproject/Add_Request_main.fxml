@@ -2,22 +2,30 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cita450_finalproject.AddRequestMainController">
+<AnchorPane prefHeight="367.0" prefWidth="413.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cita450_finalproject.AddRequestMainController">
    <children>
-      <Pane layoutX="2.0" layoutY="6.0" prefHeight="394.0" prefWidth="600.0">
+      <Label layoutX="73.0" layoutY="32.0" text="Maintenance Request">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Label>
+      <Pane layoutX="39.0" layoutY="61.0" prefHeight="278.0" prefWidth="317.0">
          <children>
-            <Button fx:id="btnAddRequest" layoutX="445.0" layoutY="264.0" mnemonicParsing="false" onAction="#AddRequest" text="Add" />
-            <Label alignment="CENTER" layoutX="91.0" layoutY="51.0" prefHeight="25.0" prefWidth="138.0" text="Comments" textAlignment="CENTER" />
-            <RadioButton fx:id="rbutton1" layoutX="412.0" layoutY="97.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="118.0" text="Broken Toilet" textFill="#5abd31">
+            <TextField fx:id="searchRequestTextbox" layoutX="116.0" layoutY="21.0" prefHeight="25.0" prefWidth="184.0" promptText="Please type a room number" />
+            <Label layoutX="59.0" layoutY="26.0" text="Room #:" />
+            <RadioButton fx:id="rbutton1" layoutX="116.0" layoutY="57.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="184.0" text="Broken Toilet" textFill="#5abd31">
                <toggleGroup>
                   <ToggleGroup fx:id="fix" />
-               </toggleGroup></RadioButton>
-            <RadioButton fx:id="rbutton2" layoutX="412.0" layoutY="135.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="103.0" text="Broken Light" textFill="#5abd31" toggleGroup="$fix" />
-            <RadioButton fx:id="rbutton3" layoutX="412.0" layoutY="166.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="103.0" text="Broken AC" textFill="#5abd31" toggleGroup="$fix" />
-            <Label layoutX="310.0" layoutY="59.0" text="Room Number:" />
-            <TextField fx:id="searchRequestTextbox" layoutX="395.0" layoutY="55.0" prefHeight="25.0" prefWidth="184.0" promptText="Please type a room number" />
-            <TextArea fx:id="Areacomments" layoutX="29.0" layoutY="80.0" prefHeight="287.0" prefWidth="281.0" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="rbutton2" layoutX="116.0" layoutY="82.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="184.0" text="Broken Light" textFill="#5abd31" toggleGroup="$fix" />
+            <RadioButton fx:id="rbutton3" layoutX="116.0" layoutY="107.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="184.0" text="Broken AC" textFill="#5abd31" toggleGroup="$fix" />
+            <Button fx:id="btnAddRequest" layoutX="261.0" layoutY="252.0" mnemonicParsing="false" onAction="#AddRequest" text="Add" />
+            <Label alignment="CENTER" layoutX="94.0" layoutY="133.0" prefHeight="25.0" prefWidth="138.0" text="Comments" textAlignment="CENTER" />
+            <TextArea fx:id="Areacomments" layoutX="24.0" layoutY="158.0" prefHeight="87.0" prefWidth="281.0" />
+            <Button fx:id="btnAddRequest1" layoutX="24.0" layoutY="252.0" mnemonicParsing="false" onAction="#AddRequest" text="Back" />
          </children>
       </Pane>
    </children>

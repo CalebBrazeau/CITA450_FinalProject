@@ -3,6 +3,8 @@
     -dark-primary-purple: rgb(187,134,252);
     -dark-secondary-teal: rgb(3, 218, 198);
     -dark-error: rgb(207, 102, 121);
+    -dark-button-text: rgb(18,18,18);
+    -dark-button-text-light: rgb(255,255,255);
 }
 /****** Iunno ******/
 .root {
@@ -12,7 +14,7 @@
 
 /****** Start Button Styling ******/
 .button {
-    -fx-text-fill: rgb(18,18,18);
+    -fx-text-fill: -dark-button-text;
     -fx-background-color: -dark-primary-purple;
 }
 
@@ -59,6 +61,7 @@
 /****** Start Text Field Styling ******/
 .text-field {
     -fx-background-color: -dark-primary-purple;
+    -fx-prompt-text-fill: -dark-button-text;
 }
 
 .text-field:focused {
@@ -84,3 +87,23 @@
     -fx-text-fill: black;
 }
 /****** End Choice Box Styling ******/
+
+/****** Start Text Area Styling ******/
+.text-area {
+    -fx-text-fill: -dark-button-text;
+}
+
+.text-area .content {
+    -fx-background-color: -dark-primary-purple;
+}
+/****** End Text Area Styling ******/
+
+/****** Start Radio Button Styling ******/
+.radio-button {
+    -fx-text-fill: -dark-button-text-light;
+}
+
+.radio-button .radio {
+    -fx-background-color: -dark-secondary-teal;
+}
+/****** End Radio Button Styling ******/
